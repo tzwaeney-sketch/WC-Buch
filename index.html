@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WC Gästebuch – Familie Albrecht</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --card:#0f0f0f;
+  --line:#222;
+  --text:#f4f4f4;
+  --muted:#aaa;
+  --accent:#fff;
+  --ok:#46d17a;
+  --err:#ff6b6b;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Roboto,Arial;
+  background:#000;
+  color:var(--text);
+}
+
+.bg-logo{
+  position:fixed;
+  inset:0;
+  background:url("logo.png") center/420px no-repeat;
+  opacity:.04;
+  pointer-events:none;
+  filter:blur(1px);
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:18px 14px 60px;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.logo{
+  width:90px;
+  height:90px;
+  border-radius:22px;
+  border:1px solid #333;
+  overflow:hidden;
+  background:#000;
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+h1{margin:0;font-size:26px}
+.sub{color:#aaa;font-size:13px}
+
+.card{
+  margin-top:14px;
+  background:linear-gradient(#111,#0b0b0b);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+}
+
+.grid{
+  display:grid;
+  gap:12px;
+}
+@media(min-width:900px){
+  .grid{grid-template-columns:1.1fr .9fr}
+}
+
+label{font-size:13px;color:#ddd}
+input,textarea{
+  width:100%;
+  padding:11px;
+  border-radius:14px;
+  background:#090909;
+  border:1px solid #222;
+  color:#fff;
+}
+
+textarea{min-height:80px}
+
+button{
+  background:#111;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#fff;
+  cursor:pointer;
+}
+button.primary{
+  background:#fff;
+  color:#000;
+  font-weight:800;
+}
+
+.preview{
+  width:90px;height:90px;
+  border-radius:14px;
+  border:1px solid #333;
+  object-fit:cover;
+  display:none;
+}
+
+.msg.ok{color:var(--ok)}
+.msg.err{color:var(--err)}
+
+.entry{
+  display:flex;
+  gap:12px;
+  border-top:1px solid #191919;
+  padding:12px 0;
+}
+.entry img{
+  width:44px;height:44px;
+  border-radius:50%;
+  border:1px solid #333;
+}
+
+.funbox{
+  border:1px solid #222;
+  border-radius:14px;
+  padding:10px;
+  margin-top:10px;
+}
+
+.funrow{
+  display:flex;
+  justify-content:space-between;
+  font-weight:700;
+}
+
+.luckbox{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px dashed #333;
+  border-radius:14px;
+  padding:12px;
+  margin-top:12px;
+}
+
+/* Regeln Modal */
+#rulesWrap{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+#rulesWrap.hidden{display:none}
+
+.rules{
+  background:#0c0c0c;
+  border:1px solid #333;
+  border-radius:20px;
+  max-width:500px;
+  padding:16px;
+}
+.rules ul{padding-left:18px}
+
+/* Feuerwerk */
+#fx{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-logo"></div>
+<canvas id="fx"></canvas>
+
+<!-- Regeln -->
+<div id="rulesWrap">
+  <div class="rules">
+    <h2>🚽 Toiletten-Regeln</h2>
+    <ul>
+      <li>Sauber hinterlassen.</li>
+      <li>Papier prüfen.</li>
+      <li>Nett bleiben.</li>
+      <li>Unfälle melden 😄</li>
+    </ul>
+    <button id="acceptRules" class="primary">Akzeptieren & weiter</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="logo"><img src="logo.png"></div>
+    <div>
+      <h1>WC Gästebuch</h1>
+      <div class="sub">Familie Albrecht</div>
+    </div>
+  </div>
+</header>
+
+<div class="card luckbox">
+  <div>
+    <strong>Glücksschiss</strong>
+    <div class="sub">Wenn’s richtig gut lief</div>
+  </div>
+  <div>
+    <span id="luckCount">0</span>
+    <button id="luckBtn" class="primary">🎉</button>
+  </div>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>Neuer Eintrag</h3>
+
+<label>Name</label>
+<input id="name">
+
+<label>Text</label>
+<textarea id="text"></textarea>
+
+<div class="funbox">
+  <div class="funrow"><span>Geräusch</span><span id="noiseVal"></span></div>
+  <input type="range" id="noise" min="0" max="4" value="1">
+</div>
+
+<div class="funbox">
+  <div class="funrow"><span>Duft</span><span id="smellVal"></span></div>
+  <input type="range" id="smell" min="0" max="4" value="1">
+</div>
+
+<label>Foto</label>
+<input type="file" id="photo" accept="image/*" capture="environment">
+<img id="preview" class="preview">
+
+<button id="sendBtn" class="primary">Absenden</button>
+<div id="msg" class="msg"></div>
+
+</div>
+
+<div class="card">
+<h3>Verlauf</h3>
+<div id="entries"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const EXEC_URL = "/.netlify/functions/guestbook";
+const PIN = "1234";
+
+let photoDataUrl = null;
+
+/* Regeln */
+document.getElementById("acceptRules").onclick = ()=>{
+  document.getElementById("rulesWrap").classList.add("hidden");
+  localStorage.setItem("rulesAccepted","1");
+};
+if(localStorage.getItem("rulesAccepted")) {
+  document.getElementById("rulesWrap").classList.add("hidden");
+}
+
+/* Slider */
+const NOISE=["🤫","🙂","😅","😂","😈"];
+const SMELL=["🌸","🌿","🧴","🤢","☠️"];
+function upd(){
+  noiseVal.textContent=NOISE[noise.value];
+  smellVal.textContent=SMELL[smell.value];
+}
+noise.oninput=smell.oninput=upd;
+upd();
+
+/* Foto */
+photo.onchange=e=>{
+  const f=e.target.files[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    photoDataUrl=r.result;
+    preview.src=r.result;
+    preview.style.display="block";
+  };
+  r.readAsDataURL(f);
+};
+
+/* Glücksschiss */
+let luck=Number(localStorage.getItem("luck")||0);
+luckCount.textContent=luck;
+
+luckBtn.onclick=()=>{
+  luck++;
+  localStorage.setItem("luck",luck);
+  luckCount.textContent=luck;
+  fireworks();
+};
+
+/* Feuerwerk */
+function fireworks(){
+  const c=document.getElementById("fx");
+  const ctx=c.getContext("2d");
+  c.width=innerWidth;c.height=innerHeight;
+  let parts=[...Array(80)].map(()=>({
+    x:innerWidth/2,
+    y:innerHeight/3,
+    vx:(Math.random()-.5)*12,
+    vy:(Math.random()-.7)*12,
+    a:1
+  }));
+  (function anim(){
+    ctx.clearRect(0,0,c.width,c.height);
+    parts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.a-=.02;
+      ctx.fillStyle=`rgba(255,255,255,${p.a})`;
+      ctx.fillRect(p.x,p.y,4,4);
+    });
+    parts=parts.filter(p=>p.a>0);
+    if(parts.length) requestAnimationFrame(anim);
+  })();
+}
+
+/* Laden */
+async function loadEntries(){
+  const r=await fetch(`${EXEC_URL}?pin=${PIN}`);
+  const d=await r.json();
+  entries.innerHTML="";
+  d.entries.forEach(e=>{
+    const div=document.createElement("div");
+    div.className="entry";
+    div.innerHTML=`
+      ${e.foto?`<img src="${e.foto}">`:""}
+      <div>
+        <strong>${e.name||""}</strong><br>
+        ${e.text||""}
+      </div>`;
+    entries.appendChild(div);
+  });
+}
+
+/* Absenden */
+sendBtn.onclick=async()=>{
+  msg.textContent="Sende...";
+  const body={
+    pin:PIN,
+    name:name.value,
+    text:text.value+
+      `\nGeräusch:${NOISE[noise.value]} Duft:${SMELL[smell.value]}`,
+    photoDataUrl
+  };
+
+  const r=await fetch(EXEC_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(body)
+  });
+  const d=await r.json();
+
+  if(d.ok){
+    msg.textContent="Gespeichert!";
+    msg.className="msg ok";
+    name.value=text.value="";
+    preview.style.display="none";
+    photoDataUrl=null;
+    loadEntries();
+  } else {
+    msg.textContent=d.error||"Fehler";
+    msg.className="msg err";
+  }
+};
+
+loadEntries();
+</script>
+
+</body>
+</html>
