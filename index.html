@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WC Gästebuch Familie Albrecht</title>
+  <style>
+    :root{
+      --bg:#070707;
+      --card:#0f0f0f;
+      --line:#222;
+      --text:#f2f2f2;
+      --muted:#a9a9a9;
+      --radius:18px;
+      --ok:#46d17a;
+      --err:#ff6b6b;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 0%, #111 0%, var(--bg) 55%),
+        radial-gradient(1000px 500px at 90% 10%, #101010 0%, var(--bg) 60%);
+      overflow-x:hidden;
+    }
+    .wrap{ max-width:960px; margin:0 auto; padding:18px 16px 70px; position:relative; }
+
+    /* großes Hintergrund-Logo */
+    .bgLogo{
+      position:absolute;
+      inset:auto -140px -180px auto;
+      width:520px;
+      opacity:.08;
+      filter: blur(.2px);
+      transform: rotate(-10deg);
+      pointer-events:none;
+      user-select:none;
+    }
+    @media (max-width: 520px){
+      .bgLogo{ width:420px; right:-120px; bottom:-160px; opacity:.09; }
+    }
+
+    .header{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      margin: 6px 0 14px;
+    }
+    .brand{ display:flex; align-items:center; gap:14px; min-width:0; }
+    .logoBig{
+      width:78px; height:78px; border-radius:22px;
+      background:#000;
+      border:1px solid #2a2a2a;
+      box-shadow: 0 14px 36px rgba(0,0,0,.45);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logoBig img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .title{ margin:0; font-size:24px; line-height:1.1; letter-spacing:.2px; }
+    .subtitle{ margin:4px 0 0; color:var(--muted); font-size:13px; }
+
+    .pill{
+      font-size:12px;
+      border:1px solid #2a2a2a;
+      border-radius:999px;
+      padding:7px 10px;
+      color:#dcdcdc;
+      background:#0b0b0b;
+      white-space:nowrap;
+    }
+
+    .grid{ display:grid; grid-template-columns: 1fr; gap:12px; }
+    @media (min-width: 920px){ .grid{ grid-template-columns: 1.15fr 0.85fr; } }
+
+    .card{
+      background: linear-gradient(180deg, #111 0%, var(--card) 100%);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.32);
+      position:relative;
+    }
+    .card h2{ margin:0 0 10px; font-size:16px; letter-spacing:.2px; }
+    .hint{ color:var(--muted); font-size:13px; }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    label{ display:block; margin:10px 0 6px; font-size:13px; color:#ddd; }
+
+    input, textarea{
+      width:100%;
+      border:1px solid #2a2a2a;
+      border-radius:16px;
+      padding:12px 12px;
+      font-size:16px;
+      background:#0b0b0b;
+      color:var(--text);
+      outline:none;
+    }
+    textarea{ min-height:92px; resize:vertical; }
+    input:focus, textarea:focus{ border-color:#3a3a3a; }
+
+    .btn{
+      border:1px solid #2a2a2a;
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:15px;
+      cursor:pointer;
+      background:#0b0b0b;
+      color:var(--text);
+      transition: transform .04s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{ border-color:#3a3a3a; }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+      font-weight:900;
+    }
+    .btn.primary:hover{ background:#f2f2f2; border-color:#f2f2f2; }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .previewWrap{ display:flex; gap:12px; align-items:center; }
+    .preview{
+      width:92px; height:92px;
+      border-radius:18px;
+      border:1px solid #2a2a2a;
+      object-fit:cover;
+      background:#111;
+      display:none;
+      flex:0 0 auto;
+    }
+
+    .quote{ font-size:18px; line-height:1.25; margin-top:6px; color:#f5f5f5; }
+    .msg{ margin-top:10px; font-size:14px; }
+    .msg.ok{ color:var(--ok); }
+    .msg.err{ color:var(--err); }
+
+    .entriesHeader{ display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+    .entry{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:12px 0;
+      border-top:1px solid #171717;
+    }
+    .entry:first-child{ border-top:0; padding-top:0; }
+    .avatar{
+      width:46px; height:46px; border-radius:50%;
+      border:1px solid #232323;
+      object-fit:cover;
+      background:#111;
+      flex:0 0 auto;
+    }
+    .name{ font-weight:900; }
+    .meta{ color:#888; font-size:12px; margin-top:3px; }
+
+    /* Glücksschiss */
+    .luckBox{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border:1px dashed #2a2a2a;
+      border-radius:16px;
+      padding:12px;
+      background:#0b0b0b;
+      margin-top:12px;
+    }
+    .luckCount{ font-weight:900; letter-spacing:.3px; }
+
+    /* Feuerwerk Canvas */
+    #fx{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    /* Fun sliders */
+    .funBox{
+      border:1px solid #1f1f1f;
+      background:#0b0b0b;
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .funRow{ display:flex; justify-content:space-between; gap:12px; align-items:center; }
+    .funLabel{ font-weight:900; }
+    .funValue{ color:#ddd; font-weight:900; white-space:nowrap; }
+    input[type="range"]{ width:100%; padding:0; }
+
+    /* Regeln Modal */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9998;
+      padding:16px;
+    }
+    .modal{
+      width:min(640px, 100%);
+      background: linear-gradient(180deg,#121212 0%, #0b0b0b 100%);
+      border:1px solid #2a2a2a;
+      border-radius:20px;
+      padding:16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .modal h3{ margin:0 0 8px; font-size:18px; }
+    .modal ul{ margin:10px 0 12px; padding-left:18px; color:#eaeaea; }
+    .modal li{ margin:8px 0; color:#eaeaea; }
+    .modalFooter{
+      display:flex; justify-content:flex-end; align-items:center; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px solid #1f1f1f;
+    }
+
+    /* Debug overlay */
+    #debug{
+      display:none;
+      position:fixed; left:10px; right:10px; bottom:10px;
+      background:#b00020; color:#fff;
+      padding:10px; border-radius:12px;
+      z-index:99999; font-size:12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      white-space:pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="fx"></canvas>
+  <div id="debug"></div>
+
+  <div class="wrap">
+    <!-- Hintergrundlogo -->
+    <img class="bgLogo" src="logo.png" alt="" aria-hidden="true"/>
+
+    <!-- Regeln Modal -->
+    <div id="rulesBackdrop" class="modalBackdrop">
+      <div class="modal">
+        <h3>🚽 Toilettenregeln</h3>
+        <div class="hint">Kurz, fair, familienfreundlich.</div>
+        <ul>
+          <li>Hinterlass es so, wie du es selbst gern vorfinden würdest.</li>
+          <li>Wenn was schiefgeht: Bescheid sagen. Niemand wird gebissen.</li>
+          <li>Gästebuch: nett bleiben. Keine Beleidigungen.</li>
+        </ul>
+        <div class="modalFooter">
+          <button id="rulesOkBtn" class="btn primary" type="button">Akzeptieren & weiter</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="brand">
+        <div class="logoBig">
+          <img src="logo.png" alt="Logo" />
+        </div>
+        <div style="min-width:0;">
+          <h1 class="title">WC Gästebuch</h1>
+          <div class="subtitle">Familie Albrecht</div>
+        </div>
+      </div>
+      <div class="row">
+        <button id="showRulesBtn" class="btn" type="button">Regeln</button>
+        <div class="pill">PIN: 1234</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hint">Spruch des Tages (offline)</div>
+      <div id="quote" class="quote"></div>
+
+      <div class="luckBox">
+        <div>
+          <div style="font-weight:900;">Glücksschiss</div>
+          <div class="hint">Wenn’s richtig gut lief: drücken 😄</div>
+        </div>
+        <div class="row" style="justify-content:flex-end;">
+          <div class="pill">Zähler: <span id="luckCount" class="luckCount">0</span></div>
+          <button id="luckBtn" class="btn primary" type="button">🎉 Glücksschiss</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Neuer Eintrag</h2>
+
+        <label for="name">Name</label>
+        <input id="name" placeholder="z.B. Opa Karsten" autocomplete="off" />
+
+        <label for="text">Text</label>
+        <textarea id="text" placeholder="Kurz und nett 🙂"></textarea>
+
+        <div class="funBox">
+          <div class="funRow">
+            <div class="funLabel">Geräuschpegel</div>
+            <div id="noiseValue" class="funValue">🙂 okay</div>
+          </div>
+          <input id="noise" type="range" min="0" max="4" step="1" value="1" />
+          <div class="hint" style="margin-top:6px;">🤫 → 😈</div>
+        </div>
+
+        <div class="funBox">
+          <div class="funRow">
+            <div class="funLabel">Duftlage</div>
+            <div id="smellValue" class="funValue">🌿 neutral</div>
+          </div>
+          <input id="smell" type="range" min="0" max="4" step="1" value="1" />
+          <div class="hint" style="margin-top:6px;">🌸 → ☠️</div>
+        </div>
+
+        <label>Foto</label>
+        <div class="previewWrap">
+          <div style="flex:1; min-width:240px;">
+            <input id="photoCamera" type="file" accept="image/*" capture="environment" />
+            <div class="hint" style="margin-top:6px;">Handy: öffnet direkt die Kamera.</div>
+          </div>
+          <img id="preview" class="preview" alt="Foto Vorschau" />
+        </div>
+
+        <div style="margin-top:10px;">
+          <button id="pickGalleryBtn" class="btn" type="button">Oder aus Galerie auswählen</button>
+          <input id="photoGallery" type="file" accept="image/*" style="display:none;" />
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <button id="sendBtn" class="btn primary" type="button">Absenden</button>
+          <button id="clearBtn" class="btn" type="button">Leeren</button>
+          <span id="status" class="hint"></span>
+        </div>
+
+        <div id="msg" class="msg"></div>
+      </div>
+
+      <div class="card">
+        <h2>Mini-Spiel: Klopapier-Sprint</h2>
+        <div class="hint">20 Sekunden, so oft tippen wie möglich. Offline.</div>
+
+        <div class="row" style="margin-top:12px;">
+          <button id="startBtn" class="btn" type="button">Start</button>
+          <button id="tapBtn" class="btn primary" type="button" disabled>🧻 TAP!</button>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <div><b>Zeit:</b> <span id="t">20</span>s</div>
+          <div><b>Punkte:</b> <span id="s">0</span></div>
+          <div><b>Highscore:</b> <span id="hs">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="entriesHeader">
+        <h2 style="margin:0;">Einträge</h2>
+        <div class="row">
+          <button id="reloadBtn" class="btn" type="button">Aktualisieren</button>
+          <span id="countHint" class="hint"></span>
+        </div>
+      </div>
+      <div id="entries" style="margin-top:10px;"></div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Fehlerbehebung: JS-Fehler sichtbar machen =====
+    window.onerror = function(msg, src, line, col, err){
+      const d = document.getElementById("debug");
+      if (!d) return;
+      d.style.display = "block";
+      d.textContent = "JS-Fehler: " + msg + " (Zeile " + line + ")";
+    };
+
+    // ===== KONFIG =====
+    const EXEC_URL = "https://script.google.com/macros/s/AKfycby3v1ETsx1yZPeO-wrmyVcR2iCuEfIpqTuCvzQkO2rnKCynjCgKStaim0DT_Yo34rte/exec";
+    const PIN = "1234";
+    const LIMIT = 50;
+    const MAX_UPLOAD_BYTES = 2.5 * 1024 * 1024;
+
+    // ===== Spruch des Tages =====
+    const QUOTES = [
+      "Wer lächelt, hat’s leichter. Auch hier.",
+      "Kurzer Stopp, großer Schritt.",
+      "Mach’s kurz. Und freundlich.",
+      "Heute ist ein guter Tag für gute Laune.",
+      "Man muss nicht alles ernst nehmen. Aber sauber.",
+      "Ein guter Witz ist wie Klopapier: hilft immer.",
+      "Nichts ist so dringend wie eine Pause.",
+      "Bleib entspannt. Das Leben ist schon wild genug."
+    ];
+    (function(){
+      const d = new Date();
+      const key = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+      const q = QUOTES[key % QUOTES.length];
+      const el = document.getElementById("quote");
+      if (el) el.textContent = q;
+    })();
+
+    // ===== Helpers =====
+    const msgEl = document.getElementById("msg");
+    const statusEl = document.getElementById("status");
+    const preview = document.getElementById("preview");
+
+    function showMsg(text, kind) {
+      if (!msgEl) return;
+      msgEl.textContent = text || "";
+      msgEl.className = "msg " + (kind === "err" ? "err" : (kind === "ok" ? "ok" : ""));
+    }
+    function setStatus(t){ if (statusEl) statusEl.textContent = t || ""; }
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+    function formatTime(v) {
+      if (!v) return "";
+      const dt = new Date(v);
+      if (isNaN(dt.getTime())) return "";
+      return dt.toLocaleString("de-DE", { dateStyle:"short", timeStyle:"short" });
+    }
+
+    // ===== Regeln Modal (1 Button) =====
+    const RULES_KEY = "wc_rules_accepted_v2";
+    const rulesBackdrop = document.getElementById("rulesBackdrop");
+    const rulesOkBtn = document.getElementById("rulesOkBtn");
+    const showRulesBtn = document.getElementById("showRulesBtn");
+
+    function isRulesAccepted(){ return localStorage.getItem(RULES_KEY) === "1"; }
+    function openRules(){
+      if (rulesBackdrop) rulesBackdrop.style.display = "flex";
+    }
+    function acceptRules(){
+      localStorage.setItem(RULES_KEY, "1");
+      if (rulesBackdrop) rulesBackdrop.style.display = "none";
+      showMsg("", "");
+    }
+
+    if (rulesOkBtn) rulesOkBtn.addEventListener("click", acceptRules);
+    if (showRulesBtn) showRulesBtn.addEventListener("click", openRules);
+
+    if (!isRulesAccepted()) openRules();
+
+    // ===== Fun sliders (null-safe) =====
+    let sliderSummaryLine = () => "";
+
+    (function initSliders(){
+      const noise = document.getElementById("noise");
+      const smell = document.getElementById("smell");
+      const noiseValue = document.getElementById("noiseValue");
+      const smellValue = document.getElementById("smellValue");
+      if (!noise || !smell || !noiseValue || !smellValue) return;
+
+      const NOISE_MAP = [
+        { e:"🤫", t:"super leise" },
+        { e:"🙂", t:"okay" },
+        { e:"😅", t:"deutlich" },
+        { e:"😂", t:"laut" },
+        { e:"😈", t:"Legendär" }
+      ];
+      const SMELL_MAP = [
+        { e:"🌸", t:"blumig" },
+        { e:"🌿", t:"neutral" },
+        { e:"🧴", t:"Raumspray nötig" },
+        { e:"🤢", t:"kritisch" },
+        { e:"☠️", t:"Gefahrenzone" }
+      ];
+
+      function update(){
+        const n = NOISE_MAP[Number(noise.value)] || NOISE_MAP[1];
+        const s = SMELL_MAP[Number(smell.value)] || SMELL_MAP[1];
+        noiseValue.textContent = `${n.e} ${n.t}`;
+        smellValue.textContent = `${s.e} ${s.t}`;
+      }
+
+      noise.addEventListener("input", update);
+      smell.addEventListener("input", update);
+      update();
+
+      sliderSummaryLine = () => {
+        const n = NOISE_MAP[Number(noise.value)] || NOISE_MAP[1];
+        const s = SMELL_MAP[Number(smell.value)] || SMELL_MAP[1];
+        return `\n\n— WC-Status —\nGeräuschpegel: ${n.e} ${n.t}\nDuftlage: ${s.e} ${s.t}`;
+      };
+    })();
+
+    // ===== Foto aufnehmen/auswählen =====
+    let photoDataUrl = "";
+    const camInput = document.getElementById("photoCamera");
+    const galleryInput = document.getElementById("photoGallery");
+    const pickGalleryBtn = document.getElementById("pickGalleryBtn");
+
+    function fileToDataUrl(file){
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result || ""));
+        r.onerror = reject;
+        r.readAsDataURL(file);
+      });
+    }
+
+    async function handleFile(file){
+      if (!file) return;
+      if (file.size > MAX_UPLOAD_BYTES) { showMsg("Foto zu groß (max ca. 2,5 MB).", "err"); return; }
+      photoDataUrl = await fileToDataUrl(file);
+      if (preview){
+        preview.src = photoDataUrl;
+        preview.style.display = "block";
+      }
+      showMsg("", "");
+    }
+
+    if (camInput) camInput.addEventListener("change", async (e) => { await handleFile(e.target.files?.[0]); });
+    if (pickGalleryBtn && galleryInput){
+      pickGalleryBtn.addEventListener("click", () => galleryInput.click());
+      galleryInput.addEventListener("change", async (e) => { await handleFile(e.target.files?.[0]); });
+    }
+
+    // ===== Glücksschiss: Zähler + Feuerwerk (Canvas) =====
+    const LUCK_KEY = "wc_luck_count_v1";
+    const luckCountEl = document.getElementById("luckCount");
+    const luckBtn = document.getElementById("luckBtn");
+
+    function getLuck(){ return Number(localStorage.getItem(LUCK_KEY) || 0); }
+    function setLuck(v){
+      localStorage.setItem(LUCK_KEY, String(v));
+      if (luckCountEl) luckCountEl.textContent = String(v);
+    }
+    setLuck(getLuck());
+
+    const fx = document.getElementById("fx");
+    const ctx = fx ? fx.getContext("2d") : null;
+    function resizeFx(){ if (!fx) return; fx.width = innerWidth; fx.height = innerHeight; }
+    addEventListener("resize", resizeFx); resizeFx();
+
+    function firework(durationMs){
+      if (!fx || !ctx) return;
+      const start = performance.now();
+      const parts = [];
+      const count = 150;
+
+      for (let i=0;i<count;i++){
+        parts.push({
+          x: fx.width * (0.25 + Math.random()*0.5),
+          y: fx.height * (0.22 + Math.random()*0.25),
+          vx: (Math.random()-0.5) * 8,
+          vy: (Math.random()-0.8) * 9,
+          g: 0.18 + Math.random()*0.08,
+          r: 2 + Math.random()*2.4,
+          a: 1
+        });
+      }
+
+      function tick(t){
+        const p = (t - start) / durationMs;
+        ctx.clearRect(0,0,fx.width,fx.height);
+        for (const s of parts){
+          s.vy += s.g;
+          s.x += s.vx;
+          s.y += s.vy;
+          s.a = Math.max(0, 1 - p);
+          ctx.globalAlpha = s.a;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+          ctx.fillStyle = "white";
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        if (t - start < durationMs) requestAnimationFrame(tick);
+        else ctx.clearRect(0,0,fx.width,fx.height);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    if (luckBtn) luckBtn.addEventListener("click", () => {
+      setLuck(getLuck() + 1);
+      firework(900);
+    });
+
+    // ===== Einträge laden/anzeigen =====
+    async function loadEntries(){
+      const entriesEl = document.getElementById("entries");
+      const countHint = document.getElementById("countHint");
+      if (entriesEl) entriesEl.innerHTML = "<div class='hint'>Lade...</div>";
+      if (countHint) countHint.textContent = "";
+
+      try{
+        const url = `${EXEC_URL}?pin=${encodeURIComponent(PIN)}&limit=${encodeURIComponent(LIMIT)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.ok){
+          if (entriesEl) entriesEl.innerHTML = "";
+          showMsg("Fehler beim Laden: " + (data.error || "Unbekannt"), "err");
+          return;
+        }
+
+        const list = Array.isArray(data.entries) ? data.entries : [];
+        if (countHint) countHint.textContent = list.length ? `${list.length}` : "";
+
+        if (!list.length){
+          if (entriesEl) entriesEl.innerHTML = "<div class='hint'>Noch keine Einträge.</div>";
+          return;
+        }
+
+        if (entriesEl){
+          entriesEl.innerHTML = list.map(e => {
+            const foto = e.FotoURL ? String(e.FotoURL) : "";
+            const img = foto ? `<img class="avatar" src="${escapeHtml(foto)}" alt="">`
+                             : `<div class="avatar"></div>`;
+            const meta = formatTime(e.Zeit);
+            return `
+              <div class="entry">
+                ${img}
+                <div>
+                  <div class="name">${escapeHtml(e.Name || "Gast")}</div>
+                  <div>${escapeHtml(e.Text || "")}</div>
+                  ${meta ? `<div class="meta">${escapeHtml(meta)}</div>` : ""}
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+      } catch(err){
+        if (entriesEl) entriesEl.innerHTML = "";
+        showMsg("Fehler beim Laden: " + String(err?.message || err), "err");
+      }
+    }
+
+    // ===== Submit =====
+    const sendBtn = document.getElementById("sendBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const reloadBtn = document.getElementById("reloadBtn");
+
+    async function submitEntry(){
+      showMsg("", "");
+      setStatus("Sende...");
+
+      if (!isRulesAccepted()){
+        setStatus("");
+        showMsg("Bitte kurz Regeln akzeptieren.", "err");
+        openRules();
+        return;
+      }
+
+      const name = document.getElementById("name")?.value?.trim() || "";
+      const text = document.getElementById("text")?.value?.trim() || "";
+      const finalText = (text || "") + sliderSummaryLine();
+
+      if (!name && !text && !photoDataUrl){
+        setStatus("");
+        showMsg("Bitte mindestens Name, Text oder Foto.", "err");
+        return;
+      }
+
+      try{
+        const res = await fetch(EXEC_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pin: PIN, name, text: finalText, photoDataUrl })
+        });
+
+        const data = await res.json().catch(() => null);
+        if (!data || !data.ok){
+          setStatus("");
+          showMsg("Fehler vom Script: " + (data?.error || "Unbekannt"), "err");
+          return;
+        }
+
+        setStatus("");
+        showMsg("Gespeichert ✅", "ok");
+        clearForm(false);
+        await loadEntries();
+      } catch(err){
+        setStatus("");
+        showMsg("Netz/Browser blockt: " + String(err?.message || err), "err");
+      }
+    }
+
+    function clearForm(clearMsg){
+      const nameEl = document.getElementById("name");
+      const textEl = document.getElementById("text");
+      if (nameEl) nameEl.value = "";
+      if (textEl) textEl.value = "";
+
+      if (camInput) camInput.value = "";
+      if (galleryInput) galleryInput.value = "";
+      photoDataUrl = "";
+      if (preview) preview.style.display = "none";
+
+      const noise = document.getElementById("noise");
+      const smell = document.getElementById("smell");
+      if (noise) noise.value = "1";
+      if (smell) smell.value = "1";
+      // update slider labels if available
+      const ev = new Event("input");
+      if (noise) noise.dispatchEvent(ev);
+      if (smell) smell.dispatchEvent(ev);
+
+      if (clearMsg) showMsg("", "");
+    }
+
+    if (sendBtn) sendBtn.addEventListener("click", submitEntry);
+    if (clearBtn) clearBtn.addEventListener("click", () => clearForm(true));
+    if (reloadBtn) reloadBtn.addEventListener("click", loadEntries);
+
+    // ===== Mini-Spiel =====
+    (function initGame(){
+      const tEl = document.getElementById("t");
+      const sEl = document.getElementById("s");
+      const hsEl = document.getElementById("hs");
+      const startBtn = document.getElementById("startBtn");
+      const tapBtn = document.getElementById("tapBtn");
+      if (!tEl || !sEl || !hsEl || !startBtn || !tapBtn) return;
+
+      const key = "wc_highscore";
+      const getHS = () => Number(localStorage.getItem(key) || 0);
+      const setHS = (v) => localStorage.setItem(key, String(v));
+
+      let time = 20, score = 0, timer = null;
+
+      function reset(){
+        time = 20; score = 0;
+        tEl.textContent = time;
+        sEl.textContent = score;
+        tapBtn.disabled = true;
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      hsEl.textContent = getHS();
+
+      startBtn.addEventListener("click", () => {
+        reset();
+        tapBtn.disabled = false;
+        timer = setInterval(() => {
+          time--;
+          tEl.textContent = time;
+          if (time <= 0){
+            clearInterval(timer);
+            timer = null;
+            tapBtn.disabled = true;
+            const hs = getHS();
+            if (score > hs){ setHS(score); hsEl.textContent = score; }
+            alert(`Zeit um! Punkte: ${score}`);
+          }
+        }, 1000);
+      });
+
+      tapBtn.addEventListener("click", () => {
+        if (time <= 0) return;
+        score++;
+        sEl.textContent = score;
+      });
+
+      reset();
+    })();
+
+    // init load
+    loadEntries();
+  </script>
+</body>
+</html>
