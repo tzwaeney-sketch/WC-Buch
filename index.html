@@ -1,464 +1,326 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WC Gästebuch – Familie Albrecht</title>
-  <meta name="theme-color" content="#0b1220" />
-  <style>
-    :root{--bg:#0b1220;--text:#e5e7eb;--muted:#a7b0be;--line:rgba(255,255,255,.12);--accent:#22c55e;--danger:#ef4444;--warn:#f59e0b;--shadow:0 12px 30px rgba(0,0,0,.35);--r:18px}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:radial-gradient(900px 500px at 10% 0%, rgba(34,197,94,.18), transparent 55%),radial-gradient(900px 500px at 90% 10%, rgba(59,130,246,.18), transparent 50%),var(--bg);color:var(--text)}
-    .wrap{max-width:980px;margin:0 auto;padding:18px 16px 46px}
-    header{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;margin:6px 0 14px;flex-wrap:wrap}
-    h1{margin:0;font-size:22px;letter-spacing:.2px}
-    .sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;user-select:none}
-    .dot{width:10px;height:10px;border-radius:99px;background:var(--danger)} .dot.ok{background:var(--accent)}
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
-    @media (max-width:860px){.grid{grid-template-columns:1fr}}
-    .card{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));overflow:hidden}
-    .inner{padding:16px}
-    .card h2{margin:0 0 10px;font-size:15px;color:#f3f4f6}
-    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
-    input[type="text"], input[type="password"], textarea{width:100%;padding:12px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);outline:none}
-    textarea{min-height:96px;resize:vertical}
-    input::placeholder, textarea::placeholder{color:rgba(229,231,235,.45)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    button{padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer}
-    button.primary{background:rgba(34,197,94,.20);border-color:rgba(34,197,94,.35)}
-    button:hover{background:rgba(255,255,255,.09)} button.primary:hover{background:rgba(34,197,94,.26)}
-    button:disabled{opacity:.55;cursor:not-allowed}
-    .hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.4}
-    .msg{display:none;margin-top:10px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13px;color:var(--muted)}
-    .msg.ok{display:block;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10);color:#d1fae5}
-    .msg.err{display:block;border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.10);color:#fee2e2}
-    .msg.warn{display:block;border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:#ffedd5}
-    .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-    .entry{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:12px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.16)}
-    .thumb{width:52px;height:52px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(229,231,235,.55);font-size:12px;overflow:hidden}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .meta{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .name{margin:0;font-weight:700;font-size:14px}
-    .time{white-space:nowrap;color:var(--muted);font-size:12px}
-    .text{margin:6px 0 0;white-space:pre-wrap;line-height:1.35;font-size:14px}
-    .tiny{font-size:12px;color:var(--muted)}
-    .gameTop{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-    .kbd{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.03)}
-    canvas{width:100%;height:220px;display:block;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.18)}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WC Gästebuch – Familie Albrecht</title>
+
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+:root{
+  --bg:#0b1220;
+  --card:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.12);
+  --text:#eef2ff;
+  --muted:rgba(238,242,255,.65);
+  --accent:#22c55e;
+  --warn:#f59e0b;
+  --danger:#ef4444;
+  --r:22px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui}
+img{max-width:100%;display:block}
+
+.wrap{
+  max-width:960px;
+  margin:auto;
+  padding:18px 14px 120px;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:1px solid var(--line);
+  padding:22px;
+  text-align:center;
+}
+
+.heroLogo{
+  max-width:260px;
+  margin:0 auto 14px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:22px;
+  font-weight:900;
+}
+
+.hero p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-top:16px;
+}
+
+/* ===== CARDS ===== */
+
+.card{
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+}
+
+.cardHead{
+  padding:14px 16px 0;
+}
+
+.cardTitle{
+  margin:0;
+  font-size:15px;
+  font-weight:800;
+}
+
+.cardBody{padding:16px}
+
+/* ===== FORM ===== */
+
+label{font-size:12px;color:var(--muted)}
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.2);
+  color:var(--text);
+}
+
+textarea{min-height:90px}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+button{
+  flex:1;
+  border-radius:18px;
+  padding:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.08);
+  color:white;
+}
+
+.primary{
+  background:linear-gradient(135deg,rgba(34,197,94,.35),rgba(56,189,248,.25));
+}
+
+/* ===== ENTRIES ===== */
+
+.entries{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+
+.entry{
+  display:grid;
+  grid-template-columns:60px 1fr;
+  gap:10px;
+  padding:12px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.2);
+}
+
+.thumb{
+  width:60px;height:60px;border-radius:14px;overflow:hidden;
+}
+
+.meta{display:flex;justify-content:space-between}
+.meta strong{font-size:14px}
+.meta span{font-size:12px;color:var(--muted)}
+
+.text{margin-top:6px;font-size:14px}
+
+/* ===== GAME ===== */
+
+.gameBar{
+  height:22px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+
+.gameFill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#22c55e,#38bdf8);
+}
+
+/* ===== BOTTOM NAV ===== */
+
+.bottomNav{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  background:#050812;
+  padding:10px;
+}
+
+.nav{
+  max-width:960px;
+  margin:auto;
+  display:flex;
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+
+.nav button{
+  flex:1;
+  background:none;
+  border:none;
+  padding:12px;
+  color:white;
+}
+
+/* ===== MODAL ===== */
+
+.modalBg{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;
+}
+
+.modal{
+  max-width:500px;width:90%;
+  background:#0b1220;
+  border-radius:22px;
+  padding:18px;
+}
+
+.rules li{margin-bottom:10px}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>WC Gästebuch – Familie Albrecht</h1>
-        <p class="sub">Eintragen + Foto. Wenn das Netz weg ist: Eintrag wird gespeichert, Spiel läuft trotzdem.</p>
-      </div>
-      <div class="pill"><span class="dot" id="netDot"></span><span id="netText">Offline</span></div>
-    </header>
 
-    <div class="grid">
-      <section class="card">
-        <div class="inner">
-          <h2>Eintrag</h2>
+<div class="wrap">
 
-          <label for="pin">PIN</label>
-          <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="1234" />
+<!-- HERO -->
+<section class="hero">
+  <img src="logo.png" class="heroLogo" alt="WC Gästebuch Logo">
+  <h1>WC Gästebuch – Familie Albrecht</h1>
+  <p>Scannen, eintragen, Foto dazu. Klopapier abrollen nicht vergessen.</p>
+</section>
 
-          <label for="name">Name</label>
-          <input id="name" type="text" autocomplete="off" placeholder="z.B. Sven" />
+<div class="grid">
 
-          <label for="text">Spruch</label>
-          <textarea id="text" placeholder="Frech, lustig, strange…"></textarea>
+<!-- FORM -->
+<section class="card" id="form">
+<div class="cardHead"><h2 class="cardTitle">Eintrag</h2></div>
+<div class="cardBody">
 
-          <label for="photo">Foto (optional)</label>
-          <input id="photo" type="file" accept="image/jpeg,image/jpg,image/png,image/webp" />
-          <div class="hint">Max. ~2,5 MB (dein Backend begrenzt). JPG/PNG/WebP.</div>
+<label>PIN</label>
+<input id="pin" type="password" value="1234">
 
-          <div class="actions">
-            <button class="primary" id="btnSend">Absenden</button>
-            <button id="btnLoad">Neu laden</button>
-            <button id="btnFlush">Offline-Speicher senden</button>
-          </div>
+<label>Name</label>
+<input id="name">
 
-          <div id="msg" class="msg"></div>
-          <div class="hint" id="queueHint"></div>
-        </div>
-      </section>
+<label>Spruch</label>
+<textarea id="text"></textarea>
 
-      <section class="card">
-        <div class="inner">
-          <div class="gameTop">
-            <h2 style="margin:0;">Mini-Spiel: Klo-Flieger</h2>
-            <span class="kbd">Leertaste oder Tippen</span>
-          </div>
-          <canvas id="game" width="900" height="360"></canvas>
-          <div class="hint">Nicht an den Rohren zerschellen. Bei Crash einfach neu tippen.</div>
-        </div>
-      </section>
+<label>Foto</label>
+<input id="photo" type="file">
 
-      <section class="card" style="grid-column:1/-1;">
-        <div class="inner">
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap">
-            <div>
-              <h2 style="margin:0 0 4px;">Letzte Einträge</h2>
-              <div class="tiny">Neueste zuerst, Mini-Foto sichtbar falls vorhanden.</div>
-            </div>
-            <div class="tiny" id="lastUpdate"></div>
-          </div>
-          <div style="height:10px"></div>
-          <ul class="list" id="entries"></ul>
-        </div>
-      </section>
-    </div>
-  </div>
+<div class="actions">
+<button class="primary" id="sendBtn">Absenden</button>
+<button id="loadBtn">Neu laden</button>
+</div>
 
-  <script>
-    // Proxy-Endpunkt (Netlify Function). Siehe unten: /.netlify/functions/wc
-    const BACKEND_URL = "/.netlify/functions/wc";
-    const DEFAULT_PIN = "1234";
-    const DEFAULT_LIMIT = 50;
-    const QUEUE_KEY = "wcgb_queue_v1";
+<div id="msg"></div>
 
-    const el = (id) => document.getElementById(id);
-    const netDot = el("netDot");
-    const netText = el("netText");
-    const msg = el("msg");
-    const queueHint = el("queueHint");
+</div>
+</section>
 
-    function setMsg(type, text){
-      msg.className = "msg " + (type || "");
-      msg.textContent = text || "";
-      msg.style.display = text ? "block" : "none";
-    }
-    function isOnline(){ return navigator.onLine; }
-    function updateNetUI(){
-      const online = isOnline();
-      netDot.classList.toggle("ok", online);
-      netText.textContent = online ? "Online" : "Offline";
-      updateQueueHint();
-    }
-    window.addEventListener("online", updateNetUI);
-    window.addEventListener("offline", updateNetUI);
+<!-- GAME -->
+<section class="card" id="game">
+<div class="cardHead"><h2 class="cardTitle">Klopapier abrollen</h2></div>
+<div class="cardBody">
 
-    function getQueue(){ try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); }catch{ return []; } }
-    function setQueue(arr){ localStorage.setItem(QUEUE_KEY, JSON.stringify(arr)); updateQueueHint(); }
-    function updateQueueHint(){
-      const q = getQueue();
-      queueHint.textContent = q.length ? ("Offline-Speicher: " + q.length + " Eintrag/Einträge warten.") : "";
-    }
+<div class="gameBar">
+  <div class="gameFill" id="fill"></div>
+</div>
 
-    function formatZeit(v){
-      if (!v) return "";
-      const d = new Date(v);
-      return isNaN(d.getTime()) ? String(v) : d.toLocaleString("de-DE");
-    }
+<p style="font-size:13px;color:var(--muted)">Tippe so nah wie möglich an 80 %.</p>
+<button id="tapBtn" class="primary">TIPPE!</button>
 
-    async function readFileAsDataUrl(file){
-      return new Promise((resolve, reject) => {
-        const r = new FileReader();
-        r.onload = () => resolve(String(r.result || ""));
-        r.onerror = () => reject(new Error("Foto konnte nicht gelesen werden"));
-        r.readAsDataURL(file);
-      });
-    }
+</div>
+</section>
 
-    async function fetchEntries(){
-      const pin = (el("pin").value || DEFAULT_PIN).trim();
-      try{
-        setMsg("", "");
-        const res = await fetch(`${BACKEND_URL}?pin=${encodeURIComponent(pin)}&limit=${DEFAULT_LIMIT}`, { method:"GET" });
-        const data = await res.json();
-        if (!data?.ok) throw new Error(data?.error || "Unbekannter Fehler");
-        renderEntries(Array.isArray(data.entries) ? data.entries : []);
-        el("lastUpdate").textContent = "Stand: " + new Date().toLocaleTimeString("de-DE");
-      }catch(err){
-        setMsg("err", "Konnte Einträge nicht laden: " + (err?.message || err));
-      }
-    }
+<!-- ENTRIES -->
+<section class="card">
+<div class="cardHead"><h2 class="cardTitle">Letzte Einträge</h2></div>
+<div class="cardBody">
+<ul class="entries" id="entries"></ul>
+</div>
+</section>
 
-    function renderEntries(entries){
-      const ul = el("entries");
-      ul.innerHTML = "";
-      if (!entries.length){
-        const li = document.createElement("li");
-        li.className = "tiny";
-        li.textContent = "Noch keine Einträge.";
-        ul.appendChild(li);
-        return;
-      }
-      for (const e of entries){
-        const li = document.createElement("li");
-        li.className = "entry";
+</div>
+</div>
 
-        const thumb = document.createElement("div");
-        thumb.className = "thumb";
-        if (e.FotoURL){
-          const im = document.createElement("img");
-          im.loading = "lazy";
-          im.alt = "Foto";
-          im.src = e.FotoURL;
-          thumb.appendChild(im);
-        } else {
-          thumb.textContent = "kein";
-        }
+<!-- BOTTOM -->
+<div class="bottomNav">
+<div class="nav">
+<button onclick="scrollToId('form')">✍️ Eintrag</button>
+<button onclick="openRules()">📜 Regeln</button>
+<button onclick="scrollToId('game')">🧻 Spiel</button>
+</div>
+</div>
 
-        const right = document.createElement("div");
-        const meta = document.createElement("div");
-        meta.className = "meta";
+<!-- RULES -->
+<div class="modalBg" id="rulesBg">
+<div class="modal">
+<h3>Klo-Regeln 🚽</h3>
+<ul class="rules">
+<li>Deckel runter.</li>
+<li>Spülung benutzen.</li>
+<li>Bürste ist dein Freund.</li>
+<li>Hände waschen.</li>
+<li>Lustige Sprüche erlaubt.</li>
+</ul>
+<button onclick="closeRules()" class="primary">Verstanden</button>
+</div>
+</div>
 
-        const name = document.createElement("p");
-        name.className = "name";
-        name.textContent = e.Name || "Anonym";
+<script>
+const BACKEND="/.netlify/functions/wc";
 
-        const time = document.createElement("div");
-        time.className = "time";
-        time.textContent = formatZeit(e.Zeit);
+const fill=document.getElementById("fill");
+let v=0;
 
-        meta.appendChild(name);
-        meta.appendChild(time);
+document.getElementById("tapBtn").onclick=()=>{
+  v+=Math.random()*18;
+  fill.style.width=Math.min(v,100)+"%";
+};
 
-        const text = document.createElement("p");
-        text.className = "text";
-        text.textContent = e.Text || "";
+function scrollToId(id){
+ document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
 
-        right.appendChild(meta);
-        if (e.Text) right.appendChild(text);
+function openRules(){
+ document.getElementById("rulesBg").style.display="flex";
+}
+function closeRules(){
+ document.getElementById("rulesBg").style.display="none";
+}
 
-        li.appendChild(thumb);
-        li.appendChild(right);
-        ul.appendChild(li);
-      }
-    }
+if(!localStorage.rulesSeen){
+ openRules();
+ localStorage.rulesSeen="1";
+}
+</script>
 
-    async function postEntry(payload){
-      const res = await fetch(BACKEND_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!data?.ok) throw new Error(data?.error || "Speichern fehlgeschlagen");
-      return data;
-    }
-
-    function clearFormKeepPin(){
-      el("name").value = "";
-      el("text").value = "";
-      el("photo").value = "";
-    }
-
-    async function sendNowOrQueue(){
-      const pin = (el("pin").value || "").trim();
-      const name = (el("name").value || "").trim();
-      const text = String(el("text").value || "").slice(0, 5000);
-      const file = el("photo").files?.[0] || null;
-
-      if (!pin){ setMsg("warn", "Bitte PIN eingeben."); return; }
-      if (!name && !text && !file){ setMsg("warn", "Leerer Eintrag (Name/Text/Foto fehlt)."); return; }
-
-      let photoDataUrl = "";
-      if (file){
-        if (!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type)){
-          setMsg("warn", "Nicht erlaubter Bildtyp: " + file.type);
-          return;
-        }
-        if (file.size > 3 * 1024 * 1024){
-          setMsg("warn", "Foto ist sehr groß. Bitte kleiner als ~2,5 MB wählen.");
-          return;
-        }
-        try{ photoDataUrl = await readFileAsDataUrl(file); }
-        catch(err){ setMsg("err", err?.message || "Foto konnte nicht verarbeitet werden"); return; }
-      }
-
-      const payload = { pin, name, text, photoDataUrl };
-
-      if (!isOnline()){
-        const q = getQueue();
-        q.unshift({ payload, ts: Date.now() });
-        setQueue(q);
-        setMsg("warn", "Kein Netz. Eintrag offline gespeichert.");
-        clearFormKeepPin();
-        return;
-      }
-
-      try{
-        setMsg("", "");
-        el("btnSend").disabled = true;
-        const data = await postEntry(payload);
-        setMsg("ok", "Gespeichert ✓" + (data?.fotoUrl ? " (Foto verknüpft)" : ""));
-        clearFormKeepPin();
-        await fetchEntries();
-      }catch(err){
-        const q = getQueue();
-        q.unshift({ payload, ts: Date.now(), reason: String(err?.message || err) });
-        setQueue(q);
-        setMsg("warn", "Senden fehlgeschlagen, offline gespeichert. Grund: " + (err?.message || err));
-        clearFormKeepPin();
-      }finally{
-        el("btnSend").disabled = false;
-      }
-    }
-
-    async function flushQueue(){
-      if (!isOnline()){ setMsg("warn", "Du bist offline."); return; }
-      const q = getQueue();
-      if (!q.length){ setMsg("ok", "Kein Offline-Speicher."); return; }
-
-      try{
-        setMsg("", "");
-        el("btnFlush").disabled = true;
-
-        let sent = 0;
-        const remaining = [];
-        for (const item of q){
-          try{ await postEntry(item.payload); sent++; }
-          catch(err){ remaining.push({ ...item, reason: String(err?.message || err) }); }
-        }
-
-        setQueue(remaining);
-        setMsg(remaining.length ? "warn" : "ok",
-          remaining.length ? (sent + " gesendet, " + remaining.length + " bleiben.")
-                          : ("Alle " + sent + " Offline-Einträge gesendet ✓")
-        );
-        await fetchEntries();
-      }finally{
-        el("btnFlush").disabled = false;
-      }
-    }
-
-    // ===== Mini Game =====
-    const canvas = el("game");
-    const ctx = canvas.getContext("2d");
-    function resizeCanvas(){
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-    window.addEventListener("resize", resizeCanvas);
-
-    let game = null;
-    function resetGame(){
-      const w = canvas.getBoundingClientRect().width;
-      const h = canvas.getBoundingClientRect().height;
-      game = { w,h, t:0, started:false, over:false, score:0, best:Number(localStorage.getItem("wcgb_best")||0),
-               bird:{ x:w*0.25, y:h*0.5, vy:0, r:12 }, pipes:[] };
-      spawnPipe(true);
-      draw();
-    }
-    function spawnPipe(first){
-      const g=game;
-      const gap=Math.max(90, g.h*0.28);
-      const pad=22;
-      const topMax=g.h-gap-pad;
-      const topH=pad + Math.random()*(topMax-pad);
-      const x=first ? g.w*0.85 : g.w + 40;
-      g.pipes.push({ x, topH, passed:false });
-    }
-    function flap(){
-      if (!game) return;
-      if (game.over){ resetGame(); return; }
-      if (!game.started){ game.started=true; game.t=performance.now(); requestAnimationFrame(loop); }
-      game.bird.vy=-6.2;
-    }
-    function loop(now){
-      const g=game; if (!g || !g.started) return;
-      const dt=Math.min(32, now-g.t); g.t=now;
-      const w=g.w, h=g.h;
-
-      g.bird.vy += 0.35*(dt/16);
-      g.bird.y  += g.bird.vy*(dt/16);
-
-      const speed=2.4*(dt/16);
-      for (const p of g.pipes){
-        p.x -= speed*2.2;
-        if (!p.passed && p.x + 44 < g.bird.x){
-          p.passed=true; g.score++;
-          if (g.score>g.best){ g.best=g.score; localStorage.setItem("wcgb_best", String(g.best)); }
-        }
-      }
-      g.pipes = g.pipes.filter(p => p.x > -80);
-      if (!g.pipes.length || g.pipes[g.pipes.length-1].x < w*0.55) spawnPipe(false);
-
-      const r=g.bird.r;
-      if (g.bird.y-r<0 || g.bird.y+r>h) g.over=true;
-      else{
-        for (const p of g.pipes){
-          const pipeW=54;
-          const gap=Math.max(90, h*0.28);
-          const x0=p.x, x1=p.x+pipeW;
-          const inX=(g.bird.x+r>x0 && g.bird.x-r<x1);
-          if (inX){
-            const topH=p.topH;
-            const botY=topH+gap;
-            if (g.bird.y-r<topH || g.bird.y+r>botY){ g.over=true; break; }
-          }
-        }
-      }
-
-      draw();
-      if (!g.over) requestAnimationFrame(loop);
-      else g.started=false;
-    }
-    function draw(){
-      const g=game; if (!g) return;
-      const w=g.w,h=g.h;
-      ctx.clearRect(0,0,w,h);
-
-      ctx.beginPath(); ctx.moveTo(0,h-1); ctx.lineTo(w,h-1);
-      ctx.strokeStyle="rgba(255,255,255,.10)"; ctx.stroke();
-
-      for (const p of g.pipes){
-        const pipeW=54;
-        const gap=Math.max(90, h*0.28);
-        const topH=p.topH;
-        const botY=topH+gap;
-        ctx.fillStyle="rgba(255,255,255,.10)";
-        ctx.strokeStyle="rgba(255,255,255,.14)";
-        ctx.fillRect(p.x,0,pipeW,topH); ctx.strokeRect(p.x,0,pipeW,topH);
-        ctx.fillRect(p.x,botY,pipeW,h-botY); ctx.strokeRect(p.x,botY,pipeW,h-botY);
-      }
-
-      const b=g.bird;
-      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-      ctx.fillStyle="rgba(255,255,255,.22)"; ctx.fill();
-      ctx.strokeStyle="rgba(255,255,255,.25)"; ctx.stroke();
-      ctx.beginPath(); ctx.arc(b.x,b.y,b.r*0.45,0,Math.PI*2);
-      ctx.strokeStyle="rgba(255,255,255,.18)"; ctx.stroke();
-
-      ctx.fillStyle="rgba(229,231,235,.90)";
-      ctx.font="14px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial";
-      ctx.fillText("Score: "+g.score+"   Best: "+g.best, 14, 22);
-
-      if (!g.started && !g.over && g.score===0){
-        ctx.fillStyle="rgba(229,231,235,.75)";
-        ctx.font="16px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial";
-        ctx.fillText("Tippe oder Leertaste zum Start", 14, 50);
-      }
-      if (g.over){
-        ctx.fillStyle="rgba(255,237,213,.95)";
-        ctx.font="16px system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial";
-        ctx.fillText("Crash. Tippe/Leertaste für Neustart.", 14, 50);
-      }
-    }
-
-    // Init
-    el("pin").value = DEFAULT_PIN;
-    el("btnSend").addEventListener("click", sendNowOrQueue);
-    el("btnLoad").addEventListener("click", fetchEntries);
-    el("btnFlush").addEventListener("click", flushQueue);
-    document.addEventListener("keydown", (e)=>{ if (e.code==="Space"){ e.preventDefault(); flap(); }});
-    canvas.addEventListener("pointerdown", (e)=>{ e.preventDefault(); flap(); });
-
-    function updateNet(){ updateNetUI(); }
-    updateNet();
-    resizeCanvas();
-    resetGame();
-    fetchEntries();
-    updateQueueHint();
-  </script>
 </body>
 </html>
