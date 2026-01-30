@@ -1508,5 +1508,31 @@
 
     init();
   </script>
+<button id="debugPhoto" style="position:fixed;left:12px;bottom:120px;z-index:9999;padding:10px 12px;border-radius:12px;">
+  DEBUG FOTO TEST
+</button>
+
+<script>
+document.getElementById("debugPhoto").onclick = async () => {
+  const payload = {
+    pin:"1234",
+    action:"add",
+    name:"DebugFoto",
+    text:"Foto-Test über Netlify Function",
+    photoDataUrl:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO2V8p0AAAAASUVORK5CYII="
+  };
+
+  const r = await fetch("/.netlify/functions/wc", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const t = await r.text();
+  alert(t);
+};
+</script>
+
 </body>
 </html>
+
