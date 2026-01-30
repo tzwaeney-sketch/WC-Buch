@@ -3,38 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>WC Gästebuch – Familie Albrecht</title>
   <meta name="theme-color" content="#0b1220" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>WC Gästebuch – Familie Albrecht</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg0:#070b14; --bg1:#0b1220;
-      --card: rgba(255,255,255,.06);
+      --card: rgba(255,255,255,.07);
       --card2: rgba(255,255,255,.04);
       --line: rgba(255,255,255,.10);
+      --line2: rgba(255,255,255,.14);
       --text: #eef2ff;
-      --muted: rgba(238,242,255,.65);
-      --muted2: rgba(238,242,255,.46);
+      --muted: rgba(238,242,255,.70);
+      --muted2: rgba(238,242,255,.52);
       --accent: #22c55e;
       --accent2:#38bdf8;
-      --warn:#f59e0b;
       --danger:#ef4444;
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --r: 24px;
+      --warn:#f59e0b;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.25);
+      --r: 26px;
       --r2: 18px;
       --safeTop: env(safe-area-inset-top);
       --safeBottom: env(safe-area-inset-bottom);
+      --max: 980px;
     }
+
     *{ box-sizing:border-box; }
     html, body{ height:100%; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
       background:
-        radial-gradient(900px 520px at 15% 0%, rgba(34,197,94,.18), transparent 56%),
+        radial-gradient(900px 520px at 15% 0%, rgba(34,197,94,.20), transparent 56%),
         radial-gradient(900px 520px at 85% 0%, rgba(56,189,248,.18), transparent 54%),
         radial-gradient(1200px 650px at 50% 110%, rgba(139,92,246,.16), transparent 62%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
@@ -42,24 +50,45 @@
       overflow-x:hidden;
     }
     a{ color:inherit; text-decoration:none; }
-    button, input, textarea { font: inherit; }
+    button, input, textarea{ font:inherit; }
 
     .wrap{
-      max-width: 980px;
+      max-width: var(--max);
       margin:0 auto;
-      padding: calc(14px + var(--safeTop)) 14px calc(108px + var(--safeBottom));
+      padding: calc(14px + var(--safeTop)) 14px calc(112px + var(--safeBottom));
     }
 
     /* HERO */
     .hero{
       position:relative;
       border: 1px solid var(--line);
-      border-radius: calc(var(--r) + 6px);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border-radius: calc(var(--r) + 8px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .heroInner{ padding: 16px 16px 14px; }
+    .heroGlow{
+      position:absolute;
+      inset:-180px -80px auto -80px;
+      height: 320px;
+      background: radial-gradient(closest-side, rgba(255,255,255,.11), transparent 70%);
+      pointer-events:none;
+      filter: blur(2px);
+    }
+    .heroWave{
+      position:absolute;
+      left:-10%;
+      right:-10%;
+      bottom:-34px;
+      height: 90px;
+      background:
+        radial-gradient(140px 45px at 20% 20%, rgba(34,197,94,.25), transparent 65%),
+        radial-gradient(160px 48px at 75% 70%, rgba(56,189,248,.22), transparent 65%);
+      opacity:.8;
+      pointer-events:none;
+      filter: blur(16px);
+    }
+    .heroInner{ padding: 16px; position:relative; }
     .heroTop{
       display:flex;
       align-items:center;
@@ -71,20 +100,20 @@
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 240px;
+      min-width: 260px;
     }
     .logoBox{
       width: 72px;
       height: 72px;
       border-radius: 24px;
-      border: 1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.15);
       background:
         radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.16), transparent 70%),
-        linear-gradient(135deg, rgba(34,197,94,.18), rgba(56,189,248,.12));
+        linear-gradient(135deg, rgba(34,197,94,.20), rgba(56,189,248,.12));
       display:flex;
       align-items:center;
       justify-content:center;
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      box-shadow: var(--shadow2);
       overflow:hidden;
       flex:0 0 auto;
     }
@@ -96,8 +125,8 @@
     }
     .brandText{ display:flex; flex-direction:column; gap:2px; }
     .title{
-      font-size: 18px;
-      font-weight: 900;
+      font-size: 20px;
+      font-weight: 950;
       letter-spacing:.2px;
       line-height:1.1;
       margin:0;
@@ -109,13 +138,7 @@
       line-height:1.35;
       max-width: 640px;
     }
-
-    .statusPills{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+    .pills{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .pill{
       display:inline-flex;
       align-items:center;
@@ -132,152 +155,20 @@
     .dot{ width:10px; height:10px; border-radius:99px; background: var(--danger); }
     .dot.ok{ background: var(--accent); }
 
-    .heroGlow{
-      position:absolute;
-      inset:-140px -60px auto -60px;
-      height: 260px;
-      background: radial-gradient(closest-side, rgba(255,255,255,.10), transparent 70%);
-      pointer-events:none;
-      filter: blur(2px);
-    }
-    .heroWave{
-      position:absolute;
-      left:-10%;
-      right:-10%;
-      bottom:-32px;
-      height: 80px;
-      background: radial-gradient(120px 40px at 20% 20%, rgba(34,197,94,.25), transparent 65%),
-                  radial-gradient(140px 45px at 70% 70%, rgba(56,189,248,.20), transparent 65%);
-      opacity:.75;
-      pointer-events:none;
-      filter: blur(14px);
-    }
-
-    /* SLIDES */
-    .slidesWrap{
-      margin-top: 12px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 12px;
-    }
-    .slidesHead{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom: 10px;
-    }
-    .slidesHead h2{
-      margin:0;
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing:.2px;
-    }
-    .slidesHead .tiny{ color: var(--muted2); font-size: 12px; }
-    .slides{
-      display:flex;
-      gap:12px;
-      overflow-x:auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 6px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .slides::-webkit-scrollbar{ height: 8px; }
-    .slides::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.12); border-radius: 999px; }
-    .slide{
-      scroll-snap-align: start;
-      min-width: min(520px, 92%);
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.16));
-      overflow:hidden;
-      box-shadow: 0 14px 36px rgba(0,0,0,.25);
-      position:relative;
-    }
-    .slide::before{
-      content:"";
-      position:absolute;
-      inset:-40px -40px auto -40px;
-      height: 140px;
-      background: radial-gradient(closest-side, rgba(56,189,248,.18), transparent 70%);
-      pointer-events:none;
-      filter: blur(4px);
-    }
-    .slideInner{ padding: 14px; position:relative; }
-    .slideTop{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom: 10px;
-    }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      color: rgba(238,242,255,.85);
-      font-size: 12px;
-      user-select:none;
-    }
-    .emojiBox{
-      width: 34px; height: 34px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      display:flex; align-items:center; justify-content:center;
-      font-size: 18px;
-    }
-    .slideTitle{
-      margin:0;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing:.2px;
-    }
-    .slideText{
-      margin: 8px 0 0;
-      color: rgba(238,242,255,.92);
-      line-height: 1.35;
-      font-size: 14px;
-      white-space:pre-wrap;
-    }
-    .slideFooter{
-      margin-top: 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .miniBtn{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      color: rgba(238,242,255,.90);
-      border-radius: 999px;
-      padding: 9px 12px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .miniBtn:active{ transform: translateY(1px); }
-    .progressDots{ display:flex; gap:6px; align-items:center; }
-    .pdot{
-      width: 7px; height: 7px;
-      border-radius: 99px;
-      background: rgba(255,255,255,.18);
-    }
-    .pdot.on{ background: rgba(34,197,94,.75); }
-
-    /* GRID */
+    /* Layout */
     .grid{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
+      grid-template-columns: 1.12fr .88fr;
       gap: 14px;
       margin-top: 14px;
     }
-    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
 
-    /* CARDS */
     .card{
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border-radius: var(--r);
       box-shadow: 0 16px 45px rgba(0,0,0,.30);
       overflow:hidden;
@@ -293,17 +184,18 @@
     .cardTitle{
       margin:0;
       font-size: 15px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing:.2px;
     }
     .cardSub{
       margin: 4px 0 0;
       font-size: 12px;
       color: var(--muted2);
+      line-height: 1.35;
     }
     .cardBody{ padding: 14px; }
 
-    /* FORM */
+    /* Form */
     label{
       display:block;
       font-size: 12px;
@@ -323,12 +215,11 @@
     textarea{ min-height: 96px; resize: vertical; }
     input::placeholder, textarea::placeholder{ color: rgba(238,242,255,.38); }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 12px;
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 10px;
     }
+
     .btn{
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
@@ -349,9 +240,7 @@
       border-color: rgba(34,197,94,.30);
       background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(56,189,248,.14));
     }
-    .btnGhost{
-      background: rgba(0,0,0,.18);
-    }
+    .btnGhost{ background: rgba(0,0,0,.18); }
     .btnSmall{
       flex: 0 0 auto;
       padding: 9px 12px;
@@ -359,13 +248,6 @@
       font-size: 13px;
     }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
-
-    .hint{
-      margin-top:8px;
-      font-size: 12px;
-      color: var(--muted2);
-      line-height:1.35;
-    }
 
     .msg{
       display:none;
@@ -376,12 +258,73 @@
       background: rgba(255,255,255,.03);
       font-size: 13px;
       color: var(--muted);
+      line-height: 1.35;
     }
     .msg.ok{ display:block; border-color: rgba(34,197,94,.30); background: rgba(34,197,94,.10); color: #d1fae5; }
     .msg.warn{ display:block; border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); color: #ffedd5; }
     .msg.err{ display:block; border-color: rgba(239,68,68,.30); background: rgba(239,68,68,.10); color: #fee2e2; }
 
-    /* PHOTO PICKER + PREVIEW */
+    /* Wizard / Steps */
+    .wizard{
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+    }
+    .stepBar{
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    }
+    .stepPill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: rgba(238,242,255,.78);
+      user-select:none;
+      font-size: 13px;
+    }
+    .stepPill.on{
+      border-color: rgba(34,197,94,.30);
+      background: linear-gradient(135deg, rgba(34,197,94,.16), rgba(56,189,248,.10));
+      color: rgba(238,242,255,.92);
+    }
+    .stepPill .n{
+      width: 26px; height:26px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 900; font-size: 12px;
+    }
+    .panel{
+      margin-top: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      border-radius: 22px;
+      padding: 12px;
+      display:none;
+    }
+    .panel.on{ display:block; }
+    .panelTitle{
+      margin:0 0 6px;
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing:.2px;
+    }
+    .panelHint{
+      margin:0 0 10px;
+      font-size: 12px;
+      color: var(--muted2);
+      line-height: 1.35;
+    }
+    .counter{
+      text-align:right;
+      font-size:12px;
+      color: var(--muted2);
+      margin-top: 6px;
+    }
+
+    /* Photo */
     .photoBox{
       border:1px dashed rgba(255,255,255,.18);
       background: rgba(0,0,0,.14);
@@ -398,18 +341,17 @@
       gap:10px;
       flex-wrap:wrap;
     }
-    .photoTitle{
-      display:flex;
+    .chip{
+      display:inline-flex;
       align-items:center;
-      gap:10px;
-    }
-    .photoIcon{
-      width: 36px; height: 36px;
-      border-radius: 14px;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      display:flex; align-items:center; justify-content:center;
-      font-size: 18px;
+      background: rgba(0,0,0,.18);
+      color: rgba(238,242,255,.86);
+      font-size: 12px;
+      user-select:none;
     }
     .photoPreview{
       width: 100%;
@@ -436,31 +378,14 @@
       text-align:center;
       line-height:1.35;
     }
-    .photoActions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
     .fileInput{
       position:absolute;
       inset:0;
       opacity:0;
       cursor:pointer;
     }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      color: rgba(238,242,255,.86);
-      font-size: 12px;
-      user-select:none;
-    }
 
-    /* ENTRIES */
+    /* Entries */
     .entries{
       list-style:none;
       padding:0;
@@ -514,7 +439,7 @@
       padding: 4px 2px;
     }
 
-    /* GAME: Klopapier abrollen */
+    /* Game */
     .gameWrap{
       border-radius: 22px;
       border:1px solid rgba(255,255,255,.10);
@@ -531,7 +456,7 @@
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .hudLeft{ display:flex; flex-direction:column; gap:2px; }
-    .hudTitle{ margin:0; font-size: 14px; font-weight:900; }
+    .hudTitle{ margin:0; font-size: 14px; font-weight:950; }
     .hudSub{ margin:0; font-size: 12px; color: var(--muted2); }
     .scorePill{
       display:inline-flex; align-items:center; gap:10px;
@@ -564,7 +489,7 @@
       top:0; bottom:0;
       width: 8px;
       border-radius: 999px;
-      background: rgba(245,158,11,.90);
+      background: rgba(245,158,11,.92);
       box-shadow: 0 0 0 2px rgba(0,0,0,.25);
       transform: translateX(-50%);
       opacity:.95;
@@ -624,12 +549,12 @@
       z-index: 50;
     }
     .navBar{
-      max-width: 980px;
+      max-width: var(--max);
       margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       border-radius: 999px;
       background: rgba(255,255,255,.06);
-      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      box-shadow: var(--shadow);
       display:flex;
       overflow:hidden;
     }
@@ -646,7 +571,7 @@
       gap:10px;
       user-select:none;
     }
-    .navBtn strong{ font-size: 13px; font-weight: 900; letter-spacing:.2px; }
+    .navBtn strong{ font-size: 13px; font-weight: 950; letter-spacing:.2px; }
     .navBtn span{
       width: 34px; height:34px;
       border-radius: 14px;
@@ -722,6 +647,7 @@
       background: rgba(255,255,255,.06);
       display:flex; align-items:center; justify-content:center;
       flex:0 0 auto;
+      font-weight: 950;
     }
     .rule strong{ display:block; font-size: 14px; margin:0 0 2px; }
     .rule span{ display:block; font-size: 13px; color: var(--muted); line-height: 1.35; }
@@ -734,16 +660,12 @@
       flex-wrap:wrap;
     }
 
-    /* Sections */
-    html{ scroll-behavior:smooth; }
-    .anchor{ scroll-margin-top: 12px; }
-
-    /* Tiny */
     .tiny{ font-size:12px; color: var(--muted2); }
+    .anchor{ scroll-margin-top: 12px; }
 
     @media (max-width: 420px){
       .logoBox{ width:66px; height:66px; border-radius:22px; }
-      .title{ font-size: 17px; }
+      .title{ font-size: 18px; }
       .entry{ grid-template-columns: 52px 1fr; }
       .thumb{ width:52px; height:52px; }
     }
@@ -752,7 +674,6 @@
 
 <body>
   <div class="wrap">
-
     <section class="hero" aria-label="Kopfbereich">
       <div class="heroGlow"></div>
       <div class="heroInner">
@@ -763,31 +684,92 @@
             </div>
             <div class="brandText">
               <h1 class="title">WC Gästebuch <span style="opacity:.82;">Familie Albrecht</span></h1>
-              <p class="subtitle">Eintragen, Foto dazu, fertig. Kein Netz? Wird gespeichert. Und unten wartet das Klopapier-Spiel.</p>
+              <p class="subtitle">Kurz eintragen. Foto optional. Unten gibt’s ein Mini-Spiel, falls du Zeit schinden willst.</p>
             </div>
           </div>
-
-          <div class="statusPills">
+          <div class="pills">
             <div class="pill" id="netPill"><span class="dot" id="netDot"></span><span id="netText">Offline</span></div>
             <div class="pill pillBtn" id="btnRulesTop" title="Klo-Regeln öffnen">📜 Regeln</div>
           </div>
         </div>
 
-        <div class="slidesWrap" id="slidesSection">
-          <div class="slidesHead">
-            <div>
-              <h2>Toiletten-Erlebnisse (Slides)</h2>
-              <div class="tiny">Wischen oder warten. Zum Kopieren tippen.</div>
-            </div>
-            <div class="tiny" id="slidesInfo"></div>
+        <div class="wizard">
+          <div class="stepBar" aria-label="Schritte">
+            <div class="stepPill on" id="s1"><span class="n">1</span> Name</div>
+            <div class="stepPill" id="s2"><span class="n">2</span> Spruch</div>
+            <div class="stepPill" id="s3"><span class="n">3</span> Foto</div>
+            <div class="stepPill" id="s4"><span class="n">4</span> Fertig</div>
           </div>
 
-          <div class="slides" id="slides"></div>
+          <div class="panel on" id="p1">
+            <p class="panelTitle">Wie heißt du?</p>
+            <p class="panelHint">Nur ein Name. Keine Diplomarbeit.</p>
+            <label for="name">Name</label>
+            <input id="name" type="text" autocomplete="off" placeholder="z.B. Sven" />
+            <div class="row">
+              <button class="btn btnPrimary" id="to2" type="button">Weiter →</button>
+              <button class="btn btnGhost" id="jumpList1" type="button">Einträge ansehen</button>
+            </div>
+          </div>
 
-          <div class="slideFooter" style="padding: 0 2px;">
-            <button class="miniBtn" id="btnPrev" type="button">◀︎</button>
-            <div class="progressDots" id="dots"></div>
-            <button class="miniBtn" id="btnNext" type="button">▶︎</button>
+          <div class="panel" id="p2">
+            <p class="panelTitle">Dein Spruch</p>
+            <p class="panelHint">Frech, lustig, strange. Aber kein Müll gegen echte Menschen.</p>
+            <label for="text">Spruch</label>
+            <textarea id="text" placeholder="z.B. Ich war hier. Die Keramik war würdevoll."></textarea>
+            <div class="counter"><span id="cnt">0</span>/220</div>
+            <div class="row">
+              <button class="btn btnGhost" id="back1" type="button">← Zurück</button>
+              <button class="btn btnPrimary" id="to3" type="button">Weiter →</button>
+            </div>
+          </div>
+
+          <div class="panel" id="p3">
+            <p class="panelTitle">Foto (optional)</p>
+            <p class="panelHint">Wird automatisch verkleinert, damit es schnell lädt.</p>
+
+            <div class="photoBox">
+              <div class="photoTop">
+                <div class="chip">📸 Foto auswählen</div>
+                <div class="chip" id="photoChip">Kein Foto</div>
+              </div>
+
+              <div class="photoPreview" id="photoPreview">
+                <div class="photoPlaceholder" id="photoPlaceholder">
+                  Tippe hier, um ein Foto auszuwählen.<br>
+                  Oder lass es einfach weg.
+                </div>
+                <img id="photoImg" alt="Foto Vorschau" />
+                <input class="fileInput" id="photo" type="file" accept="image/jpeg,image/jpg,image/png,image/webp" />
+              </div>
+
+              <div class="row" style="margin-top:0;">
+                <button class="btn btnSmall btnGhost" id="btnRemovePhoto" type="button">✖ Foto entfernen</button>
+                <button class="btn btnSmall btnGhost" id="btnUseCam" type="button">📷 Kamera</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn btnGhost" id="back2" type="button">← Zurück</button>
+              <button class="btn btnPrimary" id="to4" type="button">Weiter →</button>
+            </div>
+          </div>
+
+          <div class="panel" id="p4">
+            <p class="panelTitle">Bereit zum Absenden</p>
+            <p class="panelHint">Wenn’s klappt, siehst du deinen Eintrag direkt unten.</p>
+
+            <div class="row">
+              <button class="btn btnGhost" id="back3" type="button">← Zurück</button>
+              <button class="btn btnPrimary" id="btnSend" type="button">Absenden ✅</button>
+            </div>
+
+            <div id="msg" class="msg"></div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn btnSmall btnGhost" id="btnReload" type="button">↻ Einträge neu laden</button>
+              <button class="btn btnSmall btnGhost" id="btnReset" type="button">✍️ Neuer Eintrag</button>
+            </div>
           </div>
         </div>
       </div>
@@ -795,68 +777,12 @@
     </section>
 
     <div class="grid">
-
-      <!-- FORM -->
-      <section class="card anchor" id="secEntry">
-        <div class="cardHead">
-          <div>
-            <h2 class="cardTitle">Eintrag</h2>
-            <p class="cardSub">Name + Spruch + optional Foto. Foto wird vor dem Upload automatisch verkleinert.</p>
-          </div>
-          <button class="btn btnSmall btnGhost" id="btnFlush" type="button" title="Offline gespeicherte Einträge senden">↥ Offline senden</button>
-        </div>
-
-        <div class="cardBody">
-          <label for="name">Name</label>
-          <input id="name" type="text" autocomplete="off" placeholder="z.B. Sven" />
-
-          <label for="text">Spruch</label>
-          <textarea id="text" placeholder="Frech, lustig, strange…"></textarea>
-
-          <label>Foto (optional)</label>
-          <div class="photoBox">
-            <div class="photoTop">
-              <div class="photoTitle">
-                <div class="photoIcon">📸</div>
-                <div>
-                  <div style="font-weight:900; font-size:13px;">Foto auswählen</div>
-                  <div class="tiny" id="photoHint">Tippe auf die Vorschau. JPG/PNG/WebP. Ziel: klein & schnell.</div>
-                </div>
-              </div>
-              <div class="chip" id="photoChip">Kein Foto</div>
-            </div>
-
-            <div class="photoPreview" id="photoPreview">
-              <div class="photoPlaceholder" id="photoPlaceholder">
-                Tippe hier, um ein Foto auszuwählen.<br>
-                Danach siehst du es direkt als Vorschau.
-              </div>
-              <img id="photoImg" alt="Foto Vorschau" />
-              <input class="fileInput" id="photo" type="file" accept="image/jpeg,image/jpg,image/png,image/webp" />
-            </div>
-
-            <div class="photoActions">
-              <button class="btn btnSmall btnGhost" id="btnRemovePhoto" type="button">✖ Foto entfernen</button>
-              <button class="btn btnSmall btnGhost" id="btnUseCam" type="button">📷 Kamera</button>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn btnPrimary" id="btnSend" type="button">Absenden</button>
-            <button class="btn" id="btnLoad" type="button">Neu laden</button>
-          </div>
-
-          <div id="msg" class="msg"></div>
-          <div class="hint" id="queueHint"></div>
-        </div>
-      </section>
-
       <!-- GAME -->
       <section class="card anchor" id="secGame">
         <div class="cardHead">
           <div>
-            <h2 class="cardTitle">Spiel: Klopapier abrollen</h2>
-            <p class="cardSub">Tippen = abrollen. Ziel: möglichst nahe an die Marke, ohne drüber.</p>
+            <h2 class="cardTitle">Mini-Spiel: Klopapier-Ziel</h2>
+            <p class="cardSub">Tippen = abrollen. Ziel: möglichst nah an die Marke, ohne drüber.</p>
           </div>
           <div class="pill" title="Bestwert wird lokal gespeichert">🏆 Best <span id="bestScore">0</span></div>
         </div>
@@ -866,7 +792,7 @@
             <div class="gameHud">
               <div class="hudLeft">
                 <p class="hudTitle">Zielmarke treffen</p>
-                <p class="hudSub">Pro Runde eine neue Marke. Tap-only.</p>
+                <p class="hudSub">Tap-only. Stop, wenn du mutig bist.</p>
               </div>
               <div class="scorePill">Punkte: <strong id="scoreNow">0</strong></div>
             </div>
@@ -885,12 +811,12 @@
                     <span id="tpSub">Tippe, bis du stoppen willst.</span>
                   </div>
                 </div>
-                <button class="tpTap" id="tpTap" type="button">TIPPEN!</button>
+                <button class="tpTap" id="tpTap">TIPPEN!</button>
               </div>
 
               <p class="tpMsg" id="tpMsg">Tipp: kurze schnelle Taps sind besser als einmal Vollgas.</p>
 
-              <div class="actions" style="margin-top:0;">
+              <div class="row" style="margin-top:0;">
                 <button class="btn btnSmall btnGhost" id="tpStop" type="button">⏹ Stop</button>
                 <button class="btn btnSmall btnGhost" id="tpReset" type="button">↻ Neue Runde</button>
               </div>
@@ -909,20 +835,20 @@
           <div class="tiny" id="lastUpdate"></div>
         </div>
         <div class="cardBody">
+          <div id="entriesEmpty" class="empty">Lade Einträge…</div>
           <ul class="entries" id="entries"></ul>
         </div>
       </section>
-
     </div>
   </div>
 
   <!-- Bottom Nav -->
   <div class="bottomNav" aria-label="Navigation">
     <div class="navBar">
-      <button class="navBtn active" id="navEntry" type="button" onclick="goTo('secEntry')"><span>✍️</span><strong>Eintrag</strong></button>
-      <button class="navBtn" id="navRules" type="button" onclick="openRules()"><span>📜</span><strong>Regeln</strong></button>
-      <button class="navBtn" id="navGame" type="button" onclick="goTo('secGame')"><span>🧻</span><strong>Spiel</strong></button>
-      <button class="navBtn" id="navList" type="button" onclick="goTo('secEntries')"><span>📚</span><strong>Einträge</strong></button>
+      <button class="navBtn active" id="navEntry" type="button"><span>✍️</span><strong>Eintrag</strong></button>
+      <button class="navBtn" id="navRules" type="button"><span>📜</span><strong>Regeln</strong></button>
+      <button class="navBtn" id="navGame" type="button"><span>🧻</span><strong>Spiel</strong></button>
+      <button class="navBtn" id="navList" type="button"><span>📚</span><strong>Einträge</strong></button>
     </div>
   </div>
 
@@ -931,48 +857,60 @@
     <div class="modal">
       <div class="modalHead">
         <h3>🚽 Klo-Regeln</h3>
-        <button class="miniBtn" id="btnCloseRules" type="button">✖</button>
+        <button class="btn btnSmall btnGhost" id="btnCloseRules" type="button">✖</button>
       </div>
 
       <div class="modalBody">
         <ul class="rules">
-          <li class="rule"><div class="badge">1</div><div><strong>Deckel runter</strong><span>Damit niemand in Überraschungen schaut.</span></div></li>
-          <li class="rule"><div class="badge">2</div><div><strong>Spülen ist keine Option</strong><span>Es ist ein Muss. Immer.</span></div></li>
-          <li class="rule"><div class="badge">3</div><div><strong>Bürste = Ehrenmitglied</strong><span>Wenn du sie brauchst: nutz sie. Wenn nicht: auch gut.</span></div></li>
-          <li class="rule"><div class="badge">4</div><div><strong>Hände waschen</strong><span>Du bist erwachsen. Wir müssen das nicht diskutieren.</span></div></li>
-          <li class="rule"><div class="badge">5</div><div><strong>Gästebuch mit Stil</strong><span>Lustig, frech, strange. Aber kein Stress und keine Beleidigungen.</span></div></li>
+          <li class="rule">
+            <div class="badge">1</div>
+            <div><strong>Deckel runter</strong><span>Damit niemand in Überraschungen schaut.</span></div>
+          </li>
+          <li class="rule">
+            <div class="badge">2</div>
+            <div><strong>Spülen ist keine Option</strong><span>Es ist ein Muss. Immer.</span></div>
+          </li>
+          <li class="rule">
+            <div class="badge">3</div>
+            <div><strong>Bürste = Ehrenmitglied</strong><span>Wenn du sie brauchst: nutz sie. Wenn nicht: auch gut.</span></div>
+          </li>
+          <li class="rule">
+            <div class="badge">4</div>
+            <div><strong>Hände waschen</strong><span>Du bist erwachsen. Wir müssen das nicht diskutieren.</span></div>
+          </li>
+          <li class="rule">
+            <div class="badge">5</div>
+            <div><strong>Gästebuch mit Stil</strong><span>Lustig, frech, strange. Aber keine Beleidigungen.</span></div>
+          </li>
         </ul>
         <p class="tiny" style="margin:12px 2px 0;">Diese Regeln werden pro Gerät nur einmal automatisch angezeigt.</p>
       </div>
 
       <div class="modalFoot">
-        <button class="btn btnSmall btnGhost" type="button" onclick="closeRules()">Später</button>
-        <button class="btn btnSmall btnPrimary" type="button" onclick="closeRules(true)">Verstanden ✅</button>
+        <button class="btn btnSmall btnGhost" type="button" id="rulesLater">Später</button>
+        <button class="btn btnSmall btnPrimary" type="button" id="rulesOk">Verstanden ✅</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ===== Config (wie bisher, damit nix angepasst werden muss) =====
+    // ========= FIXED CONFIG (no user changes needed) =========
     const BACKEND_URL = "/.netlify/functions/wc";
     const PIN = "1234";
-    const DEFAULT_LIMIT = 50;
+    const LIST_LIMIT = 50;
 
-    // Local storage keys
-    const QUEUE_KEY = "wcgb_queue_v2";
-    const RULES_SEEN_KEY = "wcgb_rules_seen_v1";
-    const BEST_KEY = "wcgb_tp_best_v1";
+    const BEST_KEY = "wcgb_tp_best_v2";
+    const RULES_SEEN_KEY = "wcgb_rules_seen_v2";
 
-    // ===== Helpers =====
-    const el = (id) => document.getElementById(id);
-    const msgBox = el("msg");
+    // ========= Helpers =========
+    const $ = (id) => document.getElementById(id);
 
     function setMsg(type, text){
-      msgBox.className = "msg " + (type || "");
-      msgBox.textContent = text || "";
-      msgBox.style.display = text ? "block" : "none";
+      const box = $("msg");
+      box.className = "msg " + (type || "");
+      box.textContent = text || "";
+      box.style.display = text ? "block" : "none";
     }
-    function isOnline(){ return navigator.onLine; }
 
     function escapeHtml(str){
       return String(str ?? "").replace(/[&<>"']/g, (m) => ({
@@ -980,45 +918,595 @@
       }[m]));
     }
 
-    function formatZeit(v){
+    function fmtTime(v){
       if (!v) return "";
       const d = new Date(v);
-      return isNaN(d.getTime()) ? String(v) : d.toLocaleString("de-DE");
+      if (!isNaN(d.getTime())) return d.toLocaleString("de-DE");
+      return String(v);
     }
 
-    function getQueue(){
-      try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); }
-      catch{ return []; }
-    }
-    function setQueue(arr){
-      localStorage.setItem(QUEUE_KEY, JSON.stringify(arr));
-      updateQueueHint();
-    }
-    function updateQueueHint(){
-      const q = getQueue();
-      el("queueHint").textContent = q.length ? ("Offline-Speicher: " + q.length + " Eintrag/Einträge warten noch.") : "";
+    async function readTextSafe(res){
+      try{ return await res.text(); } catch { return ""; }
     }
 
-    // ===== Net pill =====
-    const netDot = el("netDot");
-    const netText = el("netText");
-    function updateNetUI(){
-      const online = isOnline();
+    function tryJson(text){
+      try{ return JSON.parse(text); } catch { return null; }
+    }
+
+    // Robust fetch: try JSON POST, then form POST, and for list also GET.
+    async function apiCall(action, payload){
+      const basePayload = {
+        pin: PIN,
+        action,
+        ...payload
+      };
+
+      // 1) POST JSON
+      try{
+        const r = await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify(basePayload)
+        });
+        const t = await readTextSafe(r);
+        const j = tryJson(t);
+        if (r.ok) return j ?? { ok:true, raw:t };
+      }catch(e){ /* ignore */ }
+
+      // 2) POST form-urlencoded
+      try{
+        const params = new URLSearchParams();
+        Object.entries(basePayload).forEach(([k,v]) => {
+          if (v === undefined || v === null) return;
+          params.set(k, typeof v === "string" ? v : JSON.stringify(v));
+        });
+
+        const r = await fetch(BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8" },
+          body: params.toString()
+        });
+        const t = await readTextSafe(r);
+        const j = tryJson(t);
+        if (r.ok) return j ?? { ok:true, raw:t };
+      }catch(e){ /* ignore */ }
+
+      // 3) GET only for list
+      if (action === "list"){
+        try{
+          const url = new URL(BACKEND_URL, window.location.origin);
+          url.searchParams.set("pin", PIN);
+          url.searchParams.set("action", "list");
+          url.searchParams.set("limit", String(payload?.limit ?? LIST_LIMIT));
+
+          const r = await fetch(url.toString(), { method: "GET" });
+          const t = await readTextSafe(r);
+          const j = tryJson(t);
+          if (r.ok) return j ?? { ok:true, raw:t };
+        }catch(e){ /* ignore */ }
+      }
+
+      throw new Error("Backend nicht erreichbar oder API-Format passt nicht.");
+    }
+
+    // ========= Online indicator =========
+    const netDot = $("netDot");
+    const netText = $("netText");
+    function updateNet(){
+      const online = navigator.onLine;
       netDot.classList.toggle("ok", online);
       netText.textContent = online ? "Online" : "Offline";
-      updateQueueHint();
     }
-    window.addEventListener("online", updateNetUI);
-    window.addEventListener("offline", updateNetUI);
+    window.addEventListener("online", updateNet);
+    window.addEventListener("offline", updateNet);
 
-    // ===== Navigation =====
-    function setActiveNav(key){
-      const map = { entry:"navEntry", rules:"navRules", game:"navGame", list:"navList" };
-      Object.values(map).forEach(id => el(id).classList.remove("active"));
-      if (map[key]) el(map[key]).classList.add("active");
+    // ========= Rules modal =========
+    const rulesBackdrop = $("rulesBackdrop");
+    function openRules(){
+      rulesBackdrop.classList.add("open");
+      setActive("rules");
     }
-    window.goTo = function(id){
-      const sec = document.getElementById(id);
-      if (sec) sec.scrollIntoView({behavior:"smooth", block:"start"});
-      if (id === "secEntry") setActiveNav("entry");
-      if (id === "secGame") setActiveNav("game");
+    function closeRules(markSeen){
+      rulesBackdrop.classList.remove("open");
+      if (markSeen) localStorage.setItem(RULES_SEEN_KEY, "1");
+    }
+    $("btnRulesTop").addEventListener("click", openRules);
+    $("btnCloseRules").addEventListener("click", () => closeRules(false));
+    $("rulesLater").addEventListener("click", () => closeRules(false));
+    $("rulesOk").addEventListener("click", () => closeRules(true));
+    rulesBackdrop.addEventListener("click", (e) => {
+      if (e.target === rulesBackdrop) closeRules(false);
+    });
+
+    // ========= Bottom nav =========
+    function setActive(key){
+      const map = { entry:"navEntry", rules:"navRules", game:"navGame", list:"navList" };
+      Object.values(map).forEach(id => $(id).classList.remove("active"));
+      $(map[key]).classList.add("active");
+    }
+    $("navEntry").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior:"smooth" });
+      setActive("entry");
+    });
+    $("navRules").addEventListener("click", openRules);
+    $("navGame").addEventListener("click", () => {
+      $("secGame").scrollIntoView({ behavior:"smooth", block:"start" });
+      setActive("game");
+    });
+    $("navList").addEventListener("click", () => {
+      $("secEntries").scrollIntoView({ behavior:"smooth", block:"start" });
+      setActive("list");
+    });
+
+    // ========= Wizard =========
+    const steps = [
+      { pill:"s1", panel:"p1" },
+      { pill:"s2", panel:"p2" },
+      { pill:"s3", panel:"p3" },
+      { pill:"s4", panel:"p4" },
+    ];
+    let stepIndex = 0;
+
+    function showStep(i){
+      stepIndex = Math.max(0, Math.min(i, steps.length - 1));
+      steps.forEach((s, idx) => {
+        $(s.pill).classList.toggle("on", idx === stepIndex);
+        $(s.panel).classList.toggle("on", idx === stepIndex);
+      });
+      setMsg("", "");
+      // focus
+      if (stepIndex === 0) setTimeout(()=> $("name").focus(), 40);
+      if (stepIndex === 1) setTimeout(()=> $("text").focus(), 40);
+    }
+
+    $("to2").addEventListener("click", () => {
+      const name = $("name").value.trim();
+      if (!name){
+        setMsg("warn", "Name fehlt.");
+        return;
+      }
+      showStep(1);
+    });
+    $("back1").addEventListener("click", () => showStep(0));
+    $("to3").addEventListener("click", () => {
+      const text = $("text").value.trim();
+      if (!text){
+        setMsg("warn", "Spruch fehlt.");
+        return;
+      }
+      showStep(2);
+    });
+    $("back2").addEventListener("click", () => showStep(1));
+    $("to4").addEventListener("click", () => showStep(3));
+    $("back3").addEventListener("click", () => showStep(2));
+
+    $("btnReset").addEventListener("click", () => {
+      $("name").value = "";
+      $("text").value = "";
+      setPhotoNone();
+      $("cnt").textContent = "0";
+      showStep(0);
+    });
+
+    $("jumpList1").addEventListener("click", async () => {
+      $("secEntries").scrollIntoView({behavior:"smooth", block:"start"});
+      setActive("list");
+      await loadEntries(true);
+    });
+
+    // counter
+    const MAX_LEN = 220;
+    $("text").addEventListener("input", () => {
+      let v = $("text").value;
+      if (v.length > MAX_LEN) {
+        $("text").value = v.slice(0, MAX_LEN);
+        v = $("text").value;
+      }
+      $("cnt").textContent = String(v.length);
+    });
+
+    // ========= Photo =========
+    const fileInput = $("photo");
+    const photoImg = $("photoImg");
+    const photoPlaceholder = $("photoPlaceholder");
+    const photoChip = $("photoChip");
+    let selectedDataUrl = ""; // compressed dataURL
+
+    function setPhotoNone(){
+      selectedDataUrl = "";
+      fileInput.value = "";
+      photoImg.style.display = "none";
+      photoPlaceholder.style.display = "block";
+      photoChip.textContent = "Kein Foto";
+    }
+
+    $("btnRemovePhoto").addEventListener("click", (e) => {
+      e.preventDefault();
+      setPhotoNone();
+    });
+
+    $("btnUseCam").addEventListener("click", (e) => {
+      e.preventDefault();
+      fileInput.setAttribute("capture", "environment");
+      fileInput.click();
+      setTimeout(() => fileInput.removeAttribute("capture"), 500);
+    });
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files?.[0] || null;
+      if (!file){ setPhotoNone(); return; }
+
+      if (!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type)){
+        setMsg("warn", "Nicht erlaubter Bildtyp: " + file.type);
+        setPhotoNone();
+        return;
+      }
+
+      photoChip.textContent = "Wird optimiert…";
+      setMsg("", "");
+
+      try{
+        const out = await compressImageToDataUrl(file, 1600, 0.86);
+        selectedDataUrl = out.dataUrl;
+
+        photoImg.src = selectedDataUrl;
+        photoImg.onload = () => {
+          photoImg.style.display = "block";
+          photoPlaceholder.style.display = "none";
+        };
+
+        const kb = Math.round(out.outBytes / 1024);
+        photoChip.textContent = `Optimiert: ${kb} KB (${out.outW}×${out.outH})`;
+      }catch(err){
+        setMsg("err", err?.message || "Foto konnte nicht verarbeitet werden");
+        setPhotoNone();
+      }
+    });
+
+    function readFileAsDataUrl(file){
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.onerror = () => reject(new Error("Datei konnte nicht gelesen werden"));
+        r.readAsDataURL(file);
+      });
+    }
+
+    function approxDataUrlBytes(dataUrl){
+      // base64 size approx
+      const idx = String(dataUrl).indexOf("base64,");
+      if (idx < 0) return dataUrl.length;
+      const b64 = dataUrl.slice(idx + 7);
+      return Math.floor(b64.length * 0.75);
+    }
+
+    async function compressImageToDataUrl(file, maxSize, quality){
+      const src = await readFileAsDataUrl(file);
+
+      const img = await new Promise((resolve, reject) => {
+        const im = new Image();
+        im.onload = () => resolve(im);
+        im.onerror = () => reject(new Error("Foto konnte nicht geladen werden"));
+        im.src = src;
+      });
+
+      const w = img.naturalWidth || img.width;
+      const h = img.naturalHeight || img.height;
+      if (!w || !h) throw new Error("Ungültige Bildgröße");
+
+      const scale = Math.min(1, maxSize / Math.max(w, h));
+      const outW = Math.max(1, Math.round(w * scale));
+      const outH = Math.max(1, Math.round(h * scale));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = outW;
+      canvas.height = outH;
+      const ctx = canvas.getContext("2d", { alpha: false });
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(img, 0, 0, outW, outH);
+
+      let mime = "image/jpeg";
+      if (/image\/webp/i.test(file.type)) mime = "image/webp";
+
+      let q = quality;
+      let dataUrl = canvas.toDataURL(mime, q);
+      let outBytes = approxDataUrlBytes(dataUrl);
+
+      for (let i=0; i<4 && outBytes > 2_600_000; i++){
+        q = Math.max(0.60, q - 0.08);
+        dataUrl = canvas.toDataURL(mime, q);
+        outBytes = approxDataUrlBytes(dataUrl);
+      }
+
+      if (outBytes > 2_900_000){
+        const scale2 = Math.min(1, 1200 / Math.max(w, h));
+        const w2 = Math.max(1, Math.round(w * scale2));
+        const h2 = Math.max(1, Math.round(h * scale2));
+        canvas.width = w2; canvas.height = h2
+;
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, w2, h2);
+        mime = "image/jpeg";
+        dataUrl = canvas.toDataURL(mime, 0.72);
+        outBytes = approxDataUrlBytes(dataUrl);
+        return { dataUrl, outBytes, outW: w2, outH: h2 };
+      }
+
+      return { dataUrl, outBytes, outW, outH };
+    }
+
+    // ========= Send entry =========
+    const btnSend = $("btnSend");
+    btnSend.addEventListener("click", async () => {
+      setMsg("", "");
+
+      if (!navigator.onLine){
+        setMsg("warn", "Kein Netz. Bitte kurz WLAN anmachen und nochmal senden.");
+        return;
+      }
+
+      const name = $("name").value.trim();
+      const text = $("text").value.trim();
+
+      if (!name){
+        setMsg("warn", "Name fehlt.");
+        showStep(0);
+        return;
+      }
+      if (!text){
+        setMsg("warn", "Spruch fehlt.");
+        showStep(1);
+        return;
+      }
+
+      btnSend.disabled = true;
+      btnSend.textContent = "Sende…";
+
+      try{
+        // Backend tolerant: mehrere Feldnamen, falls deine Function so gebaut ist
+        const payload = {
+          name,
+          text,
+          message: text,
+          spruch: text,
+          foto: selectedDataUrl || "",
+          photo: selectedDataUrl || "",
+          photoDataUrl: selectedDataUrl || "",
+          photoBase64: selectedDataUrl || "",
+          ts: Date.now()
+        };
+
+        const res = await apiCall("add", payload);
+
+        // Manche Backends liefern {ok:true} oder {success:true}
+        const ok = !!(res?.ok ?? res?.success ?? res?.status === "ok");
+
+        if (ok){
+          setMsg("ok", "Gespeichert ✅");
+          // Nach dem Senden: Liste neu laden und UI zurücksetzen
+          await loadEntries(true);
+          // Lass Name stehen (praktisch), aber reset Spruch + Foto:
+          $("text").value = "";
+          $("cnt").textContent = "0";
+          setPhotoNone();
+          // zurück zu Schritt 2 (Spruch) damit es schneller geht
+          showStep(1);
+        }else{
+          // Fallback: zeig irgendwas aus dem Response
+          const hint = res?.message || res?.error || res?.raw || "Unbekannter Fehler vom Backend.";
+          setMsg("err", "Nicht gespeichert: " + hint);
+        }
+      }catch(err){
+        setMsg("err", err?.message || "Senden fehlgeschlagen");
+      }finally{
+        btnSend.disabled = false;
+        btnSend.textContent = "Absenden ✅";
+      }
+    });
+
+    $("btnReload").addEventListener("click", async () => {
+      await loadEntries(true);
+    });
+
+    // ========= Load entries =========
+    async function normalizeEntries(data){
+      // Erlaubt viele Formate:
+      // - { entries:[...] }
+      // - { data:[...] }
+      // - { rows:[...] }
+      // - direkt [...]
+      const arr =
+        (Array.isArray(data) ? data :
+        Array.isArray(data?.entries) ? data.entries :
+        Array.isArray(data?.data) ? data.data :
+        Array.isArray(data?.rows) ? data.rows :
+        Array.isArray(data?.items) ? data.items :
+        []);
+
+      // Normalisiere Felder
+      return arr.map((e) => {
+        const name = e?.name ?? e?.Name ?? e?.username ?? e?.who ?? "";
+        const text = e?.text ?? e?.Text ?? e?.spruch ?? e?.message ?? e?.msg ?? "";
+        const foto = e?.fotoURL ?? e?.fotoUrl ?? e?.photoURL ?? e?.photoUrl ?? e?.FotoURL ?? e?.FotoUrl ?? e?.foto ?? e?.photo ?? "";
+        const time = e?.timestamp ?? e?.ts ?? e?.date ?? e?.created ?? e?.time ?? "";
+        return { name, text, foto, time };
+      }).filter(x => x.name || x.text || x.foto || x.time);
+    }
+
+    async function loadEntries(showToast){
+      try{
+        if (!navigator.onLine){
+          $("entriesEmpty").textContent = "Offline. Einträge können gerade nicht geladen werden.";
+          return;
+        }
+
+        const res = await apiCall("list", { limit: LIST_LIMIT });
+        const entries = await normalizeEntries(res);
+
+        const list = $("entries");
+        list.innerHTML = "";
+
+        if (!entries.length){
+          $("entriesEmpty").textContent = "Noch keine Einträge da. Mach den Anfang 😄";
+        }else{
+          $("entriesEmpty").textContent = "";
+        }
+
+        entries.slice(0, LIST_LIMIT).forEach((e) => {
+          const li = document.createElement("li");
+          li.className = "entry";
+
+          const thumb = document.createElement("div");
+          thumb.className = "thumb";
+
+          if (e.foto){
+            const img = document.createElement("img");
+            img.src = e.foto;
+            img.alt = "Foto";
+            img.loading = "lazy";
+            img.onerror = () => {
+              thumb.innerHTML = "Foto";
+              thumb.style.display = "flex";
+              thumb.style.alignItems = "center";
+              thumb.style.justifyContent = "center";
+            };
+            thumb.appendChild(img);
+          }else{
+            thumb.textContent = "—";
+          }
+
+          const right = document.createElement("div");
+
+          right.innerHTML = `
+            <div class="meta">
+              <div class="who">
+                <strong>${escapeHtml(e.name || "Anonym")}</strong>
+                <span class="tiny">${escapeHtml(e.text ? "" : " ")}</span>
+              </div>
+              <div class="time">${escapeHtml(fmtTime(e.time))}</div>
+            </div>
+            <div class="text">${escapeHtml(e.text || "")}</div>
+          `;
+
+          li.appendChild(thumb);
+          li.appendChild(right);
+          list.appendChild(li);
+        });
+
+        $("lastUpdate").textContent = "Aktualisiert: " + new Date().toLocaleTimeString("de-DE");
+
+        if (showToast) setMsg("ok", "Einträge aktualisiert ✅");
+      }catch(err){
+        $("entriesEmpty").textContent = "Fehler beim Laden.";
+        if (showToast) setMsg("err", err?.message || "Einträge konnten nicht geladen werden");
+      }
+    }
+
+    // ========= Mini game =========
+    let target = 0.72;      // 0..1
+    let fill = 0.0;         // 0..1
+    let running = true;
+    let round = 1;
+    let score = 0;
+
+    const tpFill = $("tpFill");
+    const tpTarget = $("tpTarget");
+    const scoreNow = $("scoreNow");
+    const bestScore = $("bestScore");
+
+    function loadBest(){
+      const v = Number(localStorage.getItem(BEST_KEY) || "0");
+      bestScore.textContent = String(isFinite(v) ? v : 0);
+    }
+    function saveBest(v){
+      localStorage.setItem(BEST_KEY, String(v));
+      loadBest();
+    }
+
+    function newRound(){
+      fill = 0;
+      running = true;
+      target = 0.25 + Math.random() * 0.65;
+      round++;
+      $("tpTitle").textContent = "Runde " + round;
+      $("tpSub").textContent = "Tippe, bis du stoppen willst.";
+      $("tpMsg").textContent = "Ziel: möglichst nah an die Marke, ohne drüber.";
+      renderGame();
+    }
+
+    function renderGame(){
+      tpFill.style.width = Math.max(0, Math.min(1, fill)) * 100 + "%";
+      tpTarget.style.left = (Math.max(0, Math.min(1, target)) * 100) + "%";
+      scoreNow.textContent = String(score);
+    }
+
+    function stopRound(){
+      if (!running) return;
+      running = false;
+
+      const diff = target - fill;
+      let points = 0;
+
+      if (diff >= 0){
+        // näher = mehr Punkte
+        points = Math.max(0, Math.round(1000 * (1 - diff)));
+        $("tpMsg").textContent = `Sauber. Abstand: ${(diff*100).toFixed(1)}% → +${points} Punkte`;
+      }else{
+        // drüber = 0 und Spott
+        points = 0;
+        $("tpMsg").textContent = `Uff… drüber: ${Math.abs(diff*100).toFixed(1)}%. Keramik weint. +0 Punkte`;
+      }
+
+      score += points;
+
+      const best = Number(localStorage.getItem(BEST_KEY) || "0");
+      if (score > best) saveBest(score);
+
+      $("tpSub").textContent = "Stop gedrückt. Neue Runde?";
+      renderGame();
+    }
+
+    // Tap increases fill by a small random amount
+    $("tpTap").addEventListener("click", () => {
+      if (!running) return;
+      const add = 0.018 + Math.random() * 0.030; // feel-good
+      fill = Math.min(1.05, fill + add);
+      renderGame();
+      if (fill >= 1){
+        // auto stop if full
+        stopRound();
+      }
+    });
+
+    $("tpStop").addEventListener("click", stopRound);
+
+    $("tpReset").addEventListener("click", () => {
+      score = 0;
+      round = 0;
+      newRound();
+      renderGame();
+    });
+
+    // ========= Init =========
+    function init(){
+      updateNet();
+      loadBest();
+      renderGame();
+      newRound();
+      showStep(0);
+
+      // rules once
+      if (!localStorage.getItem(RULES_SEEN_KEY)){
+        setTimeout(() => rulesBackdrop.classList.add("open"), 450);
+      }
+
+      // initial load
+      loadEntries(false);
+    }
+
+    init();
+  </script>
+</body>
+</html>
