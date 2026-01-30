@@ -1,5 +1,5 @@
 export async function handler(event) {
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbzWz7x15X29gld5hR8qVBhW4AvMAhR0fNkEGyt1FwPWiKmGD51rk4E9QGFPktGr9AT5/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbxQ8XHbU9mfJkR-w35CKMpJwsDxYnk4fasBBO7WI05YVtmV_4EQ_joozGFquB2ul3eI/exec";
 
   try {
     const method = event.httpMethod || "GET";
