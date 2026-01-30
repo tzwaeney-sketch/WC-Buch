@@ -1,326 +1,1024 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>WC Gästebuch – Familie Albrecht</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WC Gästebuch – Familie Albrecht</title>
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="theme-color" content="#0b1220">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <style>
+    :root{
+      --bg0:#070b14; --bg1:#0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.04);
+      --line: rgba(255,255,255,.10);
+      --text: #eef2ff;
+      --muted: rgba(238,242,255,.65);
+      --muted2: rgba(238,242,255,.46);
+      --accent: #22c55e;
+      --accent2:#38bdf8;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --r: 24px;
+      --r2: 18px;
+      --safeTop: env(safe-area-inset-top);
+      --safeBottom: env(safe-area-inset-bottom);
+    }
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 15% 0%, rgba(34,197,94,.18), transparent 56%),
+        radial-gradient(900px 520px at 85% 0%, rgba(56,189,248,.18), transparent 54%),
+        radial-gradient(1200px 650px at 50% 110%, rgba(139,92,246,.16), transparent 62%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      -webkit-tap-highlight-color: transparent;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    button, input, textarea { font: inherit; }
 
-<style>
-:root{
-  --bg:#0b1220;
-  --card:rgba(255,255,255,.06);
-  --line:rgba(255,255,255,.12);
-  --text:#eef2ff;
-  --muted:rgba(238,242,255,.65);
-  --accent:#22c55e;
-  --warn:#f59e0b;
-  --danger:#ef4444;
-  --r:22px;
-}
+    .wrap{
+      max-width: 980px;
+      margin:0 auto;
+      padding: calc(14px + var(--safeTop)) 14px calc(108px + var(--safeBottom));
+    }
 
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui}
-img{max-width:100%;display:block}
+    /* HERO */
+    .hero{
+      position:relative;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 6px);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroInner{ padding: 16px 16px 14px; }
+    .heroTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .logoBox{
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.16), transparent 70%),
+        linear-gradient(135deg, rgba(34,197,94,.18), rgba(56,189,248,.12));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logoBox img{
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+    .brandText{ display:flex; flex-direction:column; gap:2px; }
+    .title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      line-height:1.1;
+      margin:0;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.35;
+      max-width: 640px;
+    }
 
-.wrap{
-  max-width:960px;
-  margin:auto;
-  padding:18px 14px 120px;
-}
+    .statusPills{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 13px;
+      user-select:none;
+    }
+    .pillBtn{ cursor:pointer; }
+    .dot{ width:10px; height:10px; border-radius:99px; background: var(--danger); }
+    .dot.ok{ background: var(--accent); }
 
-/* ===== HERO ===== */
+    .heroGlow{
+      position:absolute;
+      inset:-140px -60px auto -60px;
+      height: 260px;
+      background: radial-gradient(closest-side, rgba(255,255,255,.10), transparent 70%);
+      pointer-events:none;
+      filter: blur(2px);
+    }
+    .heroWave{
+      position:absolute;
+      left:-10%;
+      right:-10%;
+      bottom:-32px;
+      height: 80px;
+      background: radial-gradient(120px 40px at 20% 20%, rgba(34,197,94,.25), transparent 65%),
+                  radial-gradient(140px 45px at 70% 70%, rgba(56,189,248,.20), transparent 65%);
+      opacity:.75;
+      pointer-events:none;
+      filter: blur(14px);
+    }
 
-.hero{
-  border-radius:28px;
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
-  border:1px solid var(--line);
-  padding:22px;
-  text-align:center;
-}
+    /* SLIDES */
+    .slidesWrap{
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+    }
+    .slidesHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .slidesHead h2{
+      margin:0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .slidesHead .tiny{ color: var(--muted2); font-size: 12px; }
+    .slides{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .slides::-webkit-scrollbar{ height: 8px; }
+    .slides::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.12); border-radius: 999px; }
+    .slide{
+      scroll-snap-align: start;
+      min-width: min(520px, 92%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.16));
+      overflow:hidden;
+      box-shadow: 0 14px 36px rgba(0,0,0,.25);
+      position:relative;
+    }
+    .slide::before{
+      content:"";
+      position:absolute;
+      inset:-40px -40px auto -40px;
+      height: 140px;
+      background: radial-gradient(closest-side, rgba(56,189,248,.18), transparent 70%);
+      pointer-events:none;
+      filter: blur(4px);
+    }
+    .slideInner{ padding: 14px; position:relative; }
+    .slideTop{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom: 10px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(238,242,255,.85);
+      font-size: 12px;
+      user-select:none;
+    }
+    .emojiBox{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 18px;
+    }
+    .slideTitle{
+      margin:0;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .slideText{
+      margin: 8px 0 0;
+      color: rgba(238,242,255,.92);
+      line-height: 1.35;
+      font-size: 14px;
+      white-space:pre-wrap;
+    }
+    .slideFooter{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .miniBtn{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(238,242,255,.90);
+      border-radius: 999px;
+      padding: 9px 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .miniBtn:active{ transform: translateY(1px); }
+    .progressDots{ display:flex; gap:6px; align-items:center; }
+    .pdot{
+      width: 7px; height: 7px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.18);
+    }
+    .pdot.on{ background: rgba(34,197,94,.75); }
 
-.heroLogo{
-  max-width:260px;
-  margin:0 auto 14px;
-}
+    /* GRID */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
 
-.hero h1{
-  margin:0;
-  font-size:22px;
-  font-weight:900;
-}
+    /* CARDS */
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border-radius: var(--r);
+      box-shadow: 0 16px 45px rgba(0,0,0,.30);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding: 14px 14px 0;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .cardTitle{
+      margin:0;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    .cardSub{
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+    .cardBody{ padding: 14px; }
 
-.hero p{
-  margin:6px 0 0;
-  color:var(--muted);
-  font-size:13px;
-}
+    /* FORM */
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+    input[type="text"], textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+    textarea{ min-height: 96px; resize: vertical; }
+    input::placeholder, textarea::placeholder{ color: rgba(238,242,255,.38); }
 
-/* ===== GRID ===== */
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 18px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex: 1 1 160px;
+      user-select:none;
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btnPrimary{
+      border-color: rgba(34,197,94,.30);
+      background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(56,189,248,.14));
+    }
+    .btnGhost{
+      background: rgba(0,0,0,.18);
+    }
+    .btnSmall{
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-  margin-top:16px;
-}
+    .hint{
+      margin-top:8px;
+      font-size: 12px;
+      color: var(--muted2);
+      line-height:1.35;
+    }
 
-/* ===== CARDS ===== */
+    .msg{
+      display:none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .msg.ok{ display:block; border-color: rgba(34,197,94,.30); background: rgba(34,197,94,.10); color: #d1fae5; }
+    .msg.warn{ display:block; border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); color: #ffedd5; }
+    .msg.err{ display:block; border-color: rgba(239,68,68,.30); background: rgba(239,68,68,.10); color: #fee2e2; }
 
-.card{
-  border:1px solid var(--line);
-  border-radius:var(--r);
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-}
+    /* PHOTO PICKER + PREVIEW */
+    .photoBox{
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.14);
+      border-radius: 20px;
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .photoTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .photoTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .photoIcon{
+      width: 36px; height: 36px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 18px;
+    }
+    .photoPreview{
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    .photoPreview img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:none;
+    }
+    .photoPlaceholder{
+      color: var(--muted2);
+      font-size: 13px;
+      padding: 12px;
+      text-align:center;
+      line-height:1.35;
+    }
+    .photoActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .fileInput{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      cursor:pointer;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(238,242,255,.86);
+      font-size: 12px;
+      user-select:none;
+    }
 
-.cardHead{
-  padding:14px 16px 0;
-}
+    /* ENTRIES */
+    .entries{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .entry{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 20px;
+      background: rgba(0,0,0,.18);
+      padding: 12px;
+      display:grid;
+      grid-template-columns: 56px 1fr;
+      gap:10px;
+      overflow:hidden;
+    }
+    .thumb{
+      width:56px; height:56px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(238,242,255,.52);
+      font-size: 12px;
+      overflow:hidden;
+    }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .meta{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .who{ display:flex; flex-direction:column; gap:2px; }
+    .who strong{ font-size: 14px; }
+    .time{ font-size: 12px; color: var(--muted2); white-space:nowrap; }
+    .text{
+      margin: 8px 0 0;
+      white-space:pre-wrap;
+      line-height:1.35;
+      font-size: 14px;
+      color: rgba(238,242,255,.94);
+    }
+    .empty{
+      color: var(--muted2);
+      font-size: 13px;
+      padding: 4px 2px;
+    }
 
-.cardTitle{
-  margin:0;
-  font-size:15px;
-  font-weight:800;
-}
+    /* GAME: Klopapier abrollen */
+    .gameWrap{
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      overflow:hidden;
+      position:relative;
+    }
+    .gameHud{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding: 12px 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .hudLeft{ display:flex; flex-direction:column; gap:2px; }
+    .hudTitle{ margin:0; font-size: 14px; font-weight:900; }
+    .hudSub{ margin:0; font-size: 12px; color: var(--muted2); }
+    .scorePill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: rgba(238,242,255,.90);
+      font-size: 13px;
+      user-select:none;
+    }
+    .gameArea{ padding: 12px; display:flex; flex-direction:column; gap:10px; }
+    .tpTrack{
+      height: 24px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+      position:relative;
+    }
+    .tpFill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(34,197,94,.32), rgba(56,189,248,.26));
+      transition: width 70ms linear;
+    }
+    .tpTarget{
+      position:absolute;
+      top:0; bottom:0;
+      width: 8px;
+      border-radius: 999px;
+      background: rgba(245,158,11,.90);
+      box-shadow: 0 0 0 2px rgba(0,0,0,.25);
+      transform: translateX(-50%);
+      opacity:.95;
+    }
+    .tpCard{
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tpLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 210px;
+    }
+    .tpEmoji{
+      width: 46px; height:46px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 22px;
+      flex:0 0 auto;
+    }
+    .tpText{ display:flex; flex-direction:column; gap:2px; }
+    .tpText strong{ font-size: 14px; }
+    .tpText span{ font-size: 12px; color: var(--muted2); }
+    .tpTap{
+      flex: 1 1 160px;
+      padding: 13px 14px;
+      border-radius: 20px;
+      border:1px solid rgba(34,197,94,.30);
+      background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(56,189,248,.14));
+      color: var(--text);
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 12px 30px rgba(0,0,0,.22);
+    }
+    .tpTap:active{ transform: translateY(1px); }
+    .tpMsg{ font-size: 13px; color: var(--muted); line-height: 1.35; margin:0; }
 
-.cardBody{padding:16px}
+    /* Bottom nav */
+    .bottomNav{
+      position: fixed;
+      left:0; right:0;
+      bottom: 0;
+      padding: 10px 12px calc(10px + var(--safeBottom));
+      background: linear-gradient(180deg, rgba(7,11,20,0), rgba(7,11,20,.78) 40%, rgba(7,11,20,.92));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+    .navBar{
+      max-width: 980px;
+      margin: 0 auto;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      display:flex;
+      overflow:hidden;
+    }
+    .navBtn{
+      flex:1 1 0;
+      border:0;
+      background: transparent;
+      color: rgba(238,242,255,.82);
+      padding: 10px 10px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      user-select:none;
+    }
+    .navBtn strong{ font-size: 13px; font-weight: 900; letter-spacing:.2px; }
+    .navBtn span{
+      width: 34px; height:34px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .navBtn.active{
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(56,189,248,.10));
+    }
+    .navBtn.active span{ border-color: rgba(34,197,94,.30); }
 
-/* ===== FORM ===== */
+    /* Modal */
+    .modalBackdrop{
+      position: fixed;
+      inset:0;
+      background: rgba(0,0,0,.58);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 16px 14px calc(16px + var(--safeBottom));
+      z-index: 80;
+    }
+    .modalBackdrop.open{ display:flex; }
+    .modal{
+      width: min(740px, 100%);
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding: 14px 14px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .modalHead h3{
+      margin:0;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .modalBody{ padding: 14px; color: rgba(238,242,255,.92); }
+    .rules{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+    .rule{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      background: rgba(0,0,0,.16);
+      padding: 12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .badge{
+      width: 34px; height:34px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    .rule strong{ display:block; font-size: 14px; margin:0 0 2px; }
+    .rule span{ display:block; font-size: 13px; color: var(--muted); line-height: 1.35; }
+    .modalFoot{
+      padding: 12px 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
 
-label{font-size:12px;color:var(--muted)}
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.2);
-  color:var(--text);
-}
+    /* Sections */
+    html{ scroll-behavior:smooth; }
+    .anchor{ scroll-margin-top: 12px; }
 
-textarea{min-height:90px}
+    /* Tiny */
+    .tiny{ font-size:12px; color: var(--muted2); }
 
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
-
-button{
-  flex:1;
-  border-radius:18px;
-  padding:12px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.08);
-  color:white;
-}
-
-.primary{
-  background:linear-gradient(135deg,rgba(34,197,94,.35),rgba(56,189,248,.25));
-}
-
-/* ===== ENTRIES ===== */
-
-.entries{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-
-.entry{
-  display:grid;
-  grid-template-columns:60px 1fr;
-  gap:10px;
-  padding:12px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.2);
-}
-
-.thumb{
-  width:60px;height:60px;border-radius:14px;overflow:hidden;
-}
-
-.meta{display:flex;justify-content:space-between}
-.meta strong{font-size:14px}
-.meta span{font-size:12px;color:var(--muted)}
-
-.text{margin-top:6px;font-size:14px}
-
-/* ===== GAME ===== */
-
-.gameBar{
-  height:22px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  overflow:hidden;
-}
-
-.gameFill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#22c55e,#38bdf8);
-}
-
-/* ===== BOTTOM NAV ===== */
-
-.bottomNav{
-  position:fixed;
-  left:0;right:0;bottom:0;
-  background:#050812;
-  padding:10px;
-}
-
-.nav{
-  max-width:960px;
-  margin:auto;
-  display:flex;
-  border-radius:999px;
-  overflow:hidden;
-  border:1px solid var(--line);
-}
-
-.nav button{
-  flex:1;
-  background:none;
-  border:none;
-  padding:12px;
-  color:white;
-}
-
-/* ===== MODAL ===== */
-
-.modalBg{
-  position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:none;align-items:center;justify-content:center;
-}
-
-.modal{
-  max-width:500px;width:90%;
-  background:#0b1220;
-  border-radius:22px;
-  padding:18px;
-}
-
-.rules li{margin-bottom:10px}
-</style>
+    @media (max-width: 420px){
+      .logoBox{ width:66px; height:66px; border-radius:22px; }
+      .title{ font-size: 17px; }
+      .entry{ grid-template-columns: 52px 1fr; }
+      .thumb{ width:52px; height:52px; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
 
-<div class="wrap">
+    <section class="hero" aria-label="Kopfbereich">
+      <div class="heroGlow"></div>
+      <div class="heroInner">
+        <div class="heroTop">
+          <div class="brand">
+            <div class="logoBox" aria-label="Logo">
+              <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+            </div>
+            <div class="brandText">
+              <h1 class="title">WC Gästebuch <span style="opacity:.82;">Familie Albrecht</span></h1>
+              <p class="subtitle">Eintragen, Foto dazu, fertig. Kein Netz? Wird gespeichert. Und unten wartet das Klopapier-Spiel.</p>
+            </div>
+          </div>
 
-<!-- HERO -->
-<section class="hero">
-  <img src="logo.png" class="heroLogo" alt="WC Gästebuch Logo">
-  <h1>WC Gästebuch – Familie Albrecht</h1>
-  <p>Scannen, eintragen, Foto dazu. Klopapier abrollen nicht vergessen.</p>
-</section>
+          <div class="statusPills">
+            <div class="pill" id="netPill"><span class="dot" id="netDot"></span><span id="netText">Offline</span></div>
+            <div class="pill pillBtn" id="btnRulesTop" title="Klo-Regeln öffnen">📜 Regeln</div>
+          </div>
+        </div>
 
-<div class="grid">
+        <div class="slidesWrap" id="slidesSection">
+          <div class="slidesHead">
+            <div>
+              <h2>Toiletten-Erlebnisse (Slides)</h2>
+              <div class="tiny">Wischen oder warten. Zum Kopieren tippen.</div>
+            </div>
+            <div class="tiny" id="slidesInfo"></div>
+          </div>
 
-<!-- FORM -->
-<section class="card" id="form">
-<div class="cardHead"><h2 class="cardTitle">Eintrag</h2></div>
-<div class="cardBody">
+          <div class="slides" id="slides"></div>
 
-<label>PIN</label>
-<input id="pin" type="password" value="1234">
+          <div class="slideFooter" style="padding: 0 2px;">
+            <button class="miniBtn" id="btnPrev" type="button">◀︎</button>
+            <div class="progressDots" id="dots"></div>
+            <button class="miniBtn" id="btnNext" type="button">▶︎</button>
+          </div>
+        </div>
+      </div>
+      <div class="heroWave"></div>
+    </section>
 
-<label>Name</label>
-<input id="name">
+    <div class="grid">
 
-<label>Spruch</label>
-<textarea id="text"></textarea>
+      <!-- FORM -->
+      <section class="card anchor" id="secEntry">
+        <div class="cardHead">
+          <div>
+            <h2 class="cardTitle">Eintrag</h2>
+            <p class="cardSub">Name + Spruch + optional Foto. Foto wird vor dem Upload automatisch verkleinert.</p>
+          </div>
+          <button class="btn btnSmall btnGhost" id="btnFlush" type="button" title="Offline gespeicherte Einträge senden">↥ Offline senden</button>
+        </div>
 
-<label>Foto</label>
-<input id="photo" type="file">
+        <div class="cardBody">
+          <label for="name">Name</label>
+          <input id="name" type="text" autocomplete="off" placeholder="z.B. Sven" />
 
-<div class="actions">
-<button class="primary" id="sendBtn">Absenden</button>
-<button id="loadBtn">Neu laden</button>
-</div>
+          <label for="text">Spruch</label>
+          <textarea id="text" placeholder="Frech, lustig, strange…"></textarea>
 
-<div id="msg"></div>
+          <label>Foto (optional)</label>
+          <div class="photoBox">
+            <div class="photoTop">
+              <div class="photoTitle">
+                <div class="photoIcon">📸</div>
+                <div>
+                  <div style="font-weight:900; font-size:13px;">Foto auswählen</div>
+                  <div class="tiny" id="photoHint">Tippe auf die Vorschau. JPG/PNG/WebP. Ziel: klein & schnell.</div>
+                </div>
+              </div>
+              <div class="chip" id="photoChip">Kein Foto</div>
+            </div>
 
-</div>
-</section>
+            <div class="photoPreview" id="photoPreview">
+              <div class="photoPlaceholder" id="photoPlaceholder">
+                Tippe hier, um ein Foto auszuwählen.<br>
+                Danach siehst du es direkt als Vorschau.
+              </div>
+              <img id="photoImg" alt="Foto Vorschau" />
+              <input class="fileInput" id="photo" type="file" accept="image/jpeg,image/jpg,image/png,image/webp" />
+            </div>
 
-<!-- GAME -->
-<section class="card" id="game">
-<div class="cardHead"><h2 class="cardTitle">Klopapier abrollen</h2></div>
-<div class="cardBody">
+            <div class="photoActions">
+              <button class="btn btnSmall btnGhost" id="btnRemovePhoto" type="button">✖ Foto entfernen</button>
+              <button class="btn btnSmall btnGhost" id="btnUseCam" type="button">📷 Kamera</button>
+            </div>
+          </div>
 
-<div class="gameBar">
-  <div class="gameFill" id="fill"></div>
-</div>
+          <div class="actions">
+            <button class="btn btnPrimary" id="btnSend" type="button">Absenden</button>
+            <button class="btn" id="btnLoad" type="button">Neu laden</button>
+          </div>
 
-<p style="font-size:13px;color:var(--muted)">Tippe so nah wie möglich an 80 %.</p>
-<button id="tapBtn" class="primary">TIPPE!</button>
+          <div id="msg" class="msg"></div>
+          <div class="hint" id="queueHint"></div>
+        </div>
+      </section>
 
-</div>
-</section>
+      <!-- GAME -->
+      <section class="card anchor" id="secGame">
+        <div class="cardHead">
+          <div>
+            <h2 class="cardTitle">Spiel: Klopapier abrollen</h2>
+            <p class="cardSub">Tippen = abrollen. Ziel: möglichst nahe an die Marke, ohne drüber.</p>
+          </div>
+          <div class="pill" title="Bestwert wird lokal gespeichert">🏆 Best <span id="bestScore">0</span></div>
+        </div>
 
-<!-- ENTRIES -->
-<section class="card">
-<div class="cardHead"><h2 class="cardTitle">Letzte Einträge</h2></div>
-<div class="cardBody">
-<ul class="entries" id="entries"></ul>
-</div>
-</section>
+        <div class="cardBody">
+          <div class="gameWrap">
+            <div class="gameHud">
+              <div class="hudLeft">
+                <p class="hudTitle">Zielmarke treffen</p>
+                <p class="hudSub">Pro Runde eine neue Marke. Tap-only.</p>
+              </div>
+              <div class="scorePill">Punkte: <strong id="scoreNow">0</strong></div>
+            </div>
 
-</div>
-</div>
+            <div class="gameArea">
+              <div class="tpTrack" aria-label="Fortschritt">
+                <div class="tpFill" id="tpFill"></div>
+                <div class="tpTarget" id="tpTarget" title="Ziel"></div>
+              </div>
 
-<!-- BOTTOM -->
-<div class="bottomNav">
-<div class="nav">
-<button onclick="scrollToId('form')">✍️ Eintrag</button>
-<button onclick="openRules()">📜 Regeln</button>
-<button onclick="scrollToId('game')">🧻 Spiel</button>
-</div>
-</div>
+              <div class="tpCard">
+                <div class="tpLeft">
+                  <div class="tpEmoji" id="tpEmoji">🧻</div>
+                  <div class="tpText">
+                    <strong id="tpTitle">Runde 1</strong>
+                    <span id="tpSub">Tippe, bis du stoppen willst.</span>
+                  </div>
+                </div>
+                <button class="tpTap" id="tpTap" type="button">TIPPEN!</button>
+              </div>
 
-<!-- RULES -->
-<div class="modalBg" id="rulesBg">
-<div class="modal">
-<h3>Klo-Regeln 🚽</h3>
-<ul class="rules">
-<li>Deckel runter.</li>
-<li>Spülung benutzen.</li>
-<li>Bürste ist dein Freund.</li>
-<li>Hände waschen.</li>
-<li>Lustige Sprüche erlaubt.</li>
-</ul>
-<button onclick="closeRules()" class="primary">Verstanden</button>
-</div>
-</div>
+              <p class="tpMsg" id="tpMsg">Tipp: kurze schnelle Taps sind besser als einmal Vollgas.</p>
 
-<script>
-const BACKEND="/.netlify/functions/wc";
+              <div class="actions" style="margin-top:0;">
+                <button class="btn btnSmall btnGhost" id="tpStop" type="button">⏹ Stop</button>
+                <button class="btn btnSmall btnGhost" id="tpReset" type="button">↻ Neue Runde</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-const fill=document.getElementById("fill");
-let v=0;
+      <!-- ENTRIES -->
+      <section class="card anchor" id="secEntries" style="grid-column:1/-1;">
+        <div class="cardHead">
+          <div>
+            <h2 class="cardTitle">Letzte Einträge</h2>
+            <p class="cardSub">Neueste zuerst. Mini-Foto wird direkt angezeigt.</p>
+          </div>
+          <div class="tiny" id="lastUpdate"></div>
+        </div>
+        <div class="cardBody">
+          <ul class="entries" id="entries"></ul>
+        </div>
+      </section>
 
-document.getElementById("tapBtn").onclick=()=>{
-  v+=Math.random()*18;
-  fill.style.width=Math.min(v,100)+"%";
-};
+    </div>
+  </div>
 
-function scrollToId(id){
- document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
+  <!-- Bottom Nav -->
+  <div class="bottomNav" aria-label="Navigation">
+    <div class="navBar">
+      <button class="navBtn active" id="navEntry" type="button" onclick="goTo('secEntry')"><span>✍️</span><strong>Eintrag</strong></button>
+      <button class="navBtn" id="navRules" type="button" onclick="openRules()"><span>📜</span><strong>Regeln</strong></button>
+      <button class="navBtn" id="navGame" type="button" onclick="goTo('secGame')"><span>🧻</span><strong>Spiel</strong></button>
+      <button class="navBtn" id="navList" type="button" onclick="goTo('secEntries')"><span>📚</span><strong>Einträge</strong></button>
+    </div>
+  </div>
 
-function openRules(){
- document.getElementById("rulesBg").style.display="flex";
-}
-function closeRules(){
- document.getElementById("rulesBg").style.display="none";
-}
+  <!-- Rules Modal -->
+  <div class="modalBackdrop" id="rulesBackdrop" role="dialog" aria-modal="true" aria-label="Klo-Regeln">
+    <div class="modal">
+      <div class="modalHead">
+        <h3>🚽 Klo-Regeln</h3>
+        <button class="miniBtn" id="btnCloseRules" type="button">✖</button>
+      </div>
 
-if(!localStorage.rulesSeen){
- openRules();
- localStorage.rulesSeen="1";
-}
-</script>
+      <div class="modalBody">
+        <ul class="rules">
+          <li class="rule"><div class="badge">1</div><div><strong>Deckel runter</strong><span>Damit niemand in Überraschungen schaut.</span></div></li>
+          <li class="rule"><div class="badge">2</div><div><strong>Spülen ist keine Option</strong><span>Es ist ein Muss. Immer.</span></div></li>
+          <li class="rule"><div class="badge">3</div><div><strong>Bürste = Ehrenmitglied</strong><span>Wenn du sie brauchst: nutz sie. Wenn nicht: auch gut.</span></div></li>
+          <li class="rule"><div class="badge">4</div><div><strong>Hände waschen</strong><span>Du bist erwachsen. Wir müssen das nicht diskutieren.</span></div></li>
+          <li class="rule"><div class="badge">5</div><div><strong>Gästebuch mit Stil</strong><span>Lustig, frech, strange. Aber kein Stress und keine Beleidigungen.</span></div></li>
+        </ul>
+        <p class="tiny" style="margin:12px 2px 0;">Diese Regeln werden pro Gerät nur einmal automatisch angezeigt.</p>
+      </div>
 
-</body>
-</html>
+      <div class="modalFoot">
+        <button class="btn btnSmall btnGhost" type="button" onclick="closeRules()">Später</button>
+        <button class="btn btnSmall btnPrimary" type="button" onclick="closeRules(true)">Verstanden ✅</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Config (wie bisher, damit nix angepasst werden muss) =====
+    const BACKEND_URL = "/.netlify/functions/wc";
+    const PIN = "1234";
+    const DEFAULT_LIMIT = 50;
+
+    // Local storage keys
+    const QUEUE_KEY = "wcgb_queue_v2";
+    const RULES_SEEN_KEY = "wcgb_rules_seen_v1";
+    const BEST_KEY = "wcgb_tp_best_v1";
+
+    // ===== Helpers =====
+    const el = (id) => document.getElementById(id);
+    const msgBox = el("msg");
+
+    function setMsg(type, text){
+      msgBox.className = "msg " + (type || "");
+      msgBox.textContent = text || "";
+      msgBox.style.display = text ? "block" : "none";
+    }
+    function isOnline(){ return navigator.onLine; }
+
+    function escapeHtml(str){
+      return String(str ?? "").replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    function formatZeit(v){
+      if (!v) return "";
+      const d = new Date(v);
+      return isNaN(d.getTime()) ? String(v) : d.toLocaleString("de-DE");
+    }
+
+    function getQueue(){
+      try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); }
+      catch{ return []; }
+    }
+    function setQueue(arr){
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(arr));
+      updateQueueHint();
+    }
+    function updateQueueHint(){
+      const q = getQueue();
+      el("queueHint").textContent = q.length ? ("Offline-Speicher: " + q.length + " Eintrag/Einträge warten noch.") : "";
+    }
+
+    // ===== Net pill =====
+    const netDot = el("netDot");
+    const netText = el("netText");
+    function updateNetUI(){
+      const online = isOnline();
+      netDot.classList.toggle("ok", online);
+      netText.textContent = online ? "Online" : "Offline";
+      updateQueueHint();
+    }
+    window.addEventListener("online", updateNetUI);
+    window.addEventListener("offline", updateNetUI);
+
+    // ===== Navigation =====
+    function setActiveNav(key){
+      const map = { entry:"navEntry", rules:"navRules", game:"navGame", list:"navList" };
+      Object.values(map).forEach(id => el(id).classList.remove("active"));
+      if (map[key]) el(map[key]).classList.add("active");
+    }
+    window.goTo = function(id){
+      const sec = document.getElementById(id);
+      if (sec) sec.scrollIntoView({behavior:"smooth", block:"start"});
+      if (id === "secEntry") setActiveNav("entry");
+      if (id === "secGame") setActiveNav("game");
