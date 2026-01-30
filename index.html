@@ -1,424 +1,649 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WC Gästebuch – Familie Albrecht</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WC Gästebuch – Familie Albrecht</title>
+  <meta name="theme-color" content="#0b1220" />
 
-<style>
-:root{
-  --bg:#050505;
-  --card:#0f0f0f;
-  --line:#222;
-  --text:#f4f4f4;
-  --muted:#aaa;
-  --accent:#fff;
-  --ok:#46d17a;
-  --err:#ff6b6b;
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:system-ui,Segoe UI,Roboto,Arial;
-  background:#000;
-  color:var(--text);
-}
-
-.bg-logo{
-  position:fixed;
-  inset:0;
-  background:url("logo.png") center/420px no-repeat;
-  opacity:.04;
-  pointer-events:none;
-  filter:blur(1px);
-}
-
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:18px 14px 60px;
-}
-
-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.logo{
-  width:90px;
-  height:90px;
-  border-radius:22px;
-  border:1px solid #333;
-  overflow:hidden;
-  background:#000;
-}
-
-.logo img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-h1{margin:0;font-size:26px}
-.sub{color:#aaa;font-size:13px}
-
-.card{
-  margin-top:14px;
-  background:linear-gradient(#111,#0b0b0b);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:14px;
-}
-
-.grid{
-  display:grid;
-  gap:12px;
-}
-@media(min-width:900px){
-  .grid{grid-template-columns:1.1fr .9fr}
-}
-
-label{font-size:13px;color:#ddd}
-input,textarea{
-  width:100%;
-  padding:11px;
-  border-radius:14px;
-  background:#090909;
-  border:1px solid #222;
-  color:#fff;
-}
-
-textarea{min-height:80px}
-
-button{
-  background:#111;
-  border:1px solid #333;
-  border-radius:14px;
-  padding:12px 14px;
-  color:#fff;
-  cursor:pointer;
-}
-button.primary{
-  background:#fff;
-  color:#000;
-  font-weight:800;
-}
-
-.preview{
-  width:90px;height:90px;
-  border-radius:14px;
-  border:1px solid #333;
-  object-fit:cover;
-  display:none;
-}
-
-.msg.ok{color:var(--ok)}
-.msg.err{color:var(--err)}
-
-.entry{
-  display:flex;
-  gap:12px;
-  border-top:1px solid #191919;
-  padding:12px 0;
-}
-.entry img{
-  width:44px;height:44px;
-  border-radius:50%;
-  border:1px solid #333;
-}
-
-.funbox{
-  border:1px solid #222;
-  border-radius:14px;
-  padding:10px;
-  margin-top:10px;
-}
-
-.funrow{
-  display:flex;
-  justify-content:space-between;
-  font-weight:700;
-}
-
-.luckbox{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border:1px dashed #333;
-  border-radius:14px;
-  padding:12px;
-  margin-top:12px;
-}
-
-/* Regeln Modal */
-#rulesWrap{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-}
-#rulesWrap.hidden{display:none}
-
-.rules{
-  background:#0c0c0c;
-  border:1px solid #333;
-  border-radius:20px;
-  max-width:500px;
-  padding:16px;
-}
-.rules ul{padding-left:18px}
-
-/* Feuerwerk */
-#fx{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-</style>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f1a2e; --text:#e5e7eb; --muted:#a7b0be;
+      --line:rgba(255,255,255,.12); --accent:#22c55e; --danger:#ef4444; --warn:#f59e0b;
+      --shadow:0 12px 30px rgba(0,0,0,.35); --r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background: radial-gradient(900px 500px at 10% 0%, rgba(34,197,94,.18), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(59,130,246,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:18px 16px 46px}
+    header{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;margin:6px 0 14px;flex-wrap:wrap}
+    h1{margin:0;font-size:22px;letter-spacing:.2px}
+    .sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;user-select:none}
+    .dot{width:10px;height:10px;border-radius:99px;background:var(--danger)}
+    .dot.ok{background:var(--accent)}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+    @media (max-width:860px){.grid{grid-template-columns:1fr}}
+    .card{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));overflow:hidden}
+    .inner{padding:16px}
+    .card h2{margin:0 0 10px;font-size:15px;color:#f3f4f6}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
+    input[type="text"], input[type="password"], textarea{
+      width:100%; padding:12px 12px; border-radius:14px; border:1px solid var(--line);
+      background:rgba(0,0,0,.18); color:var(--text); outline:none;
+    }
+    textarea{min-height:96px;resize:vertical}
+    input::placeholder, textarea::placeholder{color:rgba(229,231,235,.45)}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button{
+      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;
+    }
+    button.primary{background:rgba(34,197,94,.20);border-color:rgba(34,197,94,.35)}
+    button:hover{background:rgba(255,255,255,.09)}
+    button.primary:hover{background:rgba(34,197,94,.26)}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.4}
+    .msg{display:none;margin-top:10px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13px;color:var(--muted)}
+    .msg.ok{display:block;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.10);color:#d1fae5}
+    .msg.err{display:block;border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.10);color:#fee2e2}
+    .msg.warn{display:block;border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:#ffedd5}
+    .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+    .entry{
+      display:grid;grid-template-columns:52px 1fr;gap:10px;
+      padding:12px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.16)
+    }
+    .thumb{
+      width:52px;height:52px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;
+      color:rgba(229,231,235,.55);font-size:12px;overflow:hidden
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .meta{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .name{margin:0;font-weight:700;font-size:14px}
+    .time{white-space:nowrap;color:var(--muted);font-size:12px}
+    .text{margin:6px 0 0;white-space:pre-wrap;line-height:1.35;font-size:14px}
+    .tiny{font-size:12px;color:var(--muted)}
+    .gameTop{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+    .kbd{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.03)}
+    canvas{width:100%;height:220px;display:block;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.18)}
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>WC Gästebuch – Familie Albrecht</h1>
+        <p class="sub">Trag dich ein, lade ein Foto hoch, und wenn das WLAN weg ist: Spiel starten. Einträge werden offline zwischengespeichert.</p>
+      </div>
+      <div class="pill" id="netPill"><span class="dot" id="netDot"></span><span id="netText">Offline</span></div>
+    </header>
 
-<div class="bg-logo"></div>
-<canvas id="fx"></canvas>
+    <div class="grid">
+      <section class="card">
+        <div class="inner">
+          <h2>Eintrag</h2>
 
-<!-- Regeln -->
-<div id="rulesWrap">
-  <div class="rules">
-    <h2>🚽 Toiletten-Regeln</h2>
-    <ul>
-      <li>Sauber hinterlassen.</li>
-      <li>Papier prüfen.</li>
-      <li>Nett bleiben.</li>
-      <li>Unfälle melden 😄</li>
-    </ul>
-    <button id="acceptRules" class="primary">Akzeptieren & weiter</button>
-  </div>
-</div>
+          <label for="pin">PIN</label>
+          <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="1234" />
 
-<div class="wrap">
+          <label for="name">Name</label>
+          <input id="name" type="text" autocomplete="off" placeholder="z.B. Sven" />
 
-<header>
-  <div class="brand">
-    <div class="logo"><img src="logo.png"></div>
-    <div>
-      <h1>WC Gästebuch</h1>
-      <div class="sub">Familie Albrecht</div>
+          <label for="text">Spruch</label>
+          <textarea id="text" placeholder="Frech, lustig, strange…"></textarea>
+
+          <label for="photo">Foto (optional)</label>
+          <input id="photo" type="file" accept="image/jpeg,image/jpg,image/png,image/webp" />
+          <div class="hint">Max. ca. 2,5 MB (dein Backend begrenzt). JPG/PNG/WebP.</div>
+
+          <div class="actions">
+            <button class="primary" id="btnSend">Absenden</button>
+            <button id="btnLoad">Neu laden</button>
+            <button id="btnFlush" title="Schickt offline gespeicherte Einträge raus">Offline-Speicher senden</button>
+          </div>
+
+          <div id="msg" class="msg"></div>
+          <div class="hint" id="queueHint"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="inner">
+          <div class="gameTop">
+            <h2 style="margin:0;">Mini-Spiel: Klo-Flieger</h2>
+            <span class="kbd">Leertaste oder Tap</span>
+          </div>
+          <canvas id="game" width="900" height="360" aria-label="Mini-Spiel"></canvas>
+          <div class="hint">Ziel: Nicht an den Rohren zerschellen. Wenn du verlierst, einfach nochmal tippen.</div>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column:1/-1;">
+        <div class="inner">
+          <div class="row" style="justify-content:space-between;align-items:flex-end">
+            <div>
+              <h2 style="margin:0 0 4px;">Letzte Einträge</h2>
+              <div class="tiny">Neueste zuerst, mit Mini-Foto falls vorhanden.</div>
+            </div>
+            <div class="tiny" id="lastUpdate"></div>
+          </div>
+          <div style="height:10px"></div>
+          <ul class="list" id="entries"></ul>
+        </div>
+      </section>
     </div>
   </div>
-</header>
 
-<div class="card luckbox">
-  <div>
-    <strong>Glücksschiss</strong>
-    <div class="sub">Wenn’s richtig gut lief</div>
-  </div>
-  <div>
-    <span id="luckCount">0</span>
-    <button id="luckBtn" class="primary">🎉</button>
-  </div>
-</div>
+  <script>
+    // =======================
+    // 1) HIER EINTRAGEN
+    // =======================
+    // Empfohlen: Netlify Proxy (same-origin), z.B. "/.netlify/functions/wc"
+    // Alternativ: Apps Script /exec URL (kann im Browser CORS blocken)
+    const BACKEND_URL = "PASTE_YOUR_BACKEND_URL_HERE";
+    const DEFAULT_PIN = "1234";
+    const DEFAULT_LIMIT = 50;
 
-<div class="grid">
+    // Local queue key
+    const QUEUE_KEY = "wcgb_queue_v1";
 
-<div class="card">
-<h3>Neuer Eintrag</h3>
+    const el = (id) => document.getElementById(id);
+    const netDot = el("netDot");
+    const netText = el("netText");
+    const msg = el("msg");
+    const queueHint = el("queueHint");
 
-<label>Name</label>
-<input id="name">
+    function setMsg(type, text){
+      msg.className = "msg " + (type || "");
+      msg.textContent = text || "";
+      msg.style.display = text ? "block" : "none";
+    }
 
-<label>Text</label>
-<textarea id="text"></textarea>
+    function isOnline(){
+      return navigator.onLine;
+    }
 
-<div class="funbox">
-  <div class="funrow"><span>Geräusch</span><span id="noiseVal"></span></div>
-  <input type="range" id="noise" min="0" max="4" value="1">
-</div>
+    function updateNetUI(){
+      const online = isOnline();
+      netDot.classList.toggle("ok", online);
+      netText.textContent = online ? "Online" : "Offline";
+      updateQueueHint();
+    }
 
-<div class="funbox">
-  <div class="funrow"><span>Duft</span><span id="smellVal"></span></div>
-  <input type="range" id="smell" min="0" max="4" value="1">
-</div>
+    window.addEventListener("online", updateNetUI);
+    window.addEventListener("offline", updateNetUI);
 
-<label>Foto</label>
-<input type="file" id="photo" accept="image/*" capture="environment">
-<img id="preview" class="preview">
+    function getQueue(){
+      try{ return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); }
+      catch{ return []; }
+    }
+    function setQueue(arr){
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(arr));
+      updateQueueHint();
+    }
+    function updateQueueHint(){
+      const q = getQueue();
+      queueHint.textContent = q.length ? ("Offline-Speicher: " + q.length + " Eintrag/Einträge warten noch.") : "";
+    }
 
-<button id="sendBtn" class="primary">Absenden</button>
-<div id="msg" class="msg"></div>
+    function sanitizeText(s){
+      return String(s || "").slice(0, 5000);
+    }
 
-</div>
+    function formatZeit(v){
+      // Apps Script kann Date, String oder leer liefern
+      if (!v) return "";
+      const d = new Date(v);
+      if (!isNaN(d.getTime())) return d.toLocaleString("de-DE");
+      return String(v);
+    }
 
-<div class="card">
-<h3>Verlauf</h3>
-<div id="entries"></div>
-</div>
+    async function readFileAsDataUrl(file){
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result || ""));
+        r.onerror = () => reject(new Error("Foto konnte nicht gelesen werden"));
+        r.readAsDataURL(file);
+      });
+    }
 
-</div>
-</div>
+    async function fetchEntries(){
+      if (!BACKEND_URL || BACKEND_URL.includes("PASTE_YOUR_BACKEND_URL_HERE")){
+        setMsg("warn", "Backend-URL fehlt. Trag oben BACKEND_URL ein (Proxy oder /exec).");
+        return;
+      }
 
-<script>
-const EXEC_URL = "/.netlify/functions/guestbook";
-const PIN = "1234";
+      const pin = (el("pin").value || DEFAULT_PIN).trim();
+      const url = new URL(BACKEND_URL, window.location.href);
+      url.searchParams.set("pin", pin);
+      url.searchParams.set("limit", String(DEFAULT_LIMIT));
 
-let photoDataUrl = null;
+      try{
+        setMsg("", "");
+        const res = await fetch(url.toString(), { method:"GET" });
+        const data = await res.json();
 
-/* Regeln */
-document.getElementById("acceptRules").onclick = ()=>{
-  document.getElementById("rulesWrap").classList.add("hidden");
-  localStorage.setItem("rulesAccepted","1");
-};
-if(localStorage.getItem("rulesAccepted")) {
-  document.getElementById("rulesWrap").classList.add("hidden");
-}
+        if (!data?.ok) throw new Error(data?.error || "Unbekannter Fehler");
+        renderEntries(Array.isArray(data.entries) ? data.entries : []);
 
-/* Slider */
-const NOISE=["🤫","🙂","😅","😂","😈"];
-const SMELL=["🌸","🌿","🧴","🤢","☠️"];
-function upd(){
-  noiseVal.textContent=NOISE[noise.value];
-  smellVal.textContent=SMELL[smell.value];
-}
-noise.oninput=smell.oninput=upd;
-upd();
+        el("lastUpdate").textContent = "Stand: " + new Date().toLocaleTimeString("de-DE");
+      }catch(err){
+        setMsg("err", "Konnte Einträge nicht laden: " + (err?.message || err));
+      }
+    }
 
-/* Foto */
-photo.onchange=e=>{
-  const f=e.target.files[0];
-  if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{
-    photoDataUrl=r.result;
-    preview.src=r.result;
-    preview.style.display="block";
-  };
-  r.readAsDataURL(f);
-};
+    function renderEntries(entries){
+      const ul = el("entries");
+      ul.innerHTML = "";
 
-/* Glücksschiss */
-let luck=Number(localStorage.getItem("luck")||0);
-luckCount.textContent=luck;
+      if (!entries.length){
+        const li = document.createElement("li");
+        li.className = "tiny";
+        li.textContent = "Noch keine Einträge.";
+        ul.appendChild(li);
+        return;
+      }
 
-luckBtn.onclick=()=>{
-  luck++;
-  localStorage.setItem("luck",luck);
-  luckCount.textContent=luck;
-  fireworks();
-};
+      for (const e of entries){
+        const li = document.createElement("li");
+        li.className = "entry";
 
-/* Feuerwerk */
-function fireworks(){
-  const c=document.getElementById("fx");
-  const ctx=c.getContext("2d");
-  c.width=innerWidth;c.height=innerHeight;
-  let parts=[...Array(80)].map(()=>({
-    x:innerWidth/2,
-    y:innerHeight/3,
-    vx:(Math.random()-.5)*12,
-    vy:(Math.random()-.7)*12,
-    a:1
-  }));
-  (function anim(){
-    ctx.clearRect(0,0,c.width,c.height);
-    parts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.a-=.02;
-      ctx.fillStyle=`rgba(255,255,255,${p.a})`;
-      ctx.fillRect(p.x,p.y,4,4);
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        if (e.FotoURL){
+          const im = document.createElement("img");
+          im.loading = "lazy";
+          im.alt = "Foto";
+          im.src = e.FotoURL;
+          thumb.appendChild(im);
+        } else {
+          thumb.textContent = "kein";
+        }
+
+        const right = document.createElement("div");
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+
+        const name = document.createElement("p");
+        name.className = "name";
+        name.textContent = e.Name || "Anonym";
+
+        const time = document.createElement("div");
+        time.className = "time";
+        time.textContent = formatZeit(e.Zeit);
+
+        meta.appendChild(name);
+        meta.appendChild(time);
+
+        const text = document.createElement("p");
+        text.className = "text";
+        text.textContent = e.Text || "";
+
+        right.appendChild(meta);
+        if (e.Text) right.appendChild(text);
+
+        li.appendChild(thumb);
+        li.appendChild(right);
+
+        ul.appendChild(li);
+      }
+    }
+
+    async function postEntry(payload){
+      const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      // Wenn CORS kaputt ist, kommt man hier oft nicht mal hin -> catch weiter oben
+      const data = await res.json();
+      if (!data?.ok) throw new Error(data?.error || "Speichern fehlgeschlagen");
+      return data;
+    }
+
+    async function sendNowOrQueue(){
+      const pin = (el("pin").value || "").trim();
+      const name = (el("name").value || "").trim();
+      const text = sanitizeText(el("text").value || "");
+      const file = el("photo").files?.[0] || null;
+
+      if (!BACKEND_URL || BACKEND_URL.includes("PASTE_YOUR_BACKEND_URL_HERE")){
+        setMsg("warn", "Backend-URL fehlt. Trag oben BACKEND_URL ein (Proxy oder /exec).");
+        return;
+      }
+      if (!pin){
+        setMsg("warn", "Bitte PIN eingeben.");
+        return;
+      }
+      if (!name && !text && !file){
+        setMsg("warn", "Leerer Eintrag (Name/Text/Foto fehlt).");
+        return;
+      }
+
+      let photoDataUrl = "";
+      if (file){
+        // clientseitig grob prüfen: Apps Script prüft am Ende sowieso
+        if (!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type)){
+          setMsg("warn", "Nicht erlaubter Bildtyp: " + file.type);
+          return;
+        }
+        if (file.size > 3 * 1024 * 1024){
+          setMsg("warn", "Foto ist sehr groß. Bitte kleiner als ~2,5 MB wählen (sonst lehnt Backend ab).");
+          return;
+        }
+        try{
+          photoDataUrl = await readFileAsDataUrl(file);
+        }catch(err){
+          setMsg("err", err?.message || "Foto konnte nicht verarbeitet werden");
+          return;
+        }
+      }
+
+      const payload = { pin, name, text, photoDataUrl };
+
+      // Offline -> in Queue
+      if (!isOnline()){
+        const q = getQueue();
+        q.unshift({ payload, ts: Date.now() });
+        setQueue(q);
+        setMsg("warn", "Kein Netz. Eintrag wurde offline gespeichert und wird später gesendet.");
+        clearFormKeepPin();
+        return;
+      }
+
+      // Online -> direkt senden
+      try{
+        setMsg("", "");
+        el("btnSend").disabled = true;
+
+        const data = await postEntry(payload);
+        setMsg("ok", "Gespeichert ✓" + (data?.fotoUrl ? " (Foto verknüpft)" : ""));
+        clearFormKeepPin();
+        await fetchEntries();
+      }catch(err){
+        // wenn Senden scheitert, trotzdem offline sichern
+        const q = getQueue();
+        q.unshift({ payload, ts: Date.now(), reason: String(err?.message || err) });
+        setQueue(q);
+        setMsg("warn", "Senden fehlgeschlagen, offline gespeichert. Grund: " + (err?.message || err));
+        clearFormKeepPin();
+      }finally{
+        el("btnSend").disabled = false;
+      }
+    }
+
+    function clearFormKeepPin(){
+      el("name").value = "";
+      el("text").value = "";
+      el("photo").value = "";
+    }
+
+    async function flushQueue(){
+      if (!isOnline()){
+        setMsg("warn", "Du bist offline. Erst bei Netz kann gesendet werden.");
+        return;
+      }
+      const q = getQueue();
+      if (!q.length){
+        setMsg("ok", "Kein Offline-Speicher vorhanden.");
+        return;
+      }
+      try{
+        setMsg("", "");
+        el("btnFlush").disabled = true;
+
+        let sent = 0;
+        const remaining = [];
+
+        for (const item of q){
+          try{
+            await postEntry(item.payload);
+            sent++;
+          }catch(err){
+            remaining.push({ ...item, reason: String(err?.message || err) });
+          }
+        }
+
+        setQueue(remaining);
+        setMsg(remaining.length ? "warn" : "ok",
+          remaining.length
+            ? (sent + " gesendet, " + remaining.length + " bleiben (z.B. PIN falsch oder Foto zu groß).")
+            : ("Alle " + sent + " Offline-Einträge gesendet ✓")
+        );
+
+        await fetchEntries();
+      }finally{
+        el("btnFlush").disabled = false;
+      }
+    }
+
+    // =======================
+    // MINI GAME (Canvas)
+    // =======================
+    const canvas = el("game");
+    const ctx = canvas.getContext("2d");
+    function resizeCanvas(){
+      // HiDPI
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    window.addEventListener("resize", resizeCanvas);
+
+    let game = null;
+
+    function resetGame(){
+      const w = canvas.getBoundingClientRect().width;
+      const h = canvas.getBoundingClientRect().height;
+      game = {
+        w, h,
+        t: 0,
+        started: false,
+        over: false,
+        score: 0,
+        best: Number(localStorage.getItem("wcgb_best") || 0),
+        bird: { x: w*0.25, y: h*0.5, vy: 0, r: 12 },
+        pipes: [],
+        nextPipeAt: 0
+      };
+      spawnPipe(true);
+      draw();
+    }
+
+    function spawnPipe(first){
+      const g = game;
+      const gap = Math.max(90, g.h * 0.28);
+      const pad = 22;
+      const topMax = g.h - gap - pad;
+      const topH = pad + Math.random() * (topMax - pad);
+      const x = first ? g.w * 0.85 : g.w + 40;
+      g.pipes.push({ x, topH, passed:false });
+    }
+
+    function flap(){
+      if (!game) return;
+      if (!game.started){
+        game.started = true;
+        game.over = false;
+        game.t = performance.now();
+        requestAnimationFrame(loop);
+      }
+      if (game.over){
+        resetGame();
+        return;
+      }
+      game.bird.vy = -6.2;
+    }
+
+    function loop(now){
+      if (!game || !game.started) return;
+      const g = game;
+      const dt = Math.min(32, now - g.t);
+      g.t = now;
+
+      const w = g.w, h = g.h;
+
+      // physics
+      g.bird.vy += 0.35 * (dt/16);
+      g.bird.y += g.bird.vy * (dt/16);
+
+      // pipes movement
+      const speed = 2.4 * (dt/16);
+      for (const p of g.pipes){
+        p.x -= speed * 2.2;
+        if (!p.passed && p.x + 44 < g.bird.x){
+          p.passed = true;
+          g.score++;
+          if (g.score > g.best){
+            g.best = g.score;
+            localStorage.setItem("wcgb_best", String(g.best));
+          }
+        }
+      }
+      // remove offscreen
+      g.pipes = g.pipes.filter(p => p.x > -80);
+
+      // spawn
+      if (!g.pipes.length || g.pipes[g.pipes.length - 1].x < w * 0.55){
+        spawnPipe(false);
+      }
+
+      // collisions
+      const r = g.bird.r;
+      if (g.bird.y - r < 0 || g.bird.y + r > h){
+        g.over = true;
+      } else {
+        for (const p of g.pipes){
+          const pipeW = 54;
+          const gap = Math.max(90, h * 0.28);
+          const x0 = p.x, x1 = p.x + pipeW;
+          const inX = (g.bird.x + r > x0 && g.bird.x - r < x1);
+          if (inX){
+            const topH = p.topH;
+            const botY = topH + gap;
+            if (g.bird.y - r < topH || g.bird.y + r > botY){
+              g.over = true;
+              break;
+            }
+          }
+        }
+      }
+
+      draw();
+
+      if (!g.over){
+        requestAnimationFrame(loop);
+      } else {
+        g.started = false;
+      }
+    }
+
+    function draw(){
+      if (!game) return;
+      const g = game;
+      const w = g.w, h = g.h;
+
+      // background
+      ctx.clearRect(0,0,w,h);
+
+      // floor line
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      ctx.moveTo(0,h-1);
+      ctx.lineTo(w,h-1);
+      ctx.strokeStyle = "rgba(255,255,255,.10)";
+      ctx.stroke();
+
+      // pipes
+      for (const p of g.pipes){
+        const pipeW = 54;
+        const gap = Math.max(90, h * 0.28);
+        const topH = p.topH;
+        const botY = topH + gap;
+
+        ctx.fillStyle = "rgba(255,255,255,.10)";
+        ctx.strokeStyle = "rgba(255,255,255,.14)";
+
+        // top pipe
+        ctx.fillRect(p.x, 0, pipeW, topH);
+        ctx.strokeRect(p.x, 0, pipeW, topH);
+
+        // bottom pipe
+        ctx.fillRect(p.x, botY, pipeW, h - botY);
+        ctx.strokeRect(p.x, botY, pipeW, h - botY);
+      }
+
+      // bird (Klo-Rolle)
+      const b = g.bird;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fillStyle = "rgba(255,255,255,.22)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,.25)";
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r*0.45, 0, Math.PI*2);
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.stroke();
+
+      // UI text
+      ctx.fillStyle = "rgba(229,231,235,.90)";
+      ctx.font = "14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+      ctx.fillText("Score: " + g.score + "   Best: " + g.best, 14, 22);
+
+      if (!g.started && !g.over && g.score === 0){
+        ctx.fillStyle = "rgba(229,231,235,.75)";
+        ctx.font = "16px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+        ctx.fillText("Tippe oder drücke Leertaste zum Start", 14, 50);
+      }
+      if (g.over){
+        ctx.fillStyle = "rgba(255,237,213,.95)";
+        ctx.font = "16px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+        ctx.fillText("Crash. Tippe/Leertaste für Neustart.", 14, 50);
+      }
+    }
+
+    // =======================
+    // Init + Events
+    // =======================
+    el("btnSend").addEventListener("click", sendNowOrQueue);
+    el("btnLoad").addEventListener("click", fetchEntries);
+    el("btnFlush").addEventListener("click", flushQueue);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space"){
+        e.preventDefault();
+        flap();
+      }
     });
-    parts=parts.filter(p=>p.a>0);
-    if(parts.length) requestAnimationFrame(anim);
-  })();
-}
+    canvas.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      flap();
+    });
 
-/* Laden */
-async function loadEntries(){
-  const r = await fetch(`${EXEC_URL}?pin=${encodeURIComponent(PIN)}&limit=50`, { cache: "no-store" });
-  const d = await r.json();
+    // Default pin for convenience
+    el("pin").value = DEFAULT_PIN;
 
-  const entriesEl = document.getElementById("entries");
-  if (!entriesEl) return;
-
-  if (!d.ok){
-    entriesEl.innerHTML = `<div class="msg err">Laden fehlgeschlagen: ${d.error || "Unbekannt"}</div>`;
-    return;
-  }
-
-  const list = Array.isArray(d.entries) ? d.entries : [];
-  if (!list.length){
-    entriesEl.innerHTML = `<div class="sub">Noch keine Einträge.</div>`;
-    return;
-  }
-
-  entriesEl.innerHTML = list.map(e => {
-    const name = (e.Name || e.name || "Gast");
-    const text = (e.Text || e.text || "");
-    const foto = (e.FotoURL || e.foto || "");
-    const zeit = (e.Zeit || e.zeit || "");
-
-    const img = foto ? `<img src="${foto}" alt="">` : `<div style="width:44px;height:44px;border-radius:50%;border:1px solid #333;background:#111;"></div>`;
-    const meta = zeit ? `<div class="sub" style="margin-top:4px;">${zeit}</div>` : "";
-
-    return `
-      <div class="entry">
-        ${img}
-        <div>
-          <strong>${escapeHtml(name)}</strong><br>
-          ${escapeHtml(text).replace(/\n/g, "<br>")}
-          ${meta}
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-
-/* Absenden */
-sendBtn.onclick=async()=>{
-  msg.textContent="Sende...";
-  const body={
-    pin:PIN,
-    name:name.value,
-    text:text.value+
-      `\nGeräusch:${NOISE[noise.value]} Duft:${SMELL[smell.value]}`,
-    photoDataUrl
-  };
-
-  const r=await fetch(EXEC_URL,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(body)
-  });
-  const d=await r.json();
-
-  if(d.ok){
-    msg.textContent="Gespeichert!";
-    msg.className="msg ok";
-    name.value=text.value="";
-    preview.style.display="none";
-    photoDataUrl=null;
-    loadEntries();
-  } else {
-    msg.textContent=d.error||"Fehler";
-    msg.className="msg err";
-  }
-};
-
-loadEntries();
-</script>
-
+    // boot
+    updateNetUI();
+    resizeCanvas();
+    resetGame();
+    fetchEntries();
+    updateQueueHint();
+  </script>
 </body>
 </html>
-
