@@ -345,21 +345,45 @@ function fireworks(){
 
 /* Laden */
 async function loadEntries(){
-  const r=await fetch(`${EXEC_URL}?pin=${PIN}`);
-  const d=await r.json();
-  entries.innerHTML="";
-  d.entries.forEach(e=>{
-    const div=document.createElement("div");
-    div.className="entry";
-    div.innerHTML=`
-      ${e.foto?`<img src="${e.foto}">`:""}
-      <div>
-        <strong>${e.name||""}</strong><br>
-        ${e.text||""}
-      </div>`;
-    entries.appendChild(div);
-  });
+  const r = await fetch(`${EXEC_URL}?pin=${encodeURIComponent(PIN)}&limit=50`, { cache: "no-store" });
+  const d = await r.json();
+
+  const entriesEl = document.getElementById("entries");
+  if (!entriesEl) return;
+
+  if (!d.ok){
+    entriesEl.innerHTML = `<div class="msg err">Laden fehlgeschlagen: ${d.error || "Unbekannt"}</div>`;
+    return;
+  }
+
+  const list = Array.isArray(d.entries) ? d.entries : [];
+  if (!list.length){
+    entriesEl.innerHTML = `<div class="sub">Noch keine Einträge.</div>`;
+    return;
+  }
+
+  entriesEl.innerHTML = list.map(e => {
+    const name = (e.Name || e.name || "Gast");
+    const text = (e.Text || e.text || "");
+    const foto = (e.FotoURL || e.foto || "");
+    const zeit = (e.Zeit || e.zeit || "");
+
+    const img = foto ? `<img src="${foto}" alt="">` : `<div style="width:44px;height:44px;border-radius:50%;border:1px solid #333;background:#111;"></div>`;
+    const meta = zeit ? `<div class="sub" style="margin-top:4px;">${zeit}</div>` : "";
+
+    return `
+      <div class="entry">
+        ${img}
+        <div>
+          <strong>${escapeHtml(name)}</strong><br>
+          ${escapeHtml(text).replace(/\n/g, "<br>")}
+          ${meta}
+        </div>
+      </div>
+    `;
+  }).join("");
 }
+
 
 /* Absenden */
 sendBtn.onclick=async()=>{
@@ -397,3 +421,4 @@ loadEntries();
 
 </body>
 </html>
+
