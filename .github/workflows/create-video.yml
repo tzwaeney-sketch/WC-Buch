@@ -1,0 +1,73 @@
+name: Slideshow Video erstellen
+
+on:
+  push:
+    branches: [main]
+    # Nur auslösen wenn sich relevante Dateien ändern (nicht das Video selbst)
+    paths-ignore:
+      - "slideshow.mp4"
+      - ".github/workflows/create-video.yml"
+  workflow_dispatch:
+    inputs:
+      video_title:
+        description: "Titel im Video"
+        required: false
+        default: "WC Gästebuch"
+      photo_duration:
+        description: "Sekunden pro Foto"
+        required: false
+        default: "4"
+
+permissions:
+  contents: write
+
+jobs:
+  create-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Systemabhängigkeiten installieren (ffmpeg + Schriften)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            ffmpeg \
+            fonts-dejavu-core
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-slideshow.txt
+
+      - name: Python-Pakete installieren
+        run: pip install -r requirements-slideshow.txt
+
+      - name: Slideshow erstellen
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+          OUTPUT_VIDEO: slideshow.mp4
+          VIDEO_TITLE: ${{ github.event.inputs.video_title || 'WC Gästebuch' }}
+          PHOTO_DURATION: ${{ github.event.inputs.photo_duration || '4' }}
+          # Musik: Datei music.mp3 im Root des Repos ablegen (optional)
+          MUSIC_FILE: music.mp3
+        run: python scripts/create_slideshow.py
+
+      - name: Video ins Repository committen
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add slideshow.mp4
+          if git diff --staged --quiet; then
+            echo "Keine Änderungen am Video – nichts zu committen."
+          else
+            git commit -m "Auto: Slideshow aktualisiert [skip ci]"
+            git push origin HEAD
+          fi
