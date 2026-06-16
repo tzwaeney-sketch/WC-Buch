@@ -236,20 +236,22 @@ def verify_hollow(mesh, name):
 def make_1_fuss():
     """
     1  FUSS – Breite stabile Kreisscheibe  Ø200 × 50mm  [PETG Schwarz]
-    Schwerer Sockel. Unten flach (kein Bajonett). Oben Male-Peg.
-    Profil: breite Scheibe mit leichtem Wulst-Rand.
+    Schwerer Sockel. Unten flach. Oben Male-Peg.
+    Kabelaustritt-Kerbe seitlich (-Y Seite): 15mm breit × 25mm hoch.
+    Kabel läuft durch den Ø44mm Kanal, biegt an der Kerbe seitlich raus,
+    und liegt am Boden zur Steckdose hin.
     """
     H = 50.0
-    outer = [
-        [SOCK_OR, 0], [100.0, 0], [100.0, 4],   # Außenkante mit Fase
-        [98.0, H-2],  [100.0, H-2], [100.0, H],  # Deckel-Kante
-    ]
-    # Statt dieser Punkte: einfachere Disk-Form
     body = revolve_profile(
         [[SOCK_OR, 0], [100.0, 0], [100.0, H]],
         inner_r=CABLE_R, height=H
     )
     m = union2(body, male_peg(H))
+    # Kabelaustritt-Kerbe: seitlicher Schlitz durch die Fuß-Wand
+    # Box: 15mm breit (X), 130mm tief (-Y, von Mitte bis hinter Außenwand), 25mm hoch (Z)
+    notch = trimesh.creation.box(extents=[15.0, 130.0, 25.0])
+    notch = moved(notch, y=-65.0, z=12.5)   # → x:-7.5..7.5  y:-130..0  z:0..25
+    m = diff(m, notch)
     if not m.is_watertight: m.fill_holes(); m.fix_normals()
     return m
 
@@ -320,21 +322,64 @@ def make_6_schirm():
     6  SCHIRM – Konischer Lampenschirm  Ø220 → Ø66 × 110mm  [PETG Rot]
     RUND · Öffnet nach unten → Licht unten.
     Oben Female-Buchse (steckt auf letztes Körpermodul).
-    Kabelkanal durchgehend: E14 Fassung hängt in der Öffnung.
+    Innen bei z=25mm: Ring-Ablage Ø38mm für IKEA STRÄLA E14 Fassung.
+    Montage: Kabel von oben durch Kanal fädeln, Fassung an Kabel anschließen,
+    Fassung ruht auf der Ring-Ablage, Glühbirne hängt nach unten.
     """
     H = 110.0; R_TOP = SOCK_OR; R_BOT = 110.0
-    # Schirm: Kegel öffnet nach UNTEN
-    # In unserem Koordinatensystem: unten = z=0 (breit, offen), oben = z=H (schmal, Female-Buchse)
-    # Profile: innen bei z=0 offen (CABLE_R), außen bei z=0 breit (R_BOT)
     body = revolve_profile(
-        [[R_TOP, 0], [R_BOT, H]],   # außen: schmal oben → breit unten (wir spiegeln danach)
+        [[R_TOP, 0], [R_BOT, H]],
         inner_r=CABLE_R, height=H
     )
-    # Spiegeln: Schirm-Öffnung nach unten drehen
     body = rotated_x(body, 180)
     body = moved(body, z=H)
-    # Female-Buchse bei z=H (Oberkante = Verbindung zum Modul darunter)
-    m = union2(body, female_socket(H))
+    # E14-Fassungs-Ablage: Innen-Ø38mm, 3mm dick, bei z=25mm (25mm vom Öffnungsrand)
+    # IKEA STRÄLA E14 Fassungskörper Ø~40mm → liegt auf dem Ø38mm-Ring auf
+    # Kabel (Ø<10mm) passiert problemlos durch Ø38mm Bohrung
+    ledge = ring(55.0, 19.0, 3.0)    # r_out=55mm, r_in=19mm → Ø38mm Bohrung
+    ledge = moved(ledge, z=25.0)
+    m = union_all(body, female_socket(H), ledge)
+    if not m.is_watertight: m.fill_holes(); m.fix_normals()
+    return m
+
+def make_6_schirm_vase():
+    """
+    6B SCHIRM VASENMODUS – Dünnwandiger Kegel 2mm Wand  [PETG Rot/Transluzent]
+    Für Bambu Studio: Prozess → Weitere → 'Spiral-Vase' aktivieren.
+    2mm Wandstärke → Licht scheint durch · Sehr schneller Druck (~1h).
+    Gleiche Geometrie wie regulärer Schirm, ohne E14-Ablage.
+    Female-Buchse oben wie beim Normaldruck.
+    """
+    H = 110.0; R_BOT = 110.0; R_TOP = SOCK_OR; WALL = 2.0; N = SEG
+    # 4 Punkte-Ringe:
+    # R0: inner bottom (r=R_BOT-WALL, z=0)
+    # R1: outer bottom (r=R_BOT,      z=0)
+    # R2: inner top    (r=R_TOP-WALL,  z=H)
+    # R3: outer top    (r=R_TOP,       z=H)
+    rings_def = [
+        (R_BOT - WALL, 0.0),
+        (R_BOT,        0.0),
+        (R_TOP - WALL, H),
+        (R_TOP,        H),
+    ]
+    verts = []
+    for r, z in rings_def:
+        for j in range(N):
+            a = 2*np.pi*j/N
+            verts.append([r*np.cos(a), r*np.sin(a), z])
+    verts = np.array(verts, float)
+    R0, R1, R2, R3 = 0, N, 2*N, 3*N
+    faces = []
+    for j in range(N):
+        nj = (j+1)%N
+        faces += [[R1+j, R1+nj, R3+nj], [R1+j, R3+nj, R3+j]]   # Außenwand
+        faces += [[R0+j, R2+j,  R0+nj], [R0+nj, R2+j,  R2+nj]] # Innenwand
+        faces += [[R2+j, R3+j,  R3+nj], [R2+j, R3+nj,  R2+nj]] # Deckel oben
+        faces += [[R0+j, R1+nj, R1+j],  [R0+j, R0+nj,  R1+nj]] # Boden (geschlossen für Slicer)
+    m = trimesh.Trimesh(vertices=verts, faces=np.array(faces))
+    m.fix_normals()
+    sock = female_socket(H)
+    m = union2(m, sock)
     if not m.is_watertight: m.fill_holes(); m.fix_normals()
     return m
 
@@ -346,12 +391,13 @@ HEIGHTS = {
     "Fuss":50,"Kugel":90,"Wuerfel":88,"Sechseck":110,"Raute":140,"Schirm":110
 }
 PARTS = [
-    ("1_Fuss_Basis_50mm",         make_1_fuss,     "PETG Schwarz"),
-    ("2_Kugel_Round_90mm",        make_2_kugel,    "PETG Gelb"),
-    ("3_Wuerfel_Square_88mm",     make_3_wuerfel,  "PETG Blau"),
-    ("4_Sechseck_Hex_110mm",      make_4_sechseck, "PETG Gruen"),
-    ("5_Raute_Diamant_140mm",     make_5_raute,    "PETG Lila"),
-    ("6_Schirm_Konus_110mm",      make_6_schirm,   "PETG Rot"),
+    ("1_Fuss_Basis_50mm",         make_1_fuss,          "PETG Schwarz", True),
+    ("2_Kugel_Round_90mm",        make_2_kugel,         "PETG Gelb",    True),
+    ("3_Wuerfel_Square_88mm",     make_3_wuerfel,       "PETG Blau",    True),
+    ("4_Sechseck_Hex_110mm",      make_4_sechseck,      "PETG Gruen",   True),
+    ("5_Raute_Diamant_140mm",     make_5_raute,         "PETG Lila",    True),
+    ("6_Schirm_Konus_110mm",      make_6_schirm,        "PETG Rot",     True),
+    ("6B_Schirm_Vase_110mm",      make_6_schirm_vase,   "PETG Rot/Transluzent", False),
 ]
 
 def main():
@@ -378,7 +424,7 @@ def main():
 
     print(f"\n  STL-Export → {OUT}/\n")
     all_ok = True
-    for name, fn, color in PARTS:
+    for name, fn, color, check_hollow in PARTS:
         print(f"  Baue  {name}  [{color}]")
         try:
             m = fn()
@@ -387,7 +433,10 @@ def main():
             print(f"    Mesh: {'WASSERDICHT' if wt else '!NICHT WASSERDICHT'} · "
                   f"{bb[0]:.0f}×{bb[1]:.0f}×{bb[2]:.0f}mm · "
                   f"{m.volume/1000:.0f}cm³ · {len(m.vertices):,} Vertices")
-            verify_hollow(m, name)
+            if check_hollow:
+                verify_hollow(m, name)
+            else:
+                print(f"    (Vasenmodus – kein Kanaltest)")
             m.export(f"{OUT}/{name}.stl")
             if not wt: all_ok = False
         except Exception as e:
@@ -406,8 +455,19 @@ def main():
     print("  Stützstruk:  Nur für Schirm (Überhang ~45°)")
     print("  Toleranz:    Bajonett 0.6mm Spiel · passt sofort")
     print()
+    print("  Schirm-Montage (IKEA STRÄLA E14):")
+    print("    1. Kabel von OBEN durch alle Module fädeln")
+    print("    2. Kabel am Fuß durch die seitliche Kerbe (-Y Seite) herausführen")
+    print("    3. STRÄLA Fassung an Kabelende anschließen")
+    print("    4. Fassung in Schirm-Öffnung einlegen → ruht auf Ø38mm Ring-Ablage")
+    print("    5. Schuko-Stecker am anderen Kabelende")
+    print()
+    print("  Vasenmodus (6B_Schirm_Vase_110mm.stl):")
+    print("    Bambu Studio: Prozess → Weitere → 'Spiral-Vase' ✓")
+    print("    → Schicht 0.15mm · 0 Bodenschichten · transluzenter Effekt")
+    print()
     print("  Farben (Bauhaus-Palette):")
-    for _, _, c in PARTS: print(f"    {c}")
+    for _, _, c, _ in PARTS: print(f"    {c}")
 
 if __name__ == "__main__":
     main()
