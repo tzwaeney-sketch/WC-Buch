@@ -1,0 +1,478 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1040" viewBox="0 0 1400 1040">
+<rect width="1400" height="1040" fill="#f5f0e8"/>
+<defs>
+  <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#cc3333"/>
+  </marker>
+</defs>
+<rect x="20" y="20" width="1360" height="1000" fill="none" stroke="#1a1a1a" stroke-width="1.5" rx="0"/>
+<line x1="20" y1="70" x2="1380" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="700.0" y="52" font-size="22" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">BAMBUS-MODULLAMPE  ·  BAUHAUS-STIL</text>
+<text x="1340" y="52" font-size="11" text-anchor="end" font-weight="normal" fill="#555" font-family="Courier New, monospace">1:2</text>
+<text x="80" y="52" font-size="10" text-anchor="start" font-weight="normal" fill="#555" font-family="Courier New, monospace">Technische Zeichnung — 6 Elemente + Montage</text>
+<text x="175" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">A  FUSS 1</text>
+<text x="175" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Schwere Basis</text>
+<text x="430" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">B  FUSS 2</text>
+<text x="430" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Konische Basis</text>
+<text x="685" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">C  SCHIRM 1</text>
+<text x="685" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Bauhaus-Disc</text>
+<text x="940" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">D  SCHIRM 2</text>
+<text x="940" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Konus-Schirm</text>
+<text x="1175" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">E  SCHIRM 3</text>
+<text x="1175" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Dom-Schirm</text>
+<text x="1360" y="90" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">F  STIEL</text>
+<text x="1360" y="104" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Verbinder</text>
+<line x1="310" y1="70" x2="310" y2="1020" stroke="#ccc" stroke-width="0.8" stroke-dasharray="4,4"/>
+<line x1="555" y1="70" x2="555" y2="1020" stroke="#ccc" stroke-width="0.8" stroke-dasharray="4,4"/>
+<line x1="810" y1="70" x2="810" y2="1020" stroke="#ccc" stroke-width="0.8" stroke-dasharray="4,4"/>
+<line x1="1060" y1="70" x2="1060" y2="1020" stroke="#ccc" stroke-width="0.8" stroke-dasharray="4,4"/>
+<line x1="1275" y1="70" x2="1275" y2="1020" stroke="#ccc" stroke-width="0.8" stroke-dasharray="4,4"/>
+<rect x="120.0" y="276.0" width="110" height="28" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="125.0" y1="276.0" x2="125.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="130.0" y1="276.0" x2="130.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="135.0" y1="276.0" x2="135.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="140.0" y1="276.0" x2="140.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="145.0" y1="276.0" x2="145.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="150.0" y1="276.0" x2="150.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="155.0" y1="276.0" x2="155.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="160.0" y1="276.0" x2="160.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="165.0" y1="276.0" x2="165.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="170.0" y1="276.0" x2="170.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="175.0" y1="276.0" x2="175.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="180.0" y1="276.0" x2="180.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="185.0" y1="276.0" x2="185.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="190.0" y1="276.0" x2="190.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="195.0" y1="276.0" x2="195.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="200.0" y1="276.0" x2="200.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="205.0" y1="276.0" x2="205.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="210.0" y1="276.0" x2="210.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="215.0" y1="276.0" x2="215.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="220.0" y1="276.0" x2="220.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="225.0" y1="276.0" x2="225.0" y2="304.0" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="153" y="276.0" width="44" height="28" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="120.0" y="296.0" width="110" height="8" fill="#4a4a4a" stroke="#1a1a1a" stroke-width="0.8" rx="3"/>
+<rect x="149.0" y="268.0" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="154.0" y1="268.0" x2="154.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="159.0" y1="268.0" x2="159.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="164.0" y1="268.0" x2="164.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="169.0" y1="268.0" x2="169.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="174.0" y1="268.0" x2="174.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="179.0" y1="268.0" x2="179.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="184.0" y1="268.0" x2="184.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="189.0" y1="268.0" x2="189.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="194.0" y1="268.0" x2="194.0" y2="276.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="162.0" y1="268.0" x2="162.0" y2="276.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="188.0" y1="268.0" x2="188.0" y2="276.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="175" y1="261.0" x2="175" y2="309.0" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="120.0" y1="324.0" x2="153" y2="324.0" stroke="#555" stroke-width="0.8"/>
+<line x1="120.0" y1="320.0" x2="120.0" y2="328.0" stroke="#555" stroke-width="0.8"/>
+<line x1="153" y1="320.0" x2="153" y2="328.0" stroke="#555" stroke-width="0.8"/>
+<text x="136.5" y="342.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">44mm</text>
+<line x1="120.0" y1="336.0" x2="230.0" y2="336.0" stroke="#555" stroke-width="0.8"/>
+<line x1="120.0" y1="332.0" x2="120.0" y2="340.0" stroke="#555" stroke-width="0.8"/>
+<line x1="230.0" y1="332.0" x2="230.0" y2="340.0" stroke="#555" stroke-width="0.8"/>
+<text x="175.0" y="354.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">110mm</text>
+<line x1="240.0" y1="276.0" x2="240.0" y2="304.0" stroke="#555" stroke-width="0.8"/>
+<line x1="236.0" y1="276.0" x2="244.0" y2="276.0" stroke="#555" stroke-width="0.8"/>
+<line x1="236.0" y1="304.0" x2="244.0" y2="304.0" stroke="#555" stroke-width="0.8"/>
+<text x="254.0" y="294.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">28mm</text>
+<circle cx="260" cy="280" r="22" fill="#c8a96e" stroke="#7a5530" stroke-width="1"/>
+<circle cx="260" cy="280" r="22" fill="#f5f0e8" stroke="#7a5530" stroke-width="1"/>
+<text x="260" y="315" font-size="7" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Draufsicht</text>
+<circle cx="282.0" cy="280.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="260.0" cy="302.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="238.0" cy="280.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="260.0" cy="258.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<path d="M 406.0 287.5 L 454.0 287.5 L 495.0 332.5 L 365.0 332.5 Z" fill="#c8a96e" stroke="#a07840" stroke-width="1.2"/>
+<path d="M 408.0 287.5 L 452.0 287.5 L 454.0 332.5 L 406.0 332.5 Z" fill="#f5f0e8" stroke="#7a5530" stroke-width="1.2"/>
+<line x1="365.0" y1="332.5" x2="495.0" y2="332.5" stroke="#7a5530" stroke-width="1.5"/>
+<circle cx="377.0" cy="338.5" r="5" fill="#4a4a4a" stroke="#1a1a1a" stroke-width="0.8"/>
+<circle cx="483.0" cy="338.5" r="5" fill="#4a4a4a" stroke="#1a1a1a" stroke-width="0.8"/>
+<rect x="404.0" y="279.5" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="409.0" y1="279.5" x2="409.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="414.0" y1="279.5" x2="414.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="419.0" y1="279.5" x2="419.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="424.0" y1="279.5" x2="424.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="429.0" y1="279.5" x2="429.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="434.0" y1="279.5" x2="434.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="439.0" y1="279.5" x2="439.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="444.0" y1="279.5" x2="444.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="449.0" y1="279.5" x2="449.0" y2="287.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="417.0" y1="279.5" x2="417.0" y2="287.5" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="443.0" y1="279.5" x2="443.0" y2="287.5" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="430" y1="272.5" x2="430" y2="347.5" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="365.0" y1="360.5" x2="495.0" y2="360.5" stroke="#555" stroke-width="0.8"/>
+<line x1="365.0" y1="356.5" x2="365.0" y2="364.5" stroke="#555" stroke-width="0.8"/>
+<line x1="495.0" y1="356.5" x2="495.0" y2="364.5" stroke="#555" stroke-width="0.8"/>
+<text x="430.0" y="378.5" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">130mm</text>
+<line x1="406.0" y1="265.5" x2="454.0" y2="265.5" stroke="#555" stroke-width="0.8"/>
+<line x1="406.0" y1="261.5" x2="406.0" y2="269.5" stroke="#555" stroke-width="0.8"/>
+<line x1="454.0" y1="261.5" x2="454.0" y2="269.5" stroke="#555" stroke-width="0.8"/>
+<text x="430.0" y="251.5" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">48mm</text>
+<line x1="507.0" y1="287.5" x2="507.0" y2="332.5" stroke="#555" stroke-width="0.8"/>
+<line x1="503.0" y1="287.5" x2="511.0" y2="287.5" stroke="#555" stroke-width="0.8"/>
+<line x1="503.0" y1="332.5" x2="511.0" y2="332.5" stroke="#555" stroke-width="0.8"/>
+<text x="521.0" y="314.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">45mm</text>
+<rect x="605.0" y="289.0" width="160" height="22" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="610.0" y1="289.0" x2="610.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="615.0" y1="289.0" x2="615.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="620.0" y1="289.0" x2="620.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="625.0" y1="289.0" x2="625.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="630.0" y1="289.0" x2="630.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="635.0" y1="289.0" x2="635.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="640.0" y1="289.0" x2="640.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="645.0" y1="289.0" x2="645.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="650.0" y1="289.0" x2="650.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="655.0" y1="289.0" x2="655.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="660.0" y1="289.0" x2="660.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="665.0" y1="289.0" x2="665.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="670.0" y1="289.0" x2="670.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="675.0" y1="289.0" x2="675.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="680.0" y1="289.0" x2="680.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="685.0" y1="289.0" x2="685.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="690.0" y1="289.0" x2="690.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="695.0" y1="289.0" x2="695.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="700.0" y1="289.0" x2="700.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="705.0" y1="289.0" x2="705.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="710.0" y1="289.0" x2="710.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="715.0" y1="289.0" x2="715.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="720.0" y1="289.0" x2="720.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="725.0" y1="289.0" x2="725.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="730.0" y1="289.0" x2="730.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="735.0" y1="289.0" x2="735.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="740.0" y1="289.0" x2="740.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="745.0" y1="289.0" x2="745.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="750.0" y1="289.0" x2="750.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="755.0" y1="289.0" x2="755.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="760.0" y1="289.0" x2="760.0" y2="311.0" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="663" y="289.0" width="44" height="22" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="659.0" y="311.0" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="664.0" y1="311.0" x2="664.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="669.0" y1="311.0" x2="669.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="674.0" y1="311.0" x2="674.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="679.0" y1="311.0" x2="679.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="684.0" y1="311.0" x2="684.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="689.0" y1="311.0" x2="689.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="694.0" y1="311.0" x2="694.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="699.0" y1="311.0" x2="699.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="704.0" y1="311.0" x2="704.0" y2="319.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="672.0" y1="311.0" x2="672.0" y2="319.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="698.0" y1="311.0" x2="698.0" y2="319.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<rect x="659.0" y="281.0" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="664.0" y1="281.0" x2="664.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="669.0" y1="281.0" x2="669.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="674.0" y1="281.0" x2="674.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="679.0" y1="281.0" x2="679.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="684.0" y1="281.0" x2="684.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="689.0" y1="281.0" x2="689.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="694.0" y1="281.0" x2="694.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="699.0" y1="281.0" x2="699.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="704.0" y1="281.0" x2="704.0" y2="289.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="672.0" y1="281.0" x2="672.0" y2="289.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="698.0" y1="281.0" x2="698.0" y2="289.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="685" y1="271.0" x2="685" y2="329.0" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="605.0" y1="339.0" x2="765.0" y2="339.0" stroke="#555" stroke-width="0.8"/>
+<line x1="605.0" y1="335.0" x2="605.0" y2="343.0" stroke="#555" stroke-width="0.8"/>
+<line x1="765.0" y1="335.0" x2="765.0" y2="343.0" stroke="#555" stroke-width="0.8"/>
+<text x="685.0" y="357.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">160mm</text>
+<line x1="591.0" y1="289.0" x2="591.0" y2="311.0" stroke="#555" stroke-width="0.8"/>
+<line x1="587.0" y1="289.0" x2="595.0" y2="289.0" stroke="#555" stroke-width="0.8"/>
+<line x1="587.0" y1="311.0" x2="595.0" y2="311.0" stroke="#555" stroke-width="0.8"/>
+<text x="577.0" y="304.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">22mm</text>
+<line x1="663" y1="267.0" x2="707" y2="267.0" stroke="#555" stroke-width="0.8"/>
+<line x1="663" y1="263.0" x2="663" y2="271.0" stroke="#555" stroke-width="0.8"/>
+<line x1="707" y1="263.0" x2="707" y2="271.0" stroke="#555" stroke-width="0.8"/>
+<text x="685.0" y="253.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">44mm</text>
+<circle cx="790" cy="300" r="34" fill="#c8a96e" stroke="#7a5530" stroke-width="1"/>
+<circle cx="790" cy="300" r="22" fill="#f5f0e8" stroke="#7a5530" stroke-width="1"/>
+<circle cx="824.0" cy="300.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="790.0" cy="334.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="756.0" cy="300.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<circle cx="790.0" cy="266.0" r="4" fill="#7a5530" stroke="#7a5530" stroke-width="0.5"/>
+<text x="790" y="348" font-size="7" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Draufsicht</text>
+<path d="M 915.0 300.0 L 965.0 300.0 L 1030.0 360.0 L 850.0 360.0 Z" fill="#c8a96e" stroke="#a07840" stroke-width="1.2"/>
+<path d="M 918.0 300.0 L 962.0 300.0 L 962.0 360.0 L 918.0 360.0 Z" fill="#f5f0e8" stroke="#7a5530" stroke-width="1.2"/>
+<line x1="850.0" y1="360.0" x2="1030.0" y2="360.0" stroke="#7a5530" stroke-width="1.5"/>
+<rect x="914.0" y="292.0" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="919.0" y1="292.0" x2="919.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="924.0" y1="292.0" x2="924.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="929.0" y1="292.0" x2="929.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="934.0" y1="292.0" x2="934.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="939.0" y1="292.0" x2="939.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="944.0" y1="292.0" x2="944.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="949.0" y1="292.0" x2="949.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="954.0" y1="292.0" x2="954.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="959.0" y1="292.0" x2="959.0" y2="300.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="927.0" y1="292.0" x2="927.0" y2="300.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="953.0" y1="292.0" x2="953.0" y2="300.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="940" y1="282.0" x2="940" y2="370.0" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="850.0" y1="380.0" x2="1030.0" y2="380.0" stroke="#555" stroke-width="0.8"/>
+<line x1="850.0" y1="376.0" x2="850.0" y2="384.0" stroke="#555" stroke-width="0.8"/>
+<line x1="1030.0" y1="376.0" x2="1030.0" y2="384.0" stroke="#555" stroke-width="0.8"/>
+<text x="940.0" y="398.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">180mm</text>
+<line x1="915.0" y1="278.0" x2="965.0" y2="278.0" stroke="#555" stroke-width="0.8"/>
+<line x1="915.0" y1="274.0" x2="915.0" y2="282.0" stroke="#555" stroke-width="0.8"/>
+<line x1="965.0" y1="274.0" x2="965.0" y2="282.0" stroke="#555" stroke-width="0.8"/>
+<text x="940.0" y="264.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">50mm</text>
+<line x1="1044.0" y1="300.0" x2="1044.0" y2="360.0" stroke="#555" stroke-width="0.8"/>
+<line x1="1040.0" y1="300.0" x2="1048.0" y2="300.0" stroke="#555" stroke-width="0.8"/>
+<line x1="1040.0" y1="360.0" x2="1048.0" y2="360.0" stroke="#555" stroke-width="0.8"/>
+<text x="1058.0" y="334.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">60mm</text>
+<path d="M 1150.0 337.5 L 1090.0 322.5 A 85.0 40 0 0 1 1260.0 322.5 L 1200.0 337.5 Z" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2"/>
+<path d="M 1153 337.5 L 1153 322.5 L 1153 322.5 A 22 16.0 0 0 1 1197 322.5 L 1197 337.5 Z" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8"/>
+<line x1="1150.0" y1="337.5" x2="1090.0" y2="322.5" stroke="#7a5530" stroke-width="1.2"/>
+<line x1="1200.0" y1="337.5" x2="1260.0" y2="322.5" stroke="#7a5530" stroke-width="1.2"/>
+<rect x="1149.0" y="337.5" width="52" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="1154.0" y1="337.5" x2="1154.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1159.0" y1="337.5" x2="1159.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1164.0" y1="337.5" x2="1164.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1169.0" y1="337.5" x2="1169.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1174.0" y1="337.5" x2="1174.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1179.0" y1="337.5" x2="1179.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1184.0" y1="337.5" x2="1184.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1189.0" y1="337.5" x2="1189.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1194.0" y1="337.5" x2="1194.0" y2="345.5" stroke="#a07840" stroke-width="0.25"/>
+<line x1="1162.0" y1="337.5" x2="1162.0" y2="345.5" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="1188.0" y1="337.5" x2="1188.0" y2="345.5" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="1175" y1="277.5" x2="1175" y2="355.5" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="1090.0" y1="361.5" x2="1260.0" y2="361.5" stroke="#555" stroke-width="0.8"/>
+<line x1="1090.0" y1="357.5" x2="1090.0" y2="365.5" stroke="#555" stroke-width="0.8"/>
+<line x1="1260.0" y1="357.5" x2="1260.0" y2="365.5" stroke="#555" stroke-width="0.8"/>
+<text x="1175.0" y="379.5" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">170mm</text>
+<line x1="1274.0" y1="282.5" x2="1274.0" y2="337.5" stroke="#555" stroke-width="0.8"/>
+<line x1="1270.0" y1="282.5" x2="1278.0" y2="282.5" stroke="#555" stroke-width="0.8"/>
+<line x1="1270.0" y1="337.5" x2="1278.0" y2="337.5" stroke="#555" stroke-width="0.8"/>
+<text x="1288.0" y="314.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">55mm</text>
+<rect x="56.0" y="620.0" width="48" height="80" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="61.0" y1="620.0" x2="61.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="66.0" y1="620.0" x2="66.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="71.0" y1="620.0" x2="71.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="76.0" y1="620.0" x2="76.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="81.0" y1="620.0" x2="81.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="86.0" y1="620.0" x2="86.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="91.0" y1="620.0" x2="91.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="96.0" y1="620.0" x2="96.0" y2="700.0" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="58" y="620.0" width="44" height="80" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="53.0" y="612.0" width="54" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="58.0" y1="612.0" x2="58.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="63.0" y1="612.0" x2="63.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="68.0" y1="612.0" x2="68.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="73.0" y1="612.0" x2="73.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="78.0" y1="612.0" x2="78.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="83.0" y1="612.0" x2="83.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="88.0" y1="612.0" x2="88.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="93.0" y1="612.0" x2="93.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="98.0" y1="612.0" x2="98.0" y2="620.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="66.5" y1="612.0" x2="66.5" y2="620.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="93.5" y1="612.0" x2="93.5" y2="620.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<rect x="53.0" y="700.0" width="54" height="8" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="58.0" y1="700.0" x2="58.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="63.0" y1="700.0" x2="63.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="68.0" y1="700.0" x2="68.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="73.0" y1="700.0" x2="73.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="78.0" y1="700.0" x2="78.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="83.0" y1="700.0" x2="83.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="88.0" y1="700.0" x2="88.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="93.0" y1="700.0" x2="93.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="98.0" y1="700.0" x2="98.0" y2="708.0" stroke="#a07840" stroke-width="0.25"/>
+<line x1="66.5" y1="700.0" x2="66.5" y2="708.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="93.5" y1="700.0" x2="93.5" y2="708.0" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="80" y1="602.0" x2="80" y2="718.0" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<line x1="42.0" y1="620.0" x2="42.0" y2="700.0" stroke="#555" stroke-width="0.8"/>
+<line x1="38.0" y1="620.0" x2="46.0" y2="620.0" stroke="#555" stroke-width="0.8"/>
+<line x1="38.0" y1="700.0" x2="46.0" y2="700.0" stroke="#555" stroke-width="0.8"/>
+<text x="28.0" y="664.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">80mm</text>
+<line x1="56.0" y1="724.0" x2="104.0" y2="724.0" stroke="#555" stroke-width="0.8"/>
+<line x1="56.0" y1="720.0" x2="56.0" y2="728.0" stroke="#555" stroke-width="0.8"/>
+<line x1="104.0" y1="720.0" x2="104.0" y2="728.0" stroke="#555" stroke-width="0.8"/>
+<text x="80.0" y="742.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">48mm</text>
+<line x1="58" y1="598.0" x2="102" y2="598.0" stroke="#555" stroke-width="0.8"/>
+<line x1="58" y1="594.0" x2="58" y2="602.0" stroke="#555" stroke-width="0.8"/>
+<line x1="102" y1="594.0" x2="102" y2="602.0" stroke="#555" stroke-width="0.8"/>
+<text x="80.0" y="584.0" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">44mm</text>
+<text x="80" y="740.0" font-size="8" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">stapelbar</text>
+<rect x="28" y="490" width="270" height="230" fill="white" stroke="#aaa" stroke-width="0.8" rx="4"/>
+<text x="163" y="506" font-size="9" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">BAJONETT-DETAIL  (Querschnitt)</text>
+<rect x="99" y="582" width="112" height="16" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="104" y1="582" x2="104" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="109" y1="582" x2="109" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="114" y1="582" x2="114" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="119" y1="582" x2="119" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="124" y1="582" x2="124" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="129" y1="582" x2="129" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="134" y1="582" x2="134" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="139" y1="582" x2="139" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="144" y1="582" x2="144" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="149" y1="582" x2="149" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="154" y1="582" x2="154" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="159" y1="582" x2="159" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="164" y1="582" x2="164" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="169" y1="582" x2="169" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="174" y1="582" x2="174" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="179" y1="582" x2="179" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="184" y1="582" x2="184" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="189" y1="582" x2="189" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="194" y1="582" x2="194" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="199" y1="582" x2="199" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="204" y1="582" x2="204" y2="598" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="111" y="582" width="88" height="16" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="100" y="582" width="6" height="8" fill="#7a5530" stroke="#7a5530" stroke-width="0.5" rx="0"/>
+<rect x="204" y="582" width="6" height="8" fill="#7a5530" stroke="#7a5530" stroke-width="0.5" rx="0"/>
+<line x1="94" y1="615" x2="216" y2="615" stroke="#ccc" stroke-width="0.5" stroke-dasharray="2,2"/>
+<rect x="99" y="625" width="112" height="16" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="104" y1="625" x2="104" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="109" y1="625" x2="109" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="114" y1="625" x2="114" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="119" y1="625" x2="119" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="124" y1="625" x2="124" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="129" y1="625" x2="129" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="134" y1="625" x2="134" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="139" y1="625" x2="139" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="144" y1="625" x2="144" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="149" y1="625" x2="149" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="154" y1="625" x2="154" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="159" y1="625" x2="159" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="164" y1="625" x2="164" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="169" y1="625" x2="169" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="174" y1="625" x2="174" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="179" y1="625" x2="179" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="184" y1="625" x2="184" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="189" y1="625" x2="189" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="194" y1="625" x2="194" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="199" y1="625" x2="199" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="204" y1="625" x2="204" y2="641" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="111" y="625" width="88" height="16" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="100" y="625" width="6" height="16" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.5" rx="0"/>
+<rect x="204" y="625" width="6" height="16" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.5" rx="0"/>
+<path d="M 229 600 A 20 20 0 0 1 249 620" fill="none" stroke="#cc3333" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="241" y="595" font-size="9" text-anchor="start" font-weight="normal" fill="#cc3333" font-family="Courier New, monospace">90°</text>
+<text x="241" y="606" font-size="8" text-anchor="start" font-weight="normal" fill="#cc3333" font-family="Courier New, monospace">drehen</text>
+<text x="155" y="658" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Bajonett-Detail  1:2</text>
+<text x="155" y="669" font-size="8" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Vierteldrehung zum Verriegeln</text>
+<rect x="315" y="430" width="290" height="560" fill="white" stroke="#aaa" stroke-width="0.8" rx="4"/>
+<text x="460" y="448" font-size="10" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">MONTAGE-BEISPIEL</text>
+<path d="M 442.0 666 L 478.0 666 L 505.0 700 L 415.0 700 Z" fill="#c8a96e" stroke="#a07840" stroke-width="1.2"/>
+<path d="M 438.0 666 L 482.0 666 L 484.0 700 L 436.0 700 Z" fill="#f5f0e8" stroke="#7a5530" stroke-width="1.2"/>
+<line x1="415.0" y1="700" x2="505.0" y2="700" stroke="#7a5530" stroke-width="1.5"/>
+<circle cx="423.0" cy="704" r="4" fill="#4a4a4a" stroke="#1a1a1a" stroke-width="0.7"/>
+<circle cx="497.0" cy="704" r="4" fill="#4a4a4a" stroke="#1a1a1a" stroke-width="0.7"/>
+<rect x="434.0" y="660" width="52" height="6" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="439.0" y1="660" x2="439.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="444.0" y1="660" x2="444.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="449.0" y1="660" x2="449.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="454.0" y1="660" x2="454.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="459.0" y1="660" x2="459.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="464.0" y1="660" x2="464.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="469.0" y1="660" x2="469.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="474.0" y1="660" x2="474.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="479.0" y1="660" x2="479.0" y2="666" stroke="#a07840" stroke-width="0.25"/>
+<line x1="447.0" y1="660" x2="447.0" y2="666" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="473.0" y1="660" x2="473.0" y2="666" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<text x="510" y="663" font-size="8" text-anchor="start" font-weight="normal" fill="#cc3333" font-family="Courier New, monospace">&lt;-- Bajonett 1</text>
+<rect x="442.0" y="610" width="36" height="50" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="447.0" y1="610" x2="447.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="452.0" y1="610" x2="452.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="457.0" y1="610" x2="457.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="462.0" y1="610" x2="462.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="467.0" y1="610" x2="467.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="472.0" y1="610" x2="472.0" y2="660" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="438" y="610" width="44" height="50" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<rect x="434.0" y="604" width="52" height="6" fill="#c8a96e" stroke="#a07840" stroke-width="1.2" rx="0"/>
+<line x1="439.0" y1="604" x2="439.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="444.0" y1="604" x2="444.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="449.0" y1="604" x2="449.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="454.0" y1="604" x2="454.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="459.0" y1="604" x2="459.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="464.0" y1="604" x2="464.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="469.0" y1="604" x2="469.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="474.0" y1="604" x2="474.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="479.0" y1="604" x2="479.0" y2="610" stroke="#a07840" stroke-width="0.25"/>
+<line x1="447.0" y1="604" x2="447.0" y2="610" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<line x1="473.0" y1="604" x2="473.0" y2="610" stroke="#a07840" stroke-width="0.6" stroke-dasharray="2,2"/>
+<text x="510" y="607" font-size="8" text-anchor="start" font-weight="normal" fill="#cc3333" font-family="Courier New, monospace">&lt;-- Bajonett 2</text>
+<rect x="400.0" y="588" width="120" height="16" fill="#c8a96e" stroke="#7a5530" stroke-width="1.2" rx="0"/>
+<line x1="405.0" y1="588" x2="405.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="410.0" y1="588" x2="410.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="415.0" y1="588" x2="415.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="420.0" y1="588" x2="420.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="425.0" y1="588" x2="425.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="430.0" y1="588" x2="430.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="435.0" y1="588" x2="435.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="440.0" y1="588" x2="440.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="445.0" y1="588" x2="445.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="450.0" y1="588" x2="450.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="455.0" y1="588" x2="455.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="460.0" y1="588" x2="460.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="465.0" y1="588" x2="465.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="470.0" y1="588" x2="470.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="475.0" y1="588" x2="475.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="480.0" y1="588" x2="480.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="485.0" y1="588" x2="485.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="490.0" y1="588" x2="490.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="495.0" y1="588" x2="495.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="500.0" y1="588" x2="500.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="505.0" y1="588" x2="505.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="510.0" y1="588" x2="510.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<line x1="515.0" y1="588" x2="515.0" y2="604" stroke="#7a5530" stroke-width="0.25"/>
+<rect x="438" y="588" width="44" height="16" fill="#f5f0e8" stroke="#7a5530" stroke-width="0.8" rx="0"/>
+<line x1="457" y1="548" x2="457" y2="588" stroke="#888" stroke-width="1.5"/>
+<line x1="463" y1="548" x2="463" y2="588" stroke="#888" stroke-width="1.5"/>
+<rect x="452" y="530" width="16" height="18" fill="#ddd" stroke="#888" stroke-width="0.8" rx="2"/>
+<circle cx="460" cy="530" r="7" fill="#bbb" stroke="#888" stroke-width="0.8"/>
+<text x="478" y="538" font-size="8" text-anchor="start" font-weight="normal" fill="#555" font-family="Courier New, monospace">STRÄLA E14</text>
+<line x1="460" y1="712" x2="460" y2="523" stroke="#cc3333" stroke-width="0.5" stroke-dasharray="4,3"/>
+<line x1="455" y1="730" x2="455" y2="760" stroke="#555" stroke-width="1.5"/>
+<line x1="465" y1="730" x2="465" y2="760" stroke="#555" stroke-width="1.5"/>
+<circle cx="460" cy="766" r="10" fill="#ddd" stroke="#555" stroke-width="1"/>
+<text x="460" y="790" font-size="8" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Schuko-Kabel</text>
+<text x="460" y="800" font-size="8" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">∅ 44mm Kanal</text>
+<text x="460" y="790" font-size="11" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">Montage-Beispiel</text>
+<text x="460" y="803" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Fuß 2 + Stiel + Schirm 1</text>
+<rect x="610" y="427" width="360" height="376" fill="white" stroke="#aaa" stroke-width="0.8" rx="4"/>
+<text x="620" y="445" font-size="8.5" text-anchor="start" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">MATERIAL &amp; MASSE</text>
+<text x="620" y="459" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">-------------------------------------</text>
+<text x="620" y="473" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Material:     Moso-Bambus (gehärtet, geölt)</text>
+<text x="620" y="487" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Wandstärke:   10 mm</text>
+<text x="620" y="501" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Innenkanal:   ∅ 44 mm (Schuko-Kabel geeignet)</text>
+<text x="620" y="515" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Bajonett:     ∅ 56 mm aussen, 90°-Vierteldrehung</text>
+<text x="620" y="529" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Verbindung:   Bajonett M+F an jedem Element</text>
+<text x="620" y="543" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace"></text>
+<text x="620" y="557" font-size="8.5" text-anchor="start" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">ELEKTRIK</text>
+<text x="620" y="571" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">-------------------------------------</text>
+<text x="620" y="585" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Fassung:      IKEA STRÄLA E14-Pendelleuchte</text>
+<text x="620" y="599" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Anschluss:    Schuko-Stecker (DE/EU Standard)</text>
+<text x="620" y="613" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Kabelkanal:   durchgehend mittig, ∅ 44 mm</text>
+<text x="620" y="627" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace"></text>
+<text x="620" y="641" font-size="8.5" text-anchor="start" font-weight="normal" fill="#1a1a1a" font-family="Courier New, monospace">KONFIGURATIONEN (Beispiele)</text>
+<text x="620" y="655" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">-------------------------------------</text>
+<text x="620" y="669" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Tischlampe:   Fuß 1 + Schirm 1</text>
+<text x="620" y="683" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Stehlampe:    Fuß 2 + Stiel × 2 + Schirm 2</text>
+<text x="620" y="697" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Ambientelampe:Fuß 1 + Schirm 3 (nach oben)</text>
+<text x="620" y="711" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Kombi:        Fuß 2 + Stiel + Schirm 1 + Schirm 3</text>
+<text x="620" y="725" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace"></text>
+<text x="620" y="739" font-size="8.5" text-anchor="start" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">OBERFLÄCHE</text>
+<text x="620" y="753" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">-------------------------------------</text>
+<text x="620" y="767" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Finish:       Naturöl (hell) oder Hartöl (dunkel)</text>
+<text x="620" y="781" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Kanten:       leicht gebrochen, geschliffen K220</text>
+<rect x="990" y="452" width="200" height="120" fill="white" stroke="#aaa" stroke-width="0.8" rx="4"/>
+<text x="1090" y="466" font-size="9" text-anchor="middle" font-weight="bold" fill="#1a1a1a" font-family="Courier New, monospace">LEGENDE</text>
+<line x1="1000" y1="480" x2="1030" y2="480" stroke="#cc3333" stroke-width="0.6" stroke-dasharray="4,3"/>
+<text x="1036" y="484" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Mittelachse</text>
+<line x1="1000" y1="496" x2="1030" y2="496" stroke="#7a5530" stroke-width="1.2"/>
+<text x="1036" y="500" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Bambus-Kontur</text>
+<line x1="1000" y1="512" x2="1030" y2="512" stroke="#c8a96e" stroke-width="6"/>
+<rect x="1000" y="509.0" width="30" height="6" fill="#c8a96e" stroke="#c8a96e" stroke-width="0" rx="0"/>
+<text x="1036" y="516" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Bambus-Füllung</text>
+<line x1="1000" y1="528" x2="1030" y2="528" stroke="#f5f0e8" stroke-width="6"/>
+<rect x="1000" y="525.0" width="30" height="6" fill="#f5f0e8" stroke="#f5f0e8" stroke-width="0" rx="0"/>
+<text x="1036" y="532" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Hohlkanal ∅44mm</text>
+<line x1="1000" y1="544" x2="1030" y2="544" stroke="#4a4a4a" stroke-width="5"/>
+<rect x="1000" y="541.5" width="30" height="5" fill="#4a4a4a" stroke="#4a4a4a" stroke-width="0" rx="0"/>
+<text x="1036" y="548" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Gummi-Fuß</text>
+<line x1="1000" y1="560" x2="1030" y2="560" stroke="#cc3333" stroke-width="1"/>
+<text x="1036" y="564" font-size="8.5" text-anchor="start" font-weight="normal" fill="#333" font-family="Courier New, monospace">Maßlinie</text>
+<line x1="20" y1="996" x2="1380" y2="996" stroke="#1a1a1a" stroke-width="0.8"/>
+<text x="60" y="1012" font-size="9" text-anchor="start" font-weight="normal" fill="#555" font-family="Courier New, monospace">Bambus Modullampe  |  Entwurf Werkstatt</text>
+<text x="700.0" y="1012" font-size="9" text-anchor="middle" font-weight="normal" fill="#555" font-family="Courier New, monospace">Alle Maße in mm  |  Maßstab 1:2</text>
+<text x="1340" y="1012" font-size="9" text-anchor="end" font-weight="normal" fill="#555" font-family="Courier New, monospace">Blatt 1/1</text>
+</svg>
