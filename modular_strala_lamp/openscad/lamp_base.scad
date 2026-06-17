@@ -48,13 +48,23 @@ module lamp_base() {
         translate([0, 0, -1])
             cylinder(h = h + bayonet_working_depth + 2, d = bore, $fn = fn_large_bore);
 
-        // Rear side cable exit (smooth radius), enters the central tube
-        translate([0, 0, h/2])
+        // Rear side cable exit (smooth radius). Runs from the outer wall
+        // INWARD only as far as the passage-tube outer surface, so it never
+        // breaches the clear 55mm vertical plug passage. A small cable-sized
+        // hole then pierces the passage wall to admit the cable.
+        cable_exit_inner_r = bore/2 + passage_wall;  // outer face of passage tube
+        cable_exit_len = od/2 - cable_exit_inner_r + 1;
+        translate([cable_exit_inner_r, 0, h/2])
             rotate([0, 90, 0])
                 hull() {
-                    cylinder(h = od, d = 12, $fn = 48);
-                    translate([0, 8, 0]) cylinder(h = od, d = 12, $fn = 48);
+                    cylinder(h = cable_exit_len, d = 12, $fn = 48);
+                    translate([0, 8, 0]) cylinder(h = cable_exit_len, d = 12, $fn = 48);
                 }
+        // Small cable feed hole through the passage wall (cable only, not plug)
+        translate([0, 0, h/2])
+            rotate([0, 90, 0])
+                cylinder(h = bore/2 + passage_wall + 1,
+                         d = strala_cable_diameter + 2 * general_clearance, $fn = 32);
 
         // 4x rubber foot recesses on the bottom (10mm dia, 2mm deep)
         for (i = [0:3])
