@@ -81,14 +81,25 @@ base_total_height     = 45;
 base_bottom_thickness = 5;
 base_outer_wall       = base_wall;
 
-// --- STRÅLA adapter (MEASURE with real lamp) ---
-strala_socket_outer_diameter   = 30;   // MEASURE
-strala_socket_total_length     = 50;   // MEASURE
-strala_shade_ring_outer_diameter = 60; // MEASURE
-strala_shade_ring_inner_diameter = 55; // MEASURE
-strala_thread_outer_diameter   = 26;   // MEASURE
-strala_thread_length           = 15;   // MEASURE
-strala_cable_diameter          = 6;    // MEASURE
+// --- STRÅLA adapter — ALLE MIT REALER FASSUNG MESSEN ---
+// Montage: Fassungsgewinde geht von unten durch Halteflansch-Loch.
+//          Fassungsschulter liegt von unten gegen Flanschunterseite.
+//          Originaler STRÅLA-Schraubring sichert von oben.
+strala_socket_outer_diameter     = 30;   // MEASURE — Körper-Außendurchmesser der Fassung
+strala_socket_total_length       = 50;   // MEASURE — Gesamtlänge Fassungskörper
+strala_socket_shoulder_diameter  = 38;   // MEASURE — Schulterdurchmesser (breiter als Gewinde)
+strala_thread_outer_diameter     = 26;   // MEASURE — Außendurchmesser des Befestigungsgewindes
+strala_thread_usable_length      = 15;   // MEASURE — nutzbarer Gewindebereich
+strala_retaining_ring_outer_diameter = 36; // MEASURE — Außendurchmesser Originalschraubring
+strala_retaining_ring_inner_diameter = 27; // MEASURE — Innendurchmesser Originalschraubring
+strala_retaining_ring_height     = 5;    // MEASURE — Höhe Originalschraubring
+strala_cable_diameter            = 6;    // MEASURE — Kabeldurchmesser
+
+// Berechnetes Montageloch: Gewindedurchmesser + FDM-Spiel
+strala_mount_hole_clearance      = 0.6;  // anpassbar nach Probedruck
+strala_mount_hole_diameter       = strala_thread_outer_diameter + strala_mount_hole_clearance;
+
+echo("STRÅLA mount hole diameter:", strala_mount_hole_diameter, "mm (needs MEASURE of real socket)");
 
 // --- Lamp shades ---
 shade_height          = 200;
