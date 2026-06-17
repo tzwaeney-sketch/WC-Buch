@@ -1,11 +1,8 @@
 # Measurement Guide
 
 All values you must capture before printing the final adapters live in
-`openscad/config.scad`, marked with `// MEASURE`. Use calipers (digital,
-0.01 mm) and record each value, then update the config.
-
-Print `strala_measurement_guide()` from `strala_holder.scad` — it engraves the
-list of values you need to capture as a physical checklist.
+`openscad/config.scad`, marked with `// MEASURE`. Use digital calipers
+(0.01 mm) and record each value, then update the config.
 
 ## 1. The Schuko plug (already fixed in config, verify yours)
 
@@ -16,33 +13,33 @@ list of values you need to capture as a physical checklist.
 | `actual_plug_diagonal`| 41.8 mm     | corner-to-corner of body cross-section |
 | `actual_plug_length` | 111 mm       | tip of pins to back of cable boot |
 
-The bore is driven to **55 mm** regardless (the `plug_clear_passage_diameter`
+The bore is driven to **60 mm** regardless (the `plug_clear_passage_diameter`
 floor), so even an oversized molded plug clears. If your plug's diagonal
-exceeds 49 mm, increase `plug_clear_passage_diameter` and re-render — the echo
+exceeds 54 mm, increase `plug_clear_passage_diameter` and re-render — the echo
 in `config.scad` will tell you whether you are still safe.
 
-## 2. IKEA STRALA hardware (`// MEASURE`)
+## 2. IKEA STRÅLA hardware (`// MEASURE`)
 
-Measure your specific STRALA cord set — they vary by year and SKU.
+Measure your specific STRÅLA cord set — they vary by year and SKU.
 
 | Config parameter                   | Placeholder | What it is |
 |------------------------------------|-------------|------------|
 | `strala_socket_outer_diameter`     | 30 mm       | OD of the plastic socket body the clamp grips |
-| `strala_socket_total_length`       | 50 mm       | length of socket body from shoulder to top |
-| `strala_shade_ring_outer_diameter` | 60 mm       | OD of the shade-retaining ring |
+| `strala_socket_total_length`       | 50 mm       | length of the socket body |
+| `strala_shade_ring_outer_diameter` | 60 mm       | OD of the shade retaining ring |
 | `strala_shade_ring_inner_diameter` | 55 mm       | ID of that ring |
-| `strala_thread_outer_diameter`     | 26 mm       | OD of the threaded collar (if present) |
-| `strala_thread_length`             | 15 mm       | engaged length of that thread |
-| `strala_cable_diameter`            | 6 mm        | OD of the cord jacket |
+| `strala_thread_outer_diameter`     | 26 mm       | thread OD if present |
+| `strala_thread_length`             | 15 mm       | thread length |
+| `strala_cable_diameter`            | 6 mm        | OD of the cable jacket |
 
-### Tips
-- Measure the socket OD at three points (top, middle, shoulder) and use the
-  **largest** for `strala_socket_outer_diameter`.
-- For threads, measure the **major** (crest) diameter.
-- Test the captured socket OD with `strala_fit_test_ring()` before committing.
+## 3. Verifying the passage
 
-## 3. Verifying the plug passage on a print
+Print `passage_test_ring(60)` from `calibration_parts.scad`. Push your real
+plug through the 60 mm gauge. It must pass freely. If it binds, the plug is out
+of spec — bump `plug_clear_passage_diameter` and re-render.
 
-Print `passage_test_ring_55mm()` and `plug_gauge_set()`. Push your real plug
-through the 55 mm gauge. If it binds, the plug is out of spec — bump
-`plug_clear_passage_diameter` to 56–58 mm and re-export all modules.
+## 4. Verifying the STRÅLA clamp fit
+
+Print `strala_fit_test()` from `strala_holder.scad`. It produces five rings at
++0.0 / +0.5 / +1.0 / +1.5 / +2.0 mm over the nominal socket OD. Pick the ring
+that slides on snugly, then set `strala_socket_outer_diameter` accordingly.

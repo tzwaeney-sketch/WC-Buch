@@ -1,150 +1,134 @@
-// =====================================================================
-// lamp_base.scad - The weighted base of the lamp system
-// =====================================================================
 include <config.scad>
 include <bayonet_system.scad>
-include <cable_passage.scad>
 
-// ---------------------------------------------------------------------
-// Full base body. 180mm OD, 32mm tall, 55mm central passage,
-// rear side cable exit, separate weight chamber, 4 foot recesses,
-// male bayonet on top. Bottom plate is a separate part.
-// ---------------------------------------------------------------------
+EPS = 0.01;
+
+// ============================================================
+// LAMP BASE BODY
+// ============================================================
 module lamp_base() {
-    od   = base_outer_diameter;
-    h    = base_total_height;
-    bore = base_passage_diameter;          // 55mm clear passage
-    wall = base_outer_wall;                 // 3.4mm
-    top_thk = base_wall;                    // structural top deck
+    bore_r  = base_passage_diameter / 2;      // 30mm
+    outer_r = base_outer_diameter / 2;         // 110mm
+    h       = base_total_height;               // 45mm
+    wall    = base_outer_wall;                 // 3.36mm
+
+    cable_exit_r = strala_cable_diameter / 2 + 1.5;  // ~4.5mm radius
+
+    weight_chamber_outer_r = bore_r + wall + 18;
+    weight_chamber_h       = h - base_bottom_thickness - 4;
+
+    cable_channel_w = strala_cable_diameter + 4;
+    cable_channel_h = strala_cable_diameter + 4;
 
     difference() {
         union() {
-            // Outer shell
-            difference() {
-                cylinder(h = h, d = od, $fn = fn_large_bore);
-                // Hollow interior (leaving top deck and walls)
-                translate([0, 0, base_bottom_thickness])
-                    cylinder(h = h, d = od - 2 * wall, $fn = fn_large_bore);
-            }
-            // Central passage tube spanning full height
-            cylinder(h = h, d = bore + 2 * passage_wall, $fn = fn_large_bore);
-            // Top deck closing the cavity around the passage tube
-            translate([0, 0, h - top_thk])
-                cylinder(h = top_thk, d = od - 2 * wall, $fn = fn_large_bore);
-            // Weight chamber walls (an annular ring inside, separate from
-            // the cable channel). Sits between passage tube and outer wall.
-            difference() {
-                cylinder(h = h - top_thk, d = od - 2 * wall - 6, $fn = fn_large_bore);
-                translate([0, 0, -1])
-                    cylinder(h = h + 2, d = od - 2 * wall - 6 - 2 * structural_wall,
-                             $fn = fn_large_bore);
-            }
-            // Male bayonet on top
-            translate([0, 0, h])
-                bayonet_male(h = bayonet_working_depth);
+            cylinder(h=h, r=outer_r, $fn=128);
+            translate([0,0,h])
+                cylinder(h=5, r=bayonet_interface_outer_radius + structural_wall, $fn=64);
         }
 
-        // Clear central bore through everything
-        translate([0, 0, -1])
-            cylinder(h = h + bayonet_working_depth + 2, d = bore, $fn = fn_large_bore);
+        // Central bore (FULL HEIGHT)
+        translate([0,0,-EPS])
+            cylinder(h=h + 5 + 2*EPS, r=bore_r, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=3, r1=bore_r+3, r2=bore_r, $fn=64);
 
-        // Rear side cable exit (smooth radius). Runs from the outer wall
-        // INWARD only as far as the passage-tube outer surface, so it never
-        // breaches the clear 55mm vertical plug passage. A small cable-sized
-        // hole then pierces the passage wall to admit the cable.
-        cable_exit_inner_r = bore/2 + passage_wall;  // outer face of passage tube
-        cable_exit_len = od/2 - cable_exit_inner_r + 1;
-        translate([cable_exit_inner_r, 0, h/2])
-            rotate([0, 90, 0])
-                hull() {
-                    cylinder(h = cable_exit_len, d = 12, $fn = 48);
-                    translate([0, 8, 0]) cylinder(h = cable_exit_len, d = 12, $fn = 48);
-                }
-        // Small cable feed hole through the passage wall (cable only, not plug)
-        translate([0, 0, h/2])
-            rotate([0, 90, 0])
-                cylinder(h = bore/2 + passage_wall + 1,
-                         d = strala_cable_diameter + 2 * general_clearance, $fn = 32);
+        // Hollow interior
+        translate([0,0,base_bottom_thickness])
+            cylinder(h=h - base_bottom_thickness - 4, r=outer_r - wall, $fn=128);
 
-        // 4x rubber foot recesses on the bottom (10mm dia, 2mm deep)
-        for (i = [0:3])
-            rotate([0, 0, 45 + i * 90])
-                translate([od/2 - 22, 0, -0.01])
-                    cylinder(h = 2, d = 14, $fn = 40);
+        // Weight chamber pocket (annular, keep bore wall)
+        translate([0,0,base_bottom_thickness + 2])
+            difference() {
+                cylinder(h=weight_chamber_h - 2, r=weight_chamber_outer_r, $fn=64);
+                cylinder(h=weight_chamber_h, r=bore_r + wall, $fn=64);
+            }
 
-        // Inner chamfer at the bore mouths
-        _inner_chamfer(bore, h);
-        translate([0,0,h + bayonet_working_depth]) mirror([0,0,1])
-            _inner_chamfer(bore, h);
+        // Cable channel (rear trough, does NOT cross the bore)
+        translate([0, -(cable_channel_w/2), base_bottom_thickness + 2])
+            cube([outer_r, cable_channel_w, cable_channel_h]);
 
-        // 3x M3 screw bosses for the bottom plate (clearance holes)
-        for (i = [0:2])
-            rotate([0, 0, i * 120])
-                translate([od/2 - 14, 0, -0.01])
-                    cylinder(h = 8, d = 2.8, $fn = 24);
+        // Side cable exit hole
+        translate([outer_r - wall - EPS, 0, base_bottom_thickness + 2 + cable_channel_h/2])
+            rotate([0,90,0])
+                cylinder(h=wall + 2*EPS, r=cable_exit_r, $fn=32);
+
+        // Rubber foot pockets (4×)
+        for(a=[45,135,225,315]) {
+            rotate([0,0,a])
+                translate([outer_r - 12, 0, -EPS])
+                    cylinder(h=base_bottom_thickness + EPS, r=6, $fn=32);
+        }
+
+        // Bottom plate screw holes (3 × M3)
+        for(a=[0,120,240]) {
+            rotate([0,0,a])
+                translate([outer_r - 15, 0, -EPS])
+                    cylinder(h=base_bottom_thickness + 2*EPS, r=1.6, $fn=16);
+        }
     }
+
+    // Male bayonet at top
+    translate([0,0,h+5 - (bayonet_working_depth+2)])
+        bayonet_male();
 }
 
-// ---------------------------------------------------------------------
-// Bottom plate: closes the base, has a cable slot, 3x M3 counterbores.
-// ---------------------------------------------------------------------
+// ============================================================
+// BOTTOM PLATE
+// ============================================================
 module lamp_base_bottom_plate() {
-    od = base_outer_diameter - 2 * base_outer_wall - general_clearance;
-    t  = base_bottom_thickness;
+    bore_r  = base_passage_diameter / 2;
+    outer_r = base_outer_diameter / 2;
+
     difference() {
-        cylinder(h = t, d = od, $fn = fn_large_bore);
-        // Central clearance for passage tube
-        translate([0, 0, -1])
-            cylinder(h = t + 2, d = base_passage_diameter + 2 * passage_wall
-                     + general_clearance, $fn = fn_large_bore);
-        // Cable slot toward rear
-        translate([od/2 - 20, -6, -1])
-            cube([24, 12, t + 2]);
-        // 3x M3 counterbored holes
-        for (i = [0:2])
-            rotate([0, 0, i * 120])
-                translate([od/2 - 12, 0, -1]) {
-                    cylinder(h = t + 2, d = 3.4, $fn = 24);   // shaft
-                    translate([0, 0, t - 2.5])
-                        cylinder(h = 3, d = 6.5, $fn = 24);   // head counterbore
+        cylinder(h=base_bottom_thickness - 0.5, r=outer_r - general_clearance, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=base_bottom_thickness + 2*EPS, r=bore_r, $fn=128);
+        translate([-(strala_cable_diameter/2 + 2), -(outer_r), -EPS])
+            cube([strala_cable_diameter + 4, outer_r, base_bottom_thickness + 2*EPS]);
+        for(a=[0,120,240]) {
+            rotate([0,0,a])
+                translate([outer_r - 15, 0, -EPS]) {
+                    cylinder(h=base_bottom_thickness - 1.5 + EPS, r=3.2, $fn=16);
+                    translate([0,0,base_bottom_thickness - 1.5])
+                        cylinder(h=1.6, r1=3.2, r2=1.6, $fn=16);
                 }
-    }
-}
-
-// ---------------------------------------------------------------------
-// Steel-plate weight insert: an annular disc that drops into the
-// weight chamber. (Print as a template / or use for a cast/steel ring.)
-// ---------------------------------------------------------------------
-module lamp_base_weight_insert() {
-    od = base_outer_diameter - 2 * base_outer_wall - 6 - general_clearance;
-    id = base_passage_diameter + 2 * passage_wall + 4;
-    t  = base_total_height - base_bottom_thickness - base_wall - 2;
-    difference() {
-        cylinder(h = t, d = od, $fn = fn_large_bore);
-        translate([0, 0, -1])
-            cylinder(h = t + 2, d = id, $fn = fn_large_bore);
-    }
-}
-
-// ---------------------------------------------------------------------
-// Cable strain relief insert: sits in the side exit, smooth 8-10mm bore.
-// ---------------------------------------------------------------------
-module cable_strain_relief_insert() {
-    outer = 12 - general_clearance;
-    len = 16;
-    difference() {
-        union() {
-            cylinder(h = len, d = outer, $fn = 48);
-            translate([0, 0, len - 2])
-                cylinder(h = 2, d = outer + 4, $fn = 48);  // retaining flange
         }
-        translate([0, 0, -1])
-            cylinder(h = len + 4, d = 9, $fn = 48);        // smooth 9mm bore
-        // Rounded mouth
-        translate([0, 0, len + 2]) mirror([0,0,1])
-            rotate_extrude($fn = 48) translate([4.5, 0]) circle(r = 1.2, $fn = 24);
+        for(a=[45,135,225,315]) {
+            rotate([0,0,a])
+                translate([outer_r - 12, 0, -EPS])
+                    cylinder(h=base_bottom_thickness + 2*EPS, r=5.5, $fn=32);
+        }
+        translate([0,0,-EPS])
+            cylinder(h=3, r1=bore_r+3, r2=bore_r, $fn=64);
     }
 }
 
-// Preview
-// lamp_base();
+// ============================================================
+// WEIGHT INSERT (steel ring placeholder)
+// ============================================================
+module lamp_base_weight_insert() {
+    bore_r  = base_passage_diameter / 2;
+    weight_outer_r = bore_r + base_wall + 17;
+    difference() {
+        cylinder(h=8, r=weight_outer_r - 0.5, $fn=64);
+        translate([0,0,-EPS])
+            cylinder(h=10, r=bore_r + base_wall + 0.5, $fn=64);
+    }
+}
+
+// ============================================================
+// CABLE EXIT GROMMET
+// ============================================================
+module cable_exit_grommet() {
+    cable_r = strala_cable_diameter / 2 + 1.5;
+    difference() {
+        cylinder(h=base_outer_wall + 2, r=cable_r + structural_wall, $fn=32);
+        translate([0,0,-EPS])
+            cylinder(h=base_outer_wall + 4, r=cable_r, $fn=32);
+        translate([0,0,-EPS])
+            cylinder(h=2, r1=cable_r+2, r2=cable_r, $fn=32);
+    }
+}
+
+if ($preview) lamp_base();  // demo: only in GUI preview, skipped on STL export

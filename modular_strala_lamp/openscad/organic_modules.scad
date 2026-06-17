@@ -1,126 +1,98 @@
-// =====================================================================
-// organic_modules.scad - Organic / flowing decorative modules
-// =====================================================================
 include <config.scad>
 include <bayonet_system.scad>
-include <round_modules.scad>   // reuse _module_frame
 
-// ---------------------------------------------------------------------
-// Teardrop, h ~ 75mm.
-// ---------------------------------------------------------------------
-module mod_teardrop() {
-    h = 75;
-    od = 96;
-    _module_frame(h)
-        rotate_extrude($fn = 96)
-            polygon(points = [
-                [final_plug_passage/2 + structural_wall, 0],
-                [od/2, h * 0.30],
-                [od/2 * 0.85, h * 0.55],
-                [od/2 * 0.45, h * 0.85],
-                [final_plug_passage/2 + structural_wall, h],
+EPS = 0.01;
+
+// 13. Teardrop
+module mod_teardrop(h=75, outer_d=105) {
+    _check(outer_d);
+    r=outer_d/2;
+    _module_shell(h)
+        rotate_extrude($fn=96)
+            polygon([[0,0],[r*0.45,0],[r,h*0.35],[r*0.85,h*0.7],[r*0.3,h],[0,h]]);
+}
+
+// 14. Vase (S-curve)
+module mod_vase(h=85, outer_d=105) {
+    _check(outer_d);
+    r=outer_d/2;
+    base_r = bayonet_interface_outer_radius + 2*structural_wall;
+    _module_shell(h)
+        rotate_extrude($fn=96)
+            polygon([for(i=[0:1:20])
+                let(t=i/20, rad = base_r + (r-base_r)*(0.5 + 0.5*sin(360*t - 90)))
+                [rad, t*h]
             ]);
 }
 
-// ---------------------------------------------------------------------
-// Vase with waist, h ~ 85mm.
-// ---------------------------------------------------------------------
-module mod_vase() {
-    h = 85;
-    _module_frame(h)
-        rotate_extrude($fn = 96)
-            offset(r = 5) offset(delta = -5)
-                polygon(points = [
-                    [final_plug_passage/2 + 2, 0],
-                    [48, 0],
-                    [40, h * 0.25],
-                    [28, h * 0.50],     // waist
-                    [42, h * 0.78],
-                    [38, h],
-                    [final_plug_passage/2 + 2, h],
-                ]);
+// 15. Pumpkin (sinusoidal ribs via radial bumps)
+module mod_pumpkin(h=65, outer_d=110) {
+    _check(outer_d);
+    r=outer_d/2;
+    _module_shell(h)
+        for(a=[0:30:330])
+            rotate([0,0,a])
+                translate([0,0,h/2])
+                    resize([outer_d*0.55, outer_d, h]) sphere(r=r,$fn=48);
 }
 
-// ---------------------------------------------------------------------
-// Asymmetric gentle bulge, h ~ 70mm.
-// ---------------------------------------------------------------------
-module mod_asymmetric_soft() {
-    h = 70;
-    _module_frame(h)
-        rotate_extrude($fn = 96)
-            offset(r = 8) offset(delta = -8)
-                polygon(points = [
-                    [final_plug_passage/2 + 2, 0],
-                    [46, 0],
-                    [54, h * 0.40],     // bulge
-                    [40, h * 0.75],
-                    [44, h],
-                    [final_plug_passage/2 + 2, h],
-                ]);
+// 16. Wave (undulating profile)
+module mod_wave(h=60, outer_d=105) {
+    _check(outer_d);
+    r=outer_d/2;
+    base_r = bayonet_interface_outer_radius + 2*structural_wall;
+    _module_shell(h)
+        rotate_extrude($fn=96)
+            polygon([for(i=[0:1:24])
+                let(t=i/24, rad = base_r + (r-base_r)*(0.6 + 0.4*sin(720*t)))
+                [rad, t*h]
+            ]);
 }
 
-// ---------------------------------------------------------------------
-// Pumpkin / gourd with vertical ribs, h ~ 65mm.
-// ---------------------------------------------------------------------
-module mod_pumpkin() {
-    h = 65;
-    od = 110;
-    ribs = 12;
-    _module_frame(h)
-        union() {
-            // Core squashed sphere
-            intersection() {
-                scale([1, 1, h / od])
-                    translate([0, 0, od/2]) sphere(d = od, $fn = 96);
-                cylinder(h = h, d = od + 6, $fn = 96);
-            }
-            // Rib lobes
-            for (i = [0 : ribs - 1])
-                rotate([0, 0, i * 360 / ribs])
-                    translate([od/2 - 6, 0, h/2])
-                        scale([1, 1, h / (od*0.9)])
-                            sphere(d = 14, $fn = 32);
-            // central support tube to the bore wall
-            cylinder(h = h, d = final_plug_passage + 2 * structural_wall, $fn = fn_large_bore);
+// 17. Organic diamond (hull of offset spheres)
+module mod_organic_diamond(h=80, outer_d=100) {
+    _check(outer_d);
+    r=outer_d/2 - 6;
+    _module_shell(h)
+        hull() {
+            translate([0,0,2]) sphere(r=10,$fn=24);
+            translate([0,0,h-2]) sphere(r=8,$fn=24);
+            translate([r*0.6, 0, h*0.4]) sphere(r=8,$fn=24);
+            translate([-r*0.5, r*0.4, h*0.6]) sphere(r=8,$fn=24);
+            translate([0, -r*0.6, h*0.5]) sphere(r=8,$fn=24);
         }
 }
 
-// ---------------------------------------------------------------------
-// Undulating wave cylinder, h ~ 60mm.
-// ---------------------------------------------------------------------
-module mod_wave() {
-    h = 60;
-    base_r = 48;
-    waves = 4;
-    amp = 6;
-    inner_x = final_plug_passage/2 + 2;
-    outer_pts = [ for (i = [0 : 40])
-        let (z = h * i / 40,
-             r = base_r + amp * sin(360 * waves * i / 40))
-        [max(inner_x, r), z] ];
-    _module_frame(h)
-        rotate_extrude($fn = 120)
-            polygon(points = concat(
-                [[inner_x, 0]],
-                outer_pts,
-                [[inner_x, h]]
-            ));
+// 18. Asymmetric soft (translate+hull)
+module mod_asymmetric_soft(h=70, outer_d=105) {
+    _check(outer_d);
+    r=outer_d/2 - 8;
+    _module_shell(h)
+        hull() {
+            translate([0,0,4]) resize([outer_d,outer_d,20]) sphere(r=r,$fn=48);
+            translate([r*0.3,0,h-6]) sphere(r=14,$fn=36);
+        }
 }
 
-// ---------------------------------------------------------------------
-// Soft organic diamond, h ~ 80mm.
-// ---------------------------------------------------------------------
-module mod_organic_diamond() {
-    h = 80;
-    od = 100;
-    _module_frame(h)
-        rotate_extrude($fn = 96)
-            offset(r = 10) offset(delta = -10)
-                polygon(points = [
-                    [final_plug_passage/2 + 2, 0],
-                    [od/2 * 0.5, 0],
-                    [od/2, h * 0.5],     // widest mid
-                    [od/2 * 0.4, h],
-                    [final_plug_passage/2 + 2, h],
-                ]);
+// --- Narrow accent modules ---
+
+// 19. Narrow shadow ring (flat ring)
+module mod_narrow_shadow_ring(h=25, outer_d=module_outer_diameter_narrow) {
+    _check(outer_d);
+    _module_shell(h)
+        cylinder(h=h, r=outer_d/2, $fn=96);
 }
+
+// 20. Narrow ribbed ring
+module mod_narrow_ribbed_ring(h=30, outer_d=module_outer_diameter_narrow) {
+    _check(outer_d);
+    r=outer_d/2;
+    _module_shell(h)
+        union() {
+            cylinder(h=h, r=r-2, $fn=96);
+            for(a=[0:20:340])
+                rotate([0,0,a]) translate([r-2,0,0]) cylinder(h=h, r=1.6, $fn=12);
+        }
+}
+
+if ($preview) mod_teardrop();  // demo: only in GUI preview, skipped on STL export

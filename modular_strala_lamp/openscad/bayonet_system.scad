@@ -119,6 +119,33 @@ module bayonet_section_view() {
 }
 
 // ============================================================
+// SHARED MODULE HELPERS (used by all decorative module files)
+// ============================================================
+// Builds a module from a decorative outer solid (children) minus the
+// mandatory 60mm bore, plus female bayonet bottom + male bayonet top.
+module _module_shell(h) {
+    bore_r = module_passage_diameter / 2;
+    inner_if_r = bayonet_interface_outer_radius + structural_wall;
+    difference() {
+        union() {
+            children();
+            cylinder(h=h, r=inner_if_r, $fn=64);
+        }
+        // Bore extends well beyond the module ends so any decorative
+        // geometry that overhangs near the axis is always cleared (>=60mm).
+        translate([0,0,-h]) cylinder(h=3*h, r=bore_r, $fn=128);
+        translate([0,0,-EPS]) cylinder(h=3, r1=bore_r+3, r2=bore_r, $fn=64);
+        translate([0,0,h-3]) cylinder(h=3+EPS, r1=bore_r, r2=bore_r+3, $fn=64);
+    }
+    bayonet_female(h_total=bayonet_working_depth + 2);
+    translate([0,0, h - (bayonet_working_depth + 2)])
+        bayonet_male(h_total=bayonet_working_depth + 2);
+}
+
+function _check(outer_d) = assert(outer_d/2 >= bayonet_interface_outer_radius + 2*structural_wall,
+    str("mod outer too small for bayonet: ", outer_d)) outer_d;
+
+// ============================================================
 // TOLERANCE TEST PAIR
 // ============================================================
 module bayonet_tolerance_pair(clearance = 0.30) {

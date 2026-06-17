@@ -1,38 +1,41 @@
 // =====================================================================
 // export_all.scad - Export reference (comments only)
 // =====================================================================
-// This file documents how to export every printable part as STL using
-// the OpenSCAD command line. It contains no geometry on purpose.
+// This file documents how to export every printable part as STL.
+// It contains no geometry on purpose.
 //
-// General pattern (OpenSCAD 2021.01+ supports -D module calls via a
-// wrapper). Because OpenSCAD CLI exports the *top-level* geometry, the
-// recommended approach is one of:
+// The canonical, automated exporter is ../validate_all.sh — it renders
+// every part with OpenSCAD, exports STL to ../exports/stl/, and validates
+// each mesh with trimesh. Use that for a full build.
 //
-//   A) Create a tiny wrapper .scad that `include`s the source file and
-//      calls the single module, then export that wrapper, OR
-//   B) Use -D 'PART="name"' with a dispatcher (see bottom).
-//
-// ---------------------------------------------------------------------
-// Method A example (recommended, most robust):
-// ---------------------------------------------------------------------
+// Manual single-part export (Method A, most robust):
+//   export OPENSCADPATH=$PWD          # so include <config.scad> resolves
 //   echo 'include <lamp_base.scad>; lamp_base();' > _tmp.scad
 //   openscad -o lamp_base.stl _tmp.scad
 //
+// NOTE: every library file's trailing demo call is wrapped in
+//   if ($preview) <demo>();
+// so it renders only in the GUI and is skipped during -o STL export.
+// That is why a wrapper that includes the file and calls one module
+// exports exactly that one module, with no contamination.
+//
 // ---------------------------------------------------------------------
-// Full part list  (FILE  ->  MODULE)
+// Full part list  (FILE  ->  MODULES)
 // ---------------------------------------------------------------------
 // bayonet_system.scad:
-//   bayonet_male, bayonet_female, bayonet_passage_ring, bayonet_cross_section
+//   bayonet_male, bayonet_female, bayonet_pair, bayonet_passage_ring,
+//   bayonet_section_view, bayonet_tolerance_pair(clearance)
 //
 // cable_passage.scad:
-//   cable_guide_channel, plug_test_body, plug_clearance_test_body, cable_exit_fitting
+//   cable_guide_channel, plug_test_body, plug_clearance_test_body,
+//   cable_exit_fitting
 //
 // lamp_base.scad:
-//   lamp_base, lamp_base_bottom_plate, lamp_base_weight_insert, cable_strain_relief_insert
+//   lamp_base, lamp_base_bottom_plate, lamp_base_weight_insert,
+//   cable_exit_grommet
 //
 // strala_holder.scad:
-//   strala_clamp_adapter, strala_shade_ring_adapter, strala_top_cap,
-//   strala_test_adapter, strala_measurement_guide
+//   strala_fit_test, strala_split_clamp_left, strala_split_clamp_right
 //
 // round_modules.scad:
 //   mod_sphere, mod_oblate_sphere, mod_double_sphere, mod_soft_cylinder,
@@ -43,8 +46,11 @@
 //   mod_triangle_rounded, mod_stepped_geometric
 //
 // organic_modules.scad:
-//   mod_teardrop, mod_vase, mod_asymmetric_soft, mod_pumpkin, mod_wave,
-//   mod_organic_diamond
+//   mod_teardrop, mod_vase, mod_pumpkin, mod_wave, mod_organic_diamond,
+//   mod_asymmetric_soft, mod_narrow_shadow_ring, mod_narrow_ribbed_ring
+//
+// utility_modules.scad:
+//   mod_neutral_extension, mod_short_spacer, mod_top_cap, mod_transition
 //
 // lamp_shades.scad:
 //   shade_frustum, shade_cylinder, shade_bell, shade_mushroom, shade_globe,
@@ -52,36 +58,13 @@
 //   shade_organic_curve, shade_perforated, shade_mounting_ring
 //
 // calibration_parts.scad:
-//   plug_gauge_ring, plug_gauge_set, passage_test_ring_55mm,
-//   bayonet_tolerance_test, bayonet_tolerance_set, strala_fit_test_ring,
-//   cable_exit_test, shade_wall_test
+//   passage_test_ring(d), long_tunnel_test, bayonet_snap_test,
+//   shade_wall_test, cable_exit_test
+//
+// passage_variants.scad:
+//   passage_test_ring(d), passage_variants
 //
 // assembly_preview.scad:
-//   config_soft_round, config_geometric, config_minimal, config_organic, config_mixed
-//
-// ---------------------------------------------------------------------
-// Batch export script (bash):
-// ---------------------------------------------------------------------
-//   #!/usr/bin/env bash
-//   set -e
-//   declare -A PARTS=(
-//     [lamp_base]=lamp_base.scad
-//     [lamp_base_bottom_plate]=lamp_base.scad
-//     [mod_sphere]=round_modules.scad
-//     [shade_frustum]=lamp_shades.scad
-//     [passage_test_ring_55mm]=calibration_parts.scad
-//     # ...add the rest from the list above...
-//   )
-//   mkdir -p stl
-//   for part in "${!PARTS[@]}"; do
-//     file="${PARTS[$part]}"
-//     echo "include <$file>; $part();" > _tmp.scad
-//     openscad -o "stl/${part}.stl" _tmp.scad
-//   done
-//   rm -f _tmp.scad
-//
-// ---------------------------------------------------------------------
-// Render quality flags for final STL:
-//   openscad -o part.stl --enable=fast-csg \
-//            -D '$fn=128' _tmp.scad
+//   config_soft_round, config_geometric, config_organic, config_minimal,
+//   config_mixed
 // =====================================================================

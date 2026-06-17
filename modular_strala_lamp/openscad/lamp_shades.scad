@@ -1,230 +1,172 @@
-// =====================================================================
-// lamp_shades.scad - Lamp shades (mount onto a top module / cap)
-// =====================================================================
-// Shades are thin-walled and attach to a stable mounting ring whose
-// inner diameter = shade_mount_diameter. The thin shade wall is never
-// load bearing; the ring carries the joint.
-// =====================================================================
 include <config.scad>
 
-// ---------------------------------------------------------------------
-// Mounting ring: stable structural ring all shades attach to.
-// Sits over the top module; bore stays clear (>= 55mm).
-// ---------------------------------------------------------------------
-module shade_mounting_ring(mount_d = shade_mount_diameter) {
-    h = 14;
-    bore = max(final_plug_passage, mount_d - 2 * structural_wall);
+EPS = 0.01;
+
+mount_r      = shade_mount_diameter / 2;
+mount_wall   = reinforced_wall;
+mount_h      = 15;
+
+// Shared mounting ring — all shades use this
+module shade_mounting_ring() {
     difference() {
-        cylinder(h = h, d = mount_d + 2 * structural_wall, $fn = fn_large_bore);
-        // Recess that slips over the top module
-        translate([0, 0, 2])
-            cylinder(h = h, d = mount_d + general_clearance, $fn = fn_large_bore);
-        // Clear central bore
-        translate([0, 0, -1])
-            cylinder(h = h + 2, d = bore, $fn = fn_large_bore);
-        // Ventilation gap notches
-        for (i = [0:5])
-            rotate([0, 0, i * 60])
-                translate([mount_d/2, 0, h - shade_ventilation_gap/2])
-                    cube([2 * structural_wall + 2, 6, shade_ventilation_gap], center = true);
+        cylinder(h=mount_h, r=mount_r + mount_wall, $fn=64);
+        translate([0,0,-EPS])
+            cylinder(h=mount_h+2*EPS, r=mount_r, $fn=64);
+        for(a=[0:5]) {
+            rotate([0,0,a*60])
+                translate([mount_r + mount_wall/2, 0, mount_h/2])
+                    cube([mount_wall+2, 4, mount_h*0.6], center=true);
+        }
     }
 }
 
-// Shared: attach a thin shade profile (2D points, rotate_extrude) onto
-// the mounting ring. `profile` is a list of [r, z] points.
-module _shade_from_profile(profile, mount_d = shade_mount_diameter) {
+// Generic shade body from a rotate_extrude profile (children = profile polygon)
+module _shade_body(h) {
     union() {
-        shade_mounting_ring(mount_d);
-        translate([0, 0, 14])
-            difference() {
-                rotate_extrude($fn = 120) polygon(profile);
-                // hollow it out by shade_wall
-                rotate_extrude($fn = 120)
-                    offset(delta = -shade_wall) polygon(profile);
-            }
+        shade_mounting_ring();
+        translate([0,0,mount_h]) children();
     }
 }
 
-// ---------------------------------------------------------------------
-// Frustum (truncated cone) shade.
-// ---------------------------------------------------------------------
+// hollow frustum/cone helper
+module _hollow_cone(h, bot_r, top_r, w) {
+    difference() {
+        cylinder(h=h, r1=bot_r, r2=top_r, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=h+2*EPS, r1=bot_r-w, r2=top_r-w, $fn=128);
+        // top ventilation opening
+        translate([0,0,h-shade_ventilation_gap])
+            cylinder(h=shade_ventilation_gap+EPS, r=top_r+1, $fn=64);
+    }
+}
+
+// 1. Frustum
 module shade_frustum() {
-    _shade_from_profile([
-        [shade_mount_diameter/2, 0],
-        [shade_bottom_diameter/2, 6],
-        [shade_top_diameter/2, shade_height],
-        [shade_top_diameter/2 - shade_wall, shade_height],
-        [shade_bottom_diameter/2 - shade_wall, 6],
-        [shade_mount_diameter/2 - shade_wall, 0],
-    ]);
+    _shade_body(shade_height)
+        _hollow_cone(shade_height, shade_bottom_diameter/2, shade_top_diameter/2, shade_wall);
 }
 
-// ---------------------------------------------------------------------
-// Straight cylinder shade.
-// ---------------------------------------------------------------------
+// 2. Straight cylinder
 module shade_cylinder() {
-    d = shade_bottom_diameter * 0.8;
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14])
-            difference() {
-                cylinder(h = shade_height, d = d, $fn = 120);
-                translate([0, 0, -1])
-                    cylinder(h = shade_height + 2, d = d - 2 * shade_wall, $fn = 120);
-            }
-    }
+    r = shade_bottom_diameter/2 * 0.7;
+    _shade_body(shade_height)
+        _hollow_cone(shade_height, r, r, shade_wall);
 }
 
-// ---------------------------------------------------------------------
-// Bell / dome shade.
-// ---------------------------------------------------------------------
+// 3. Bell curve
 module shade_bell() {
-    pts = [ for (i = [0:24])
-        let (a = 90 * i / 24,
-             r = shade_bottom_diameter/2 * cos(a) * 0.6 + shade_top_diameter/2,
-             z = shade_height * sin(a))
-        [r, z] ];
-    prof = concat(
-        [[shade_mount_diameter/2, 0]],
-        pts,
-        [ for (i = [24:-1:0])
-            let (a = 90 * i / 24,
-                 r = shade_bottom_diameter/2 * cos(a) * 0.6 + shade_top_diameter/2,
-                 z = shade_height * sin(a))
-            [max(1, r - shade_wall), z] ],
-        [[shade_mount_diameter/2 - shade_wall, 0]]
-    );
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14]) rotate_extrude($fn = 120) polygon(prof);
-    }
+    h=shade_height;
+    _shade_body(h)
+        rotate_extrude($fn=128)
+            difference() {
+                polygon([for(i=[0:1:24])
+                    let(t=i/24, rad = shade_top_diameter/2 + (shade_bottom_diameter/2 - shade_top_diameter/2)*pow(1-t,1.8))
+                    [rad, t*h]
+                ]);
+                polygon([for(i=[0:1:24])
+                    let(t=i/24, rad = shade_top_diameter/2 + (shade_bottom_diameter/2 - shade_top_diameter/2)*pow(1-t,1.8) - shade_wall)
+                    [max(0.1,rad), t*h]
+                ]);
+            }
 }
 
-// ---------------------------------------------------------------------
-// Mushroom cap shade.
-// ---------------------------------------------------------------------
+// 4. Mushroom cap
 module shade_mushroom() {
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14])
-            difference() {
-                scale([1, 1, 0.55])
-                    sphere(d = shade_bottom_diameter, $fn = 120);
-                scale([1, 1, 0.55])
-                    sphere(d = shade_bottom_diameter - 2 * shade_wall, $fn = 120);
-                translate([0, 0, -shade_bottom_diameter])
-                    cylinder(h = shade_bottom_diameter, d = shade_bottom_diameter + 2, $fn = 8);
-            }
-    }
+    h=shade_height*0.7;
+    _shade_body(h)
+        difference() {
+            resize([shade_bottom_diameter, shade_bottom_diameter, h*2])
+                sphere(r=shade_bottom_diameter/2,$fn=96);
+            resize([shade_bottom_diameter-2*shade_wall, shade_bottom_diameter-2*shade_wall, h*2-2*shade_wall])
+                sphere(r=shade_bottom_diameter/2,$fn=96);
+            translate([0,0,-h]) cylinder(h=h,r=shade_bottom_diameter,$fn=64);
+            cylinder(h=h*2, r=shade_top_diameter/2, $fn=64); // top vent
+        }
 }
 
-// ---------------------------------------------------------------------
-// Globe / sphere shade (with bottom opening).
-// ---------------------------------------------------------------------
+// 5. Globe (sphere segment)
 module shade_globe() {
-    d = shade_bottom_diameter * 0.85;
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14 + d/2 - 10])
-            difference() {
-                sphere(d = d, $fn = 120);
-                sphere(d = d - 2 * shade_wall, $fn = 120);
-                // bottom opening for mounting
-                translate([0, 0, -d/2])
-                    cylinder(h = d/2, d = shade_mount_diameter + 6, $fn = 96);
-            }
-    }
+    h=shade_height*0.8;
+    _shade_body(h)
+        difference() {
+            resize([shade_bottom_diameter,shade_bottom_diameter,h]) sphere(r=shade_bottom_diameter/2,$fn=96);
+            resize([shade_bottom_diameter-2*shade_wall,shade_bottom_diameter-2*shade_wall,h-2*shade_wall]) sphere(r=shade_bottom_diameter/2,$fn=96);
+            cylinder(h=h, r=shade_top_diameter/2, $fn=64);
+        }
 }
 
-// ---------------------------------------------------------------------
-// Vertical ribs shade.
-// ---------------------------------------------------------------------
+// 6. Vertical ribs
 module shade_vertical_ribs() {
-    union() {
-        shade_frustum();
-        for (i = [0 : shade_rib_count - 1])
-            rotate([0, 0, i * 360 / shade_rib_count])
-                translate([shade_bottom_diameter/2 - 2, 0, 14])
-                    rotate([0, 6, 0])
-                        cube([shade_rib_depth, 2, shade_height]);
+    h=shade_height;
+    _shade_body(h) {
+        _hollow_cone(h, shade_bottom_diameter/2, shade_top_diameter/2, shade_wall);
+        for(a=[0:360/shade_rib_count:359])
+            rotate([0,0,a])
+                translate([shade_bottom_diameter/2 - 1, 0, 0])
+                    cylinder(h=h-shade_ventilation_gap, r1=shade_rib_depth, r2=shade_rib_depth*0.5, $fn=8);
     }
 }
 
-// ---------------------------------------------------------------------
-// Horizontal ribs shade.
-// ---------------------------------------------------------------------
+// 7. Horizontal ribs
 module shade_horizontal_ribs() {
-    union() {
-        shade_cylinder();
-        d = shade_bottom_diameter * 0.8;
-        for (z = [10 : 12 : shade_height - 10])
-            translate([0, 0, 14 + z])
-                rotate_extrude($fn = 120)
-                    translate([d/2, 0]) circle(r = shade_rib_depth, $fn = 16);
+    h=shade_height;
+    _shade_body(h) {
+        _hollow_cone(h, shade_bottom_diameter/2, shade_top_diameter/2, shade_wall);
+        for(z=[10:18:h-shade_ventilation_gap]) {
+            t = z/h;
+            rr = shade_bottom_diameter/2 + (shade_top_diameter/2 - shade_bottom_diameter/2)*t;
+            translate([0,0,z])
+                rotate_extrude($fn=128)
+                    translate([rr,0]) circle(r=shade_rib_depth,$fn=8);
+        }
     }
 }
 
-// ---------------------------------------------------------------------
-// Faceted polygon shade.
-// ---------------------------------------------------------------------
+// 8. Faceted polygon shade
 module shade_faceted() {
-    sides = 10;
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14])
-            difference() {
-                cylinder(h = shade_height, d1 = shade_bottom_diameter,
-                         d2 = shade_top_diameter, $fn = sides);
-                translate([0, 0, -1])
-                    cylinder(h = shade_height + 2,
-                             d1 = shade_bottom_diameter - 2 * shade_wall,
-                             d2 = shade_top_diameter - 2 * shade_wall, $fn = sides);
-            }
-    }
+    h=shade_height;
+    _shade_body(h)
+        difference() {
+            cylinder(h=h, r1=shade_bottom_diameter/2, r2=shade_top_diameter/2, $fn=10);
+            translate([0,0,-EPS])
+                cylinder(h=h+2*EPS, r1=shade_bottom_diameter/2-shade_wall, r2=shade_top_diameter/2-shade_wall, $fn=10);
+            translate([0,0,h-shade_ventilation_gap])
+                cylinder(h=shade_ventilation_gap+EPS, r=shade_top_diameter/2+2, $fn=64);
+        }
 }
 
-// ---------------------------------------------------------------------
-// Organic S-curve shade.
-// ---------------------------------------------------------------------
+// 9. Organic S-curve
 module shade_organic_curve() {
-    pts = [ for (i = [0:30])
-        let (t = i / 30,
-             z = shade_height * t,
-             r = shade_bottom_diameter/2
-                 - (shade_bottom_diameter/2 - shade_top_diameter/2) * t
-                 + 18 * sin(180 * t))
-        [r, z] ];
-    prof = concat(
-        [[shade_mount_diameter/2, 0]],
-        pts,
-        [ for (i = [30:-1:0])
-            let (t = i / 30,
-                 z = shade_height * t,
-                 r = shade_bottom_diameter/2
-                     - (shade_bottom_diameter/2 - shade_top_diameter/2) * t
-                     + 18 * sin(180 * t))
-            [r - shade_wall, z] ],
-        [[shade_mount_diameter/2 - shade_wall, 0]]
-    );
-    union() {
-        shade_mounting_ring();
-        translate([0, 0, 14]) rotate_extrude($fn = 120) polygon(prof);
-    }
+    h=shade_height;
+    botr=shade_bottom_diameter/2; topr=shade_top_diameter/2;
+    _shade_body(h)
+        rotate_extrude($fn=128)
+            difference() {
+                polygon([for(i=[0:1:30])
+                    let(t=i/30, rad = topr + (botr-topr)*(0.5+0.5*cos(180*t)))
+                    [rad, t*h]
+                ]);
+                polygon([for(i=[0:1:30])
+                    let(t=i/30, rad = topr + (botr-topr)*(0.5+0.5*cos(180*t)) - shade_wall)
+                    [max(0.1,rad), t*h]
+                ]);
+            }
 }
 
-// ---------------------------------------------------------------------
-// Perforated shade (circular hole pattern).
-// ---------------------------------------------------------------------
+// 10. Perforated frustum
 module shade_perforated() {
-    d1 = shade_bottom_diameter * 0.8;
-    rows = 8; cols = 36;
-    difference() {
-        shade_cylinder();
-        for (row = [1 : rows])
-            for (c = [0 : cols - 1])
-                rotate([0, 0, c * 360 / cols + (row % 2) * (180/cols)])
-                    translate([d1/2, 0, 14 + row * (shade_height / (rows + 1))])
-                        rotate([0, 90, 0])
-                            cylinder(h = 2 * shade_wall + 2, d = 8, center = true, $fn = 24);
-    }
+    h=shade_height;
+    _shade_body(h)
+        difference() {
+            _hollow_cone(h, shade_bottom_diameter/2, shade_top_diameter/2, shade_wall);
+            for(z=[25:30:h-30])
+                for(a=[0:30:330])
+                    rotate([0,0,a + (z/30)*15]) {
+                        t=z/h;
+                        rr = shade_bottom_diameter/2 + (shade_top_diameter/2 - shade_bottom_diameter/2)*t;
+                        translate([rr,0,z]) rotate([0,90,0]) cylinder(h=20,r=5,center=true,$fn=24);
+                    }
+        }
 }
+
+if ($preview) shade_frustum();  // demo: only in GUI preview, skipped on STL export

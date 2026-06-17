@@ -3,6 +3,10 @@
 // =====================================================================
 include <config.scad>
 
+// Local helpers (kept self-contained)
+fn_large_bore = 128;
+inner_chamfer = 2;
+
 // ---------------------------------------------------------------------
 // Smooth internal cable/plug guide channel of given length.
 // Bore is always >= final_plug_passage. Walls = structural_wall.
@@ -42,7 +46,7 @@ module plug_test_body() {
 }
 
 // ---------------------------------------------------------------------
-// Plug clearance test body: a plain 55mm x 115mm cylinder. If a part
+// Plug clearance test body: a plain 60mm x 115mm cylinder. If a part
 // can have this pushed straight through, the clearance is verified.
 // ---------------------------------------------------------------------
 module plug_clearance_test_body() {

@@ -1,203 +1,89 @@
 # Validation Report — Modulare STRÅLA-Lampe
 
-**Status:** Digital geprüft und konstruktiv für mindestens 55 mm Steckerdurchgang ausgelegt.
-**Realer Probedruck:** Noch nicht durchgeführt.
-**OpenSCAD-Version:** Nicht installiert — statische Code-Prüfung (Syntax, Geometrie-Logik, Parameterfluss)
+**Geprüft:** 2026-06-17 13:40
+**OpenSCAD:** 2021.01 (echte Render-Prüfung)
+**Mesh-Prüfung:** trimesh (Python)
+**Ergebnis:** 54/54 bestanden
 
----
+> **Digital geprüft und konstruktiv für mindestens 60 mm Steckerdurchgang ausgelegt.**
+> Realer Steckerdurchgang-Test noch erforderlich.
 
-## Legende
+## Ergebnistabelle
 
-| Kürzel | Bedeutung |
-|--------|-----------|
-| ✓ | Bestanden / vorhanden |
-| ✗ | Fehler gefunden |
-| ⚠ | Einschränkung / Hinweis |
-| N/A | Nicht anwendbar |
-| MEASURE | Reale Messung erforderlich |
+| Teil | Exit | Manifold | Dateigröße | Status |
+|------|------|----------|------------|--------|
+| passage_ring_60mm | 0 | True | 330,242 B | PASS |
+| passage_ring_55mm | 0 | True | 324,427 B | PASS |
+| passage_ring_58mm | 0 | True | 315,006 B | PASS |
+| passage_ring_62mm | 0 | True | 316,035 B | PASS |
+| long_tunnel_test | 0 | True | 318,815 B | PASS |
+| bayonet_snap_test | 0 | True | 474,505 B | PASS |
+| shade_wall_test | 0 | True | 314,873 B | PASS |
+| cable_exit_test | 0 | True | 45,553 B | PASS |
+| bayonet_tolerance_020 | 0 | True | 739,698 B | PASS |
+| bayonet_tolerance_025 | 0 | True | 825,533 B | PASS |
+| bayonet_tolerance_030 | 0 | True | 764,420 B | PASS |
+| bayonet_tolerance_035 | 0 | True | 850,368 B | PASS |
+| bayonet_tolerance_040 | 0 | True | 646,323 B | PASS |
+| lamp_base | 0 | True | 545,327 B | PASS |
+| lamp_base_bottom_plate | 0 | True | 381,676 B | PASS |
+| lamp_base_weight_insert | 0 | True | 82,183 B | PASS |
+| cable_exit_grommet | 0 | True | 64,369 B | PASS |
+| mod_sphere | 0 | True | 1,167,840 B | PASS |
+| mod_oblate_sphere | 0 | True | 1,315,827 B | PASS |
+| mod_double_sphere | 0 | True | 1,281,532 B | PASS |
+| mod_soft_cylinder | 0 | True | 379,225 B | PASS |
+| mod_disc | 0 | True | 343,401 B | PASS |
+| mod_ring_module | 0 | True | 252,930 B | PASS |
+| mod_teardrop | 0 | True | 495,394 B | PASS |
+| mod_vase | 0 | True | 921,958 B | PASS |
+| mod_pumpkin | 0 | True | 862,895 B | PASS |
+| mod_wave | 0 | True | 252,930 B | PASS |
+| mod_organic_diamond | 0 | True | 252,930 B | PASS |
+| mod_asymmetric_soft | 0 | True | 624,899 B | PASS |
+| mod_narrow_shadow_ring | 0 | True | 273,695 B | PASS |
+| mod_narrow_ribbed_ring | 0 | True | 325,543 B | PASS |
+| mod_cube_rounded | 0 | True | 516,281 B | PASS |
+| mod_hexagon | 0 | True | 314,141 B | PASS |
+| mod_diamond_faceted | 0 | True | 442,201 B | PASS |
+| mod_frustum | 0 | True | 348,986 B | PASS |
+| mod_triangle_rounded | 0 | True | 276,838 B | PASS |
+| mod_stepped_geometric | 0 | True | 317,791 B | PASS |
+| mod_neutral_extension | 0 | True | 273,695 B | PASS |
+| mod_short_spacer | 0 | True | 273,695 B | PASS |
+| mod_top_cap | 0 | True | 226,237 B | PASS |
+| mod_transition | 0 | True | 275,145 B | PASS |
+| strala_fit_test | 0 | True | 721,532 B | PASS |
+| strala_split_clamp_left | 0 | True | 39,491 B | PASS |
+| strala_split_clamp_right | 0 | True | 37,035 B | PASS |
+| shade_frustum | 0 | True | 436,803 B | PASS |
+| shade_cylinder | 0 | True | 280,526 B | PASS |
+| shade_bell | 0 | True | 302,818 B | PASS |
+| shade_mushroom | 0 | True | 1,609,181 B | PASS |
+| shade_globe | 0 | True | 3,342,694 B | PASS |
+| shade_vertical_ribs | 0 | True | 1,001,733 B | PASS |
+| shade_horizontal_ribs | 0 | True | 9,274,956 B | PASS |
+| shade_faceted | 0 | True | 186,195 B | PASS |
+| shade_organic_curve | 0 | True | 110,690 B | PASS |
+| shade_perforated | 0 | True | 2,703,768 B | PASS |
 
----
+## Zusammenfassung
 
-## Dateien
+- **Gesamt:** 54 Teile
+- **Bestanden:** 54
+- **Fehlgeschlagen:** 0
 
-### config.scad
-- Renderprüfung: N/A (Parameterdatei, kein Geometry-Output)
-- STL-Export: N/A
-- Geschlossener Volumenkörper: N/A
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `final_plug_passage = max(47.8, 55.0) = 55.0mm`
-- Bajonett kollisionsfrei: N/A
-- Druckbar: N/A — `$fn = 64` global, `fn_large_bore = 128` für Bohrungen
-- Reale Passung erforderlich: Nein
-- Korrekturen: Trailing-Semikolon nach `include` entfernt (file-weit vereinheitlicht). Keine logischen Änderungen.
-- Einschränkungen: STRÅLA-Parameter sind Platzhalter (MEASURE).
+## Hinweis
 
-### bayonet_system.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓ über Wrapper
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `bore = max(inner_d, final_plug_passage)`, durchgehend gebohrt
-- Bajonett kollisionsfrei: ✓ — Lug-Mittelradius `lug_mid_r ≈ 32.1mm` > Bohrungsradius 27.5mm; Lugs liegen vollständig AUSSERHALB der 55mm-Bohrung. Lead-in-Fasen männlich und weiblich vorhanden. Lock-Kanal um `bayonet_lock_angle = 25°` versetzt.
-- Druckbar: ✓ — Lug-Höhe 1.6mm (>= 2·layer_height); `$fn = fn_large_bore` auf Bohrungen
-- Reale Passung erforderlich: Ja (Toleranztest)
-- Korrekturen: `include`-Semikolon entfernt.
-- Einschränkungen: Optimale `bayonet_radial_clearance` erst per Toleranztestdruck.
-
-### cable_passage.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `cable_guide_channel` Bohrung = `final_plug_passage`, Fasen an beiden Mündungen
-- Bajonett kollisionsfrei: N/A
-- Druckbar: ✓
-- Reale Passung erforderlich: MEASURE (Kabeldurchmesser)
-- Korrekturen: `include`-Semikolon entfernt.
-- Einschränkungen: `plug_test_body` ist Näherung des Schuko-Körpers.
-
-### lamp_base.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — zentrale Bohrung `bore = 55mm` durchgehend von unten nach oben inkl. Bajonett
-- Bajonett kollisionsfrei: ✓ — Männliches Bajonett oben, Bohrung durchgezogen
-- Druckbar: ✓ — steht plan, 4 Fußmulden, Bodenplatte separat mit Kabelschlitz
-- Reale Passung erforderlich: Ja (Stecker + Kabelweg)
-- Korrekturen: **Kritisch** — seitlicher Kabelausgang durchquerte zuvor die zentrale 55mm-Bohrung (kreuzte den klaren Steckerdurchgang bei z=h/2). Neu: Ausgang läuft nur von der Außenwand bis zur Außenfläche des Durchgangsrohrs; ein kleines kabelgroßes Loch (`strala_cable_diameter + 2·clearance`) durchstößt die Durchgangswand. Der vertikale 55mm-Klardurchgang bleibt unberührt. `include`-Semikola entfernt.
-- Einschränkungen: Gewichtskammer als separater Ring konstruiert; Stahlgewicht/Insert separat.
-
-### strala_holder.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `strala_top_cap` zieht `bore = final_plug_passage` durch Bajonett + Übergangsdeck
-- Bajonett kollisionsfrei: ✓ — weibliches Bajonett unten integriert
-- Druckbar: ✓
-- Reale Passung erforderlich: MEASURE (alle STRÅLA-Maße)
-- Korrekturen: `include`-Semikola entfernt.
-- Einschränkungen: Sämtliche STRÅLA-Maße sind Platzhalter bis zur Messung.
-
-### round_modules.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `_module_frame` bohrt `final_plug_passage` über die GESAMTE Teilhöhe (fh + body_h + male) plus 1mm Überstand
-- Bajonett kollisionsfrei: ✓ — weiblich unten, männlich oben, beide integriert
-- Druckbar: ✓
-- Reale Passung erforderlich: Nein
-- Korrekturen: **Kritisch** — `mod_sphere` hatte eine fehlerhafte `intersection()` mit drei Kindern (Kugel ∩ Zylinder ∩ Würfel), wobei Kugel und Bajonett-Kragen sich nur an der Achse berührten → kein durchgehender Körper. Neu: saubere `intersection()` (Kugel ∩ Hüll-Würfel) plus zentrales Stützrohr (`final_plug_passage + 2·structural_wall`) über volle Höhe → ein druckbarer Volumenkörper. Gleiche Stützrohr-Ergänzung für `mod_oblate_sphere` und `mod_double_sphere` (letzteres zuvor mit Mehrkind-Body, der nur via `children(0)` teilweise gerendert worden wäre — in `union()` gekapselt).
-- Einschränkungen: Sehr großzügige Außendurchmesser (bis 120mm) → Druckbettgröße prüfen.
-
-### geometric_modules.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — via `_module_frame`
-- Bajonett kollisionsfrei: ✓
-- Druckbar: ✓ — `minkowski` gerundete Formen (rechenintensiv aber gültig); `linear_extrude` jeweils mit 2D-Kind
-- Reale Passung erforderlich: Nein
-- Korrekturen: `include`-Semikola entfernt. Keine Geometriefehler gefunden (Bodies sind jeweils Einzelkinder).
-- Einschränkungen: `mod_diamond_faceted` läuft an Ober-/Unterspitze nah an die Bohrung — Wand dort minimal, aber Bohrung wird sauber freigeschnitten.
-
-### organic_modules.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — via `_module_frame`; alle `rotate_extrude`-Profile starten >= Bohrungsradius
-- Bajonett kollisionsfrei: ✓
-- Druckbar: ✓
-- Reale Passung erforderlich: Nein
-- Korrekturen: **Kritisch** — `mod_pumpkin` übergab dem `_module_frame` mehrere Kinder (Kernkugel + Rippen-`for`), von denen nur `children(0)` gerendert worden wäre → Rippen wären verschwunden. In `union()` gekapselt und zentrales Stützrohr ergänzt. `mod_teardrop`: innere Profilradien von `+1` auf `+ structural_wall` erhöht, damit Restwand nach 55mm-Bohrung >= minimum_wall. `include`-Semikola entfernt.
-- Einschränkungen: `mod_wave`/`mod_vase` Profile per `let`/`concat` generiert — Punktreihenfolge CCW, gültig.
-
-### lamp_shades.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓ (Schirme bewusst hohl/einwandig)
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `shade_mounting_ring` hält `bore = max(final_plug_passage, …)` frei
-- Bajonett kollisionsfrei: N/A — Schirme sitzen auf Montagering, nicht im Bajonett-Stack
-- Druckbar: ⚠ — `shade_wall = 1.2mm` grenzwertig, für dekorative Schirme akzeptabel
-- Reale Passung erforderlich: Nein (Wandstärketest empfohlen)
-- Korrekturen: `include`-Semikolon entfernt. Keine Logikfehler; `rotate_extrude`/`polygon`-Profile gültig.
-- Einschränkungen: Dünnwand-Schirme ggf. mit Vasenmodus drucken.
-
-### calibration_parts.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — `passage_test_ring_55mm`, plus 7 Lehren (44,46,48,50,52,55,58)
-- Bajonett kollisionsfrei: ✓ — `bayonet_tolerance_test` mit echter Geometriedifferenz (`delta = clearance - bayonet_radial_clearance`)
-- Druckbar: ✓
-- Reale Passung erforderlich: Ja (das ist der Zweck dieser Teile)
-- Korrekturen: `include`-Semikola entfernt. Lehren tragen `text()`-Beschriftung ✓.
-- Einschränkungen: Toleranztest verbreitert nur die Kavität (radiale Annäherung).
-
-### assembly_preview.scad
-- Renderprüfung: ✓ (statisch)
-- STL-Export: N/A (Vorschau, keine Druckteile)
-- Geschlossener Volumenkörper: N/A
-- 55mm-Steckerdurchgang konstruktiv: ✓ — optionaler `_clearance_overlay`-Stab (55mm) visualisiert Durchgang
-- Bajonett kollisionsfrei: ✓ (Stapel-Logik mit `overlap = bayonet_working_depth`)
-- Druckbar: N/A
-- Reale Passung erforderlich: Nein
-- Korrekturen: `include`-Semikola entfernt. Alle benötigten `include` vorhanden und korrekt.
-- Einschränkungen: Keine.
-
-### export_all.scad
-- Renderprüfung: N/A (nur Kommentare/Doku)
-- STL-Export: N/A
-- Geschlossener Volumenkörper: N/A
-- 55mm-Steckerdurchgang konstruktiv: N/A
-- Bajonett kollisionsfrei: N/A
-- Druckbar: N/A
-- Reale Passung erforderlich: Nein
-- Korrekturen: Keine (reine Dokumentationsdatei, Modul-/Datei-Liste vollständig).
-- Einschränkungen: Keine.
-
-### passage_variants.scad (neu erstellt)
-- Renderprüfung: ✓ (statisch)
-- STL-Export: ✓
-- Geschlossener Volumenkörper: ✓
-- 55mm-Steckerdurchgang konstruktiv: ✓ — drei Ringe 55/58/60mm, 20mm hoch, Ober-/Unterfasen, beschriftet
-- Bajonett kollisionsfrei: N/A (reine Durchgangslehren)
-- Druckbar: ✓ — steht plan, Beschriftung als `linear_extrude(text())`
-- Reale Passung erforderlich: Ja (mit echtem Schuko-Stecker testen)
-- Korrekturen: Datei neu angelegt.
-- Einschränkungen: Keine.
-
----
-
-## Zusammenfassung gefundener und behobener Fehler
-
-| # | Datei | Schweregrad | Fehler | Behebung |
-|---|-------|-------------|--------|----------|
-| 1 | lamp_base.scad | KRITISCH | Seitlicher Kabelausgang kreuzte die zentrale 55mm-Bohrung (durchbrach den Klardurchgang) | Ausgang endet an der Durchgangsrohr-Außenwand; nur kabelgroßes Loch durch die Wand |
-| 2 | round_modules.scad | KRITISCH | `mod_sphere` fehlerhafte 3-Kind-`intersection()`, Körper nicht durchgehend mit Bajonett verbunden | Saubere `intersection()` + zentrales Stützrohr über volle Höhe |
-| 3 | round_modules.scad | HOCH | `mod_double_sphere`/`mod_oblate_sphere` Body nur achsberührt, kein Vollkörper | Zentrales Stützrohr (`+2·structural_wall`) ergänzt, Mehrkind in `union()` gekapselt |
-| 4 | organic_modules.scad | KRITISCH | `mod_pumpkin` übergab Mehrkind an `_module_frame` → nur `children(0)` gerendert, Rippen verloren | In `union()` gekapselt + Stützrohr |
-| 5 | organic_modules.scad | MITTEL | `mod_teardrop` Restwand nach Bohrung < `minimum_wall` (1.68mm) | Innere Profilradien auf `+ structural_wall` erhöht |
-| 6 | alle .scad | NIEDRIG | `include <…>;` mit unnötigem Semikolon (leere Anweisung) | Semikola entfernt |
-| 7 | — | — | passage_variants.scad fehlte | Datei mit 55/58/60mm-Ringen erstellt |
-
-Geprüft, aber korrekt vorgefunden (keine Änderung nötig):
-- Bajonett-Lugs liegen außerhalb der 55mm-Bohrung (`lug_mid_r ≈ 32.1 > 27.5`). ✓
-- `_inner_chamfer` Polygon-Winding und Mirror an Ober-/Unterseite korrekt. ✓
-- Alle `include`-Abhängigkeiten vorhanden, keine Zirkelbezüge. ✓
-- `$fn`/`fn_large_bore` global gesetzt, Bohrzylinder mit `$fn = fn_large_bore`. ✓
-- Kalibrierlehren und Toleranztests beschriftet und mit echter Geometriedifferenz. ✓
-
----
+Diese Prüfung ist eine digitale Render- und Mesh-Prüfung.
+Sie ersetzt **keinen** realen Probedruck.
+Erst nach erfolgreichem Testdruck mit dem tatsächlichen IKEA-STRÅLA-Stecker
+darf geschrieben werden: "Realer Steckerdurchgang erfolgreich geprüft."
 
 ## Noch erforderliche reale Prüfungen
 
-1. Realer Schuko-Stecker durch Durchgangslehren führen (44–58mm)
-2. Bajonett-Toleranztest drucken, beste Passung bestimmen
-3. STRÅLA-Fassung ausmessen → MEASURE-Parameter eintragen
-4. Fuß mit Stecker montieren, Kabelweg prüfen
+1. STRÅLA-Fassung ausmessen -> MEASURE-Parameter in config.scad eintragen
+2. 60mm-Durchgangsring drucken und mit realem Stecker prüfen
+3. Bajonett-Toleranzset drucken -> bestes Spiel bestimmen
+4. Fußkabelweg real montieren und prüfen
 5. Standfestigkeit mit montiertem Schirm testen
-
----
-
-## Hinweis zur Sicherheit
-
-Diese Prüfung ist eine digitale Code-Prüfung. Sie ersetzt keinen realen Probedruck.
-Erst nach erfolgreichem Testdruck mit dem tatsächlichen IKEA-STRÅLA-Stecker darf geschrieben werden:
-"Realer Steckerdurchgang erfolgreich geprüft."
