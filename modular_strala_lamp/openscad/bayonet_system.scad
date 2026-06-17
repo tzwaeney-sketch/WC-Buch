@@ -5,7 +5,7 @@
 // is NEVER obstructed. Lugs live in the wall ring between
 // bayonet_inner_diameter and bayonet_interface_outer_diameter.
 // =====================================================================
-include <config.scad>;
+include <config.scad>
 
 // Helper: a rounded-profile lug block placed at the wall radius.
 module _bayonet_lug(mid_radius, lug_h, lug_radial, lug_ang) {

@@ -1,9 +1,9 @@
 // =====================================================================
 // organic_modules.scad - Organic / flowing decorative modules
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
-include <round_modules.scad>;   // reuse _module_frame
+include <config.scad>
+include <bayonet_system.scad>
+include <round_modules.scad>   // reuse _module_frame
 
 // ---------------------------------------------------------------------
 // Teardrop, h ~ 75mm.
@@ -14,11 +14,11 @@ module mod_teardrop() {
     _module_frame(h)
         rotate_extrude($fn = 96)
             polygon(points = [
-                [final_plug_passage/2 + 1, 0],
+                [final_plug_passage/2 + structural_wall, 0],
                 [od/2, h * 0.30],
                 [od/2 * 0.85, h * 0.55],
                 [od/2 * 0.45, h * 0.85],
-                [final_plug_passage/2 + 1, h],
+                [final_plug_passage/2 + structural_wall, h],
             ]);
 }
 
@@ -66,20 +66,23 @@ module mod_pumpkin() {
     h = 65;
     od = 110;
     ribs = 12;
-    _module_frame(h) {
-        // Core squashed sphere
-        intersection() {
-            scale([1, 1, h / od])
-                translate([0, 0, od/2]) sphere(d = od, $fn = 96);
-            cylinder(h = h, d = od + 6, $fn = 96);
+    _module_frame(h)
+        union() {
+            // Core squashed sphere
+            intersection() {
+                scale([1, 1, h / od])
+                    translate([0, 0, od/2]) sphere(d = od, $fn = 96);
+                cylinder(h = h, d = od + 6, $fn = 96);
+            }
+            // Rib lobes
+            for (i = [0 : ribs - 1])
+                rotate([0, 0, i * 360 / ribs])
+                    translate([od/2 - 6, 0, h/2])
+                        scale([1, 1, h / (od*0.9)])
+                            sphere(d = 14, $fn = 32);
+            // central support tube to the bore wall
+            cylinder(h = h, d = final_plug_passage + 2 * structural_wall, $fn = fn_large_bore);
         }
-        // Rib lobes
-        for (i = [0 : ribs - 1])
-            rotate([0, 0, i * 360 / ribs])
-                translate([od/2 - 6, 0, h/2])
-                    scale([1, 1, h / (od*0.9)])
-                        sphere(d = 14, $fn = 32);
-    }
 }
 
 // ---------------------------------------------------------------------

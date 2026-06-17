@@ -1,8 +1,8 @@
 // =====================================================================
 // calibration_parts.scad - Print-first calibration & gauge parts
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
+include <config.scad>
+include <bayonet_system.scad>
 
 // ---------------------------------------------------------------------
 // Single gauge ring with labelled bore.

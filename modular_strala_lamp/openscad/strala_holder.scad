@@ -5,8 +5,8 @@
 // Re-measure your specific STRALA part and update config.scad before
 // printing the final adapters. Use the test/measurement modules first.
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
+include <config.scad>
+include <bayonet_system.scad>
 
 // ---------------------------------------------------------------------
 // Clamp adapter: a split ring that grips the STRALA socket body.

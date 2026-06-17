@@ -1,9 +1,9 @@
 // =====================================================================
 // lamp_base.scad - The weighted base of the lamp system
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
-include <cable_passage.scad>;
+include <config.scad>
+include <bayonet_system.scad>
+include <cable_passage.scad>
 
 // ---------------------------------------------------------------------
 // Full base body. 180mm OD, 32mm tall, 55mm central passage,

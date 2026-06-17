@@ -1,7 +1,7 @@
 // =====================================================================
 // cable_passage.scad - Cable channels, plug test bodies, exit fittings
 // =====================================================================
-include <config.scad>;
+include <config.scad>
 
 // ---------------------------------------------------------------------
 // Smooth internal cable/plug guide channel of given length.

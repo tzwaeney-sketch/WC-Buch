@@ -5,7 +5,7 @@
 // inner diameter = shade_mount_diameter. The thin shade wall is never
 // load bearing; the ring carries the joint.
 // =====================================================================
-include <config.scad>;
+include <config.scad>
 
 // ---------------------------------------------------------------------
 // Mounting ring: stable structural ring all shades attach to.

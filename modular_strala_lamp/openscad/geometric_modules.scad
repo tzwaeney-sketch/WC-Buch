@@ -1,9 +1,9 @@
 // =====================================================================
 // geometric_modules.scad - Geometric decorative modules
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
-include <round_modules.scad>;   // reuse _module_frame
+include <config.scad>
+include <bayonet_system.scad>
+include <round_modules.scad>   // reuse _module_frame
 
 // Clean rounded box helper (minkowski of a box with a sphere).
 module _rounded_box(s, h, r) {

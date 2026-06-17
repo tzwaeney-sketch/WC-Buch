@@ -1,15 +1,15 @@
 // =====================================================================
 // assembly_preview.scad - Stacked configuration previews
 // =====================================================================
-include <config.scad>;
-include <bayonet_system.scad>;
-include <cable_passage.scad>;
-include <lamp_base.scad>;
-include <strala_holder.scad>;
-include <round_modules.scad>;
-include <geometric_modules.scad>;
-include <organic_modules.scad>;
-include <lamp_shades.scad>;
+include <config.scad>
+include <bayonet_system.scad>
+include <cable_passage.scad>
+include <lamp_base.scad>
+include <strala_holder.scad>
+include <round_modules.scad>
+include <geometric_modules.scad>
+include <organic_modules.scad>
+include <lamp_shades.scad>
 
 // Each module overlaps the previous by bayonet_working_depth when stacked.
 overlap = bayonet_working_depth;
