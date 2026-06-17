@@ -1,0 +1,757 @@
+{"parts":[
+{
+  "name": "passage_ring_60mm",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "passage_test_ring(60)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/passage_ring_60mm.stl",
+  "stl_size_bytes": 330242,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "passage_ring_55mm",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "passage_test_ring(55)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/passage_ring_55mm.stl",
+  "stl_size_bytes": 324427,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "passage_ring_58mm",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "passage_test_ring(58)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/passage_ring_58mm.stl",
+  "stl_size_bytes": 315006,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "passage_ring_62mm",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "passage_test_ring(62)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/passage_ring_62mm.stl",
+  "stl_size_bytes": 316035,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "long_tunnel_test",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "long_tunnel_test()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/long_tunnel_test.stl",
+  "stl_size_bytes": 318815,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_snap_test",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "bayonet_snap_test()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_snap_test.stl",
+  "stl_size_bytes": 474505,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_wall_test",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "shade_wall_test()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/shade_wall_test.stl",
+  "stl_size_bytes": 314873,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "cable_exit_test",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/calibration_parts.scad",
+  "module": "cable_exit_test()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/cable_exit_test.stl",
+  "stl_size_bytes": 45553,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_tolerance_020",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/bayonet_system.scad",
+  "module": "bayonet_tolerance_pair(0.20)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_tolerance_020.stl",
+  "stl_size_bytes": 739698,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_tolerance_025",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/bayonet_system.scad",
+  "module": "bayonet_tolerance_pair(0.25)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_tolerance_025.stl",
+  "stl_size_bytes": 825533,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_tolerance_030",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/bayonet_system.scad",
+  "module": "bayonet_tolerance_pair(0.30)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_tolerance_030.stl",
+  "stl_size_bytes": 764420,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_tolerance_035",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/bayonet_system.scad",
+  "module": "bayonet_tolerance_pair(0.35)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_tolerance_035.stl",
+  "stl_size_bytes": 850368,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "bayonet_tolerance_040",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/bayonet_system.scad",
+  "module": "bayonet_tolerance_pair(0.40)",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/calibration/bayonet_tolerance_040.stl",
+  "stl_size_bytes": 646323,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "lamp_base",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_base.scad",
+  "module": "lamp_base()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/base/lamp_base.stl",
+  "stl_size_bytes": 545327,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "lamp_base_bottom_plate",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_base.scad",
+  "module": "lamp_base_bottom_plate()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/base/lamp_base_bottom_plate.stl",
+  "stl_size_bytes": 381676,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "lamp_base_weight_insert",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_base.scad",
+  "module": "lamp_base_weight_insert()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/base/lamp_base_weight_insert.stl",
+  "stl_size_bytes": 82183,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "cable_exit_grommet",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_base.scad",
+  "module": "cable_exit_grommet()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/base/cable_exit_grommet.stl",
+  "stl_size_bytes": 64369,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_sphere",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_sphere()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_sphere.stl",
+  "stl_size_bytes": 1167840,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_oblate_sphere",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_oblate_sphere()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_oblate_sphere.stl",
+  "stl_size_bytes": 1315827,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_double_sphere",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_double_sphere()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_double_sphere.stl",
+  "stl_size_bytes": 1281532,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_soft_cylinder",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_soft_cylinder()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_soft_cylinder.stl",
+  "stl_size_bytes": 379225,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_disc",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_disc()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_disc.stl",
+  "stl_size_bytes": 343401,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_ring_module",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/round_modules.scad",
+  "module": "mod_ring_module()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_round/mod_ring_module.stl",
+  "stl_size_bytes": 252930,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_teardrop",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_teardrop()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_teardrop.stl",
+  "stl_size_bytes": 495394,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_vase",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_vase()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_vase.stl",
+  "stl_size_bytes": 921958,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_pumpkin",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_pumpkin()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_pumpkin.stl",
+  "stl_size_bytes": 862895,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_wave",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_wave()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 1,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_wave.stl",
+  "stl_size_bytes": 252930,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_organic_diamond",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_organic_diamond()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_organic_diamond.stl",
+  "stl_size_bytes": 252930,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_asymmetric_soft",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_asymmetric_soft()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_organic/mod_asymmetric_soft.stl",
+  "stl_size_bytes": 624899,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_narrow_shadow_ring",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_narrow_shadow_ring()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_narrow_shadow_ring.stl",
+  "stl_size_bytes": 273695,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_narrow_ribbed_ring",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/organic_modules.scad",
+  "module": "mod_narrow_ribbed_ring()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_narrow_ribbed_ring.stl",
+  "stl_size_bytes": 325543,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_cube_rounded",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_cube_rounded()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_cube_rounded.stl",
+  "stl_size_bytes": 516281,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_hexagon",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_hexagon()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_hexagon.stl",
+  "stl_size_bytes": 314141,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_diamond_faceted",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_diamond_faceted()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_diamond_faceted.stl",
+  "stl_size_bytes": 442201,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_frustum",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_frustum()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_frustum.stl",
+  "stl_size_bytes": 348986,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_triangle_rounded",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_triangle_rounded()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_triangle_rounded.stl",
+  "stl_size_bytes": 276838,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_stepped_geometric",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/geometric_modules.scad",
+  "module": "mod_stepped_geometric()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_geometric/mod_stepped_geometric.stl",
+  "stl_size_bytes": 317791,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_neutral_extension",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/utility_modules.scad",
+  "module": "mod_neutral_extension()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_neutral_extension.stl",
+  "stl_size_bytes": 273695,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_short_spacer",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/utility_modules.scad",
+  "module": "mod_short_spacer()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_short_spacer.stl",
+  "stl_size_bytes": 273695,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_top_cap",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/utility_modules.scad",
+  "module": "mod_top_cap()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_top_cap.stl",
+  "stl_size_bytes": 226237,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "mod_transition",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/utility_modules.scad",
+  "module": "mod_transition()",
+  "render_exit_code": 0,
+  "render_warnings": 1,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/modules_narrow/mod_transition.stl",
+  "stl_size_bytes": 275145,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "strala_fit_test",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/strala_holder.scad",
+  "module": "strala_fit_test()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/adapters/strala_fit_test.stl",
+  "stl_size_bytes": 721532,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "strala_split_clamp_left",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/strala_holder.scad",
+  "module": "strala_split_clamp_left()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/adapters/strala_split_clamp_left.stl",
+  "stl_size_bytes": 39491,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "strala_split_clamp_right",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/strala_holder.scad",
+  "module": "strala_split_clamp_right()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/adapters/strala_split_clamp_right.stl",
+  "stl_size_bytes": 37035,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_frustum",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_frustum()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_frustum.stl",
+  "stl_size_bytes": 436803,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_cylinder",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_cylinder()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_cylinder.stl",
+  "stl_size_bytes": 280526,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_bell",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_bell()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_bell.stl",
+  "stl_size_bytes": 302818,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_mushroom",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_mushroom()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_mushroom.stl",
+  "stl_size_bytes": 1609181,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_globe",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_globe()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_globe.stl",
+  "stl_size_bytes": 3342694,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_vertical_ribs",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_vertical_ribs()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_vertical_ribs.stl",
+  "stl_size_bytes": 1001733,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_horizontal_ribs",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_horizontal_ribs()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_horizontal_ribs.stl",
+  "stl_size_bytes": 9274956,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_faceted",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_faceted()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_faceted.stl",
+  "stl_size_bytes": 186195,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_organic_curve",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_organic_curve()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 1,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_organic_curve.stl",
+  "stl_size_bytes": 110690,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+,
+{
+  "name": "shade_perforated",
+  "scad_file": "/home/user/WC-Buch/modular_strala_lamp/openscad/lamp_shades.scad",
+  "module": "shade_perforated()",
+  "render_exit_code": 0,
+  "render_warnings": 0,
+  "render_errors": 0,
+  "stl_file": "/home/user/WC-Buch/modular_strala_lamp/exports/stl/shades/shade_perforated.stl",
+  "stl_size_bytes": 2703768,
+  "manifold": true,
+  "open_edges": 0,
+  "status": "PASS"
+}
+]}
