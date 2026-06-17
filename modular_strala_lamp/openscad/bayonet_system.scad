@@ -1,153 +1,171 @@
-// =====================================================================
-// bayonet_system.scad - Twist-lock bayonet interface
-// =====================================================================
-// The bayonet joins modules. The clear bore (final_plug_passage = 55mm)
-// is NEVER obstructed. Lugs live in the wall ring between
-// bayonet_inner_diameter and bayonet_interface_outer_diameter.
-// =====================================================================
 include <config.scad>
 
-// Helper: a rounded-profile lug block placed at the wall radius.
-module _bayonet_lug(mid_radius, lug_h, lug_radial, lug_ang) {
-    // A lug spanning lug_ang degrees, lug_h tall, projecting lug_radial.
-    rotate_extrude(angle = lug_ang, $fn = fn_large_bore)
-        translate([mid_radius, 0, 0])
-            offset(r = 0.8) offset(delta = -0.8)   // round the corners
-                square([lug_radial, lug_h], center = false);
+// Epsilon for avoiding zero-thickness faces
+EPS = 0.01;
+
+// ============================================================
+// MALE BAYONET INTERFACE
+// Adds 3 lugs to the top of a cylinder
+// ============================================================
+module bayonet_male(h_total = bayonet_working_depth + 2) {
+    inner_r = bayonet_bore_radius;
+    outer_r = bayonet_interface_outer_radius;
+    lug_h   = bayonet_lug_height;
+    lug_z   = h_total - lug_h - bayonet_axial_clearance; // lugs near top
+
+    difference() {
+        cylinder(h=h_total, r=outer_r, $fn=64);
+        translate([0,0,-EPS])
+            cylinder(h=h_total+2*EPS, r=inner_r, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=2+EPS, r1=inner_r+2, r2=inner_r, $fn=64);
+        translate([0,0,h_total-2])
+            cylinder(h=2+EPS, r1=inner_r, r2=inner_r+2, $fn=64);
+    }
+
+    // 3 lugs
+    for(i=[0:2]) {
+        rotate([0,0, i*120]) {
+            translate([0,0,lug_z]) {
+                rotate_extrude(angle=22, $fn=64)
+                    translate([male_lug_inner_radius, 0, 0])
+                        square([bayonet_lug_radial_depth, lug_h]);
+            }
+        }
+    }
 }
 
-// ---------------------------------------------------------------------
-// MALE bayonet: lugs project OUTWARD from the interface wall.
-// inner_d : clear bore (>= final_plug_passage)
-// outer_d : outer diameter of the interface collar
-// ---------------------------------------------------------------------
-module bayonet_male(h = bayonet_working_depth, inner_d = bayonet_inner_diameter,
-                    outer_d = bayonet_interface_outer_diameter) {
-    bore = max(inner_d, final_plug_passage);
-    // The male collar slides INSIDE the female; reduce its outer size by
-    // radial clearance.
-    collar_outer = outer_d - 2 * bayonet_radial_clearance;
-    lug_mid_r = bore/2 + (collar_outer/2 - bore/2) * 0.5;
-    lug_radial = bayonet_lug_radial_depth;
+// ============================================================
+// FEMALE BAYONET INTERFACE
+// ============================================================
+module bayonet_female(h_total = bayonet_working_depth + 2) {
+    inner_r  = bayonet_bore_radius;
+    outer_r  = bayonet_interface_outer_radius;
+    ch_inner = female_channel_inner_radius;
+    ch_outer = female_channel_outer_radius;
+    ch_h     = female_channel_height;
+
+    entry_angle = 28;
+    groove_z = h_total - ch_h - bayonet_axial_clearance;
+
+    difference() {
+        cylinder(h=h_total, r=outer_r, $fn=64);
+        translate([0,0,-EPS])
+            cylinder(h=h_total+2*EPS, r=inner_r, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=2+EPS, r1=inner_r+2, r2=inner_r, $fn=64);
+        translate([0,0,h_total-2])
+            cylinder(h=2+EPS, r1=inner_r, r2=inner_r+2, $fn=64);
+
+        // entry slots
+        for(i=[0:2]) {
+            rotate([0,0, i*120])
+                rotate_extrude(angle=entry_angle, $fn=64)
+                    translate([ch_inner, 0, 0])
+                        square([ch_outer - ch_inner, h_total + EPS]);
+        }
+
+        // lock grooves
+        for(i=[0:2]) {
+            rotate([0,0, i*120 + entry_angle])
+                rotate_extrude(angle=bayonet_lock_angle, $fn=64)
+                    translate([ch_inner, groove_z, 0])
+                        square([ch_outer - ch_inner, ch_h]);
+        }
+    }
+}
+
+// ============================================================
+// COMPLETE BAYONET PAIR
+// ============================================================
+module bayonet_pair(gap=5) {
+    bayonet_female();
+    translate([0, 0, bayonet_working_depth + 2 + gap])
+        bayonet_male();
+}
+
+// ============================================================
+// PASSAGE RING — smallest useful module
+// ============================================================
+module bayonet_passage_ring(h=20) {
+    inner_r = bayonet_bore_radius;
+    outer_r = bayonet_interface_outer_radius + structural_wall;
 
     difference() {
         union() {
-            // Collar tube
-            difference() {
-                cylinder(h = h, d = collar_outer, $fn = fn_large_bore);
-                translate([0, 0, -1])
-                    cylinder(h = h + 2, d = bore, $fn = fn_large_bore);
-            }
-            // Lead-in chamfer at top of collar (helps insertion)
-            translate([0, 0, h - 1.2])
-                difference() {
-                    cylinder(h = 1.2, d1 = collar_outer,
-                             d2 = collar_outer - 2.0, $fn = fn_large_bore);
-                    translate([0,0,-1])
-                        cylinder(h = 3, d = bore, $fn = fn_large_bore);
-                }
-            // Three lugs near the top of the collar
-            for (i = [0 : bayonet_lug_count - 1]) {
-                rotate([0, 0, i * 360 / bayonet_lug_count])
-                    translate([0, 0, h - 2.6])
-                        _bayonet_lug(lug_mid_r + lug_radial/2, 1.6,
-                                     lug_radial, bayonet_lug_angular_width);
-            }
+            cylinder(h=h, r=outer_r, $fn=64);
+            bayonet_female(h_total = bayonet_working_depth + 2);
+            translate([0,0, h - bayonet_working_depth - 2])
+                bayonet_male(h_total = bayonet_working_depth + 2);
         }
-        // Inner chamfer (smooth lead at the bore mouth)
-        _inner_chamfer(bore, h);
+        translate([0,0,-EPS])
+            cylinder(h=h+2*EPS, r=inner_r, $fn=128);
+        translate([0,0,-EPS])
+            cylinder(h=3, r1=inner_r+3, r2=inner_r, $fn=64);
+        translate([0,0,h-3])
+            cylinder(h=3+EPS, r1=inner_r, r2=inner_r+3, $fn=64);
     }
 }
 
-// ---------------------------------------------------------------------
-// FEMALE bayonet: receiving cup with L-shaped slots for the lugs.
-// ---------------------------------------------------------------------
-module bayonet_female(h = bayonet_working_depth + 2, inner_d = bayonet_inner_diameter,
-                      outer_d = bayonet_interface_outer_diameter) {
-    bore = max(inner_d, final_plug_passage);
-    cup_outer = outer_d + 2 * bayonet_outer_wall;
-    // Inner cavity that accepts the male collar (with clearance):
-    cavity_d = outer_d;
-    lug_mid_r = bore/2 + (cavity_d/2 - bore/2) * 0.5;
-    slot_radial = bayonet_lug_radial_depth + bayonet_radial_clearance;
-
+// ============================================================
+// CROSS-SECTION VIEW
+// ============================================================
+module bayonet_section_view() {
     difference() {
-        // Outer body
-        cylinder(h = h, d = cup_outer, $fn = fn_large_bore);
+        bayonet_pair();
+        translate([-200, 0, -1])
+            cube([200, 200, 100]);
+    }
+}
 
-        // Clear bore through everything
-        translate([0, 0, -1])
-            cylinder(h = h + 2, d = bore, $fn = fn_large_bore);
+// ============================================================
+// TOLERANCE TEST PAIR
+// ============================================================
+module bayonet_tolerance_pair(clearance = 0.30) {
+    adj_radial = clearance;
+    adj_axial  = clearance * 0.8;
 
-        // Receiving cavity for collar (open at the bottom face, z=0)
-        translate([0, 0, -1])
-            cylinder(h = bayonet_working_depth + 1 + bayonet_axial_clearance,
-                     d = cavity_d, $fn = fn_large_bore);
+    h = bayonet_working_depth + 4;
+    inner_r  = bayonet_bore_radius;
+    outer_r  = bayonet_interface_outer_radius;
+    ch_inner = male_lug_inner_radius - adj_radial;
+    ch_outer = male_lug_outer_radius + adj_radial;
+    ch_h     = bayonet_lug_height + adj_axial;
+    entry_a  = 28;
+    groove_z = h - ch_h - adj_axial;
 
-        // L-shaped slots: axial entry + circumferential lock channel
-        for (i = [0 : bayonet_lug_count - 1]) {
-            rotate([0, 0, i * 360 / bayonet_lug_count]) {
-                // Axial entry slot (from bottom face upward)
-                translate([0, 0, -1])
-                    _bayonet_lug(lug_mid_r, 2.2 + 1,
-                                 slot_radial + 0.5, bayonet_lug_angular_width + 4);
-                // Circumferential lock channel
-                translate([0, 0, bayonet_working_depth - 2.6])
-                    rotate([0, 0, -bayonet_lock_angle])
-                        _bayonet_lug(lug_mid_r, 2.0,
-                                     slot_radial + 0.5,
-                                     bayonet_lug_angular_width + bayonet_lock_angle + 4);
-            }
+    // Female part
+    difference() {
+        cylinder(h=h, r=outer_r, $fn=64);
+        translate([0,0,-EPS]) cylinder(h=h+2*EPS, r=inner_r, $fn=128);
+        for(i=[0:2]) {
+            rotate([0,0,i*120])
+                rotate_extrude(angle=entry_a, $fn=64)
+                    translate([ch_inner,0]) square([ch_outer-ch_inner, h+EPS]);
+            rotate([0,0,i*120+entry_a])
+                rotate_extrude(angle=bayonet_lock_angle, $fn=64)
+                    translate([ch_inner, groove_z]) square([ch_outer-ch_inner, ch_h]);
         }
-        // Inner chamfer at bore mouth (top and bottom)
-        _inner_chamfer(bore, h);
-        translate([0, 0, h]) mirror([0,0,1]) _inner_chamfer(bore, h);
     }
-}
 
-// Inner edge chamfer cutter at z = 0 face, pointing into the part.
-module _inner_chamfer(bore, h) {
-    translate([0, 0, -0.01])
-        rotate_extrude($fn = fn_large_bore)
-            polygon(points = [
-                [bore/2 - 0.01, -0.01],
-                [bore/2 + inner_chamfer, -0.01],
-                [bore/2 - 0.01, inner_chamfer]
-            ]);
-}
-
-// ---------------------------------------------------------------------
-// Passage ring: a simple test ring exposing both interfaces.
-// Female at bottom, male at top, smooth 55mm bore between.
-// ---------------------------------------------------------------------
-module bayonet_passage_ring() {
-    fh = bayonet_working_depth + 2;
-    body_h = 12;
-    bore = final_plug_passage;
-    union() {
-        bayonet_female(h = fh);
-        translate([0, 0, fh])
-            difference() {
-                cylinder(h = body_h, d = bayonet_interface_outer_diameter
-                         + 2 * bayonet_outer_wall, $fn = fn_large_bore);
-                translate([0,0,-1])
-                    cylinder(h = body_h + 2, d = bore, $fn = fn_large_bore);
-            }
-        translate([0, 0, fh + body_h])
-            bayonet_male(h = bayonet_working_depth);
+    // Male part (offset for printing)
+    translate([outer_r*2 + 5, 0, 0]) {
+        lug_z = h - bayonet_lug_height - adj_axial;
+        difference() {
+            cylinder(h=h, r=outer_r, $fn=64);
+            translate([0,0,-EPS]) cylinder(h=h+2*EPS, r=inner_r, $fn=128);
+        }
+        for(i=[0:2]) {
+            rotate([0,0,i*120])
+                translate([0,0,lug_z])
+                    rotate_extrude(angle=22, $fn=64)
+                        translate([male_lug_inner_radius,0])
+                            square([bayonet_lug_radial_depth, bayonet_lug_height]);
+        }
     }
-}
 
-// ---------------------------------------------------------------------
-// Cross section: cutaway of the passage ring for inspection.
-// ---------------------------------------------------------------------
-module bayonet_cross_section() {
-    difference() {
-        bayonet_passage_ring();
-        translate([0, -100, -10])
-            cube([100, 200, 200]);   // cut away +X half
-    }
+    // Label
+    translate([0, outer_r+2, 0])
+        linear_extrude(height=1.5)
+            text(str(clearance, "mm"), size=4, halign="center");
 }
-
-// Quick preview
-// bayonet_passage_ring();
