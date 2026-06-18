@@ -1,9 +1,4 @@
-include <config.scad>
-include <bayonet_v2.scad>
-
-// ============================================================
-// lamp_base_round_v2.scad -- round lamp base
-// ============================================================
+include <module_frame.scad>
 
 foot_r       = 6;
 foot_depth   = 3;
@@ -19,10 +14,9 @@ module lamp_base_round() {
             cylinder(h=base_h, r=inner_tube_r, $fn=96);
         }
 
-        // 60mm through bore + chamfers
         _bore_cuts(base_h);
 
-        // Weight chamber: annular cavity in the base body
+        // Weight chamber
         translate([0,0, base_bot])
             difference() {
                 cylinder(h=base_h - base_bot - 4, r=or - wall_str, $fn=128);
@@ -30,18 +24,18 @@ module lamp_base_round() {
                     cylinder(h=base_h, r=inner_tube_r + 1.5, $fn=96);
             }
 
-        // Cable exit: radial groove in the BOTTOM face only
+        // Cable exit: radial groove in BOTTOM face only
         translate([-EPS, -(strala_cable_d/2 + 1), -EPS])
             cube([or + 2*EPS, strala_cable_d + 2, base_bot + EPS]);
 
-        // 4 rubber foot pockets on the bottom
+        // 4 rubber foot pockets
         for (i = [0:3])
             rotate([0,0, i*90])
                 translate([foot_radius, 0, -EPS])
                     cylinder(h=foot_depth + EPS, r=foot_r, $fn=48);
     }
 
-    // Male spigot on TOP: protrudes above base
+    // Male spigot protrudes above top
     translate([0,0, base_h]) bay_male_spigot(bay_depth);
 }
 

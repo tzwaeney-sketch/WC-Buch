@@ -1,9 +1,4 @@
-include <config.scad>
-include <bayonet_v2.scad>
-
-// ============================================================
-// lamp_base_design_v2.scad -- stepped (3-step) lamp base
-// ============================================================
+include <module_frame.scad>
 
 foot_r       = 6;
 foot_depth   = 3;
@@ -16,7 +11,7 @@ module lamp_base_design() {
 
     difference() {
         union() {
-            cylinder(h=h3 + EPS,      r=d0/2, $fn=128);
+            cylinder(h=h3 + EPS,    r=d0/2, $fn=128);
             translate([0,0,h3])     cylinder(h=h3 + EPS, r=d1/2, $fn=128);
             translate([0,0,2*h3])   cylinder(h=base_h-2*h3, r=d2/2, $fn=128);
             cylinder(h=base_h, r=inner_tube_r, $fn=96);
@@ -32,18 +27,18 @@ module lamp_base_design() {
                     cylinder(h=base_h, r=inner_tube_r + 1.5, $fn=96);
             }
 
-        // Cable exit trough
+        // Cable exit: radial groove in BOTTOM face only
         translate([-EPS, -(strala_cable_d/2 + 1), -EPS])
             cube([d0/2 + 2*EPS, strala_cable_d + 2, base_bot + EPS]);
 
-        // foot pockets
+        // 4 rubber foot pockets
         for (i = [0:3])
             rotate([0,0, i*90])
                 translate([foot_radius, 0, -EPS])
                     cylinder(h=foot_depth + EPS, r=foot_r, $fn=48);
     }
 
-    // Male spigot on TOP
+    // Male spigot protrudes above top
     translate([0,0, base_h]) bay_male_spigot(bay_depth);
 }
 
