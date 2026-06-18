@@ -16,16 +16,18 @@ module bay_lug() {
         rotate_extrude(angle=bay_lug_arc - chamfer_deg, $fn=160)
             translate([bay_spigot_r, 0])
                 square([bay_lug_depth, bay_lug_h]);
-    // Lead-in ramp: 12 thin wedge slices tapering height 0->full
-    slices = 12;
-    for (s=[0:slices-1]) {
-        a0 = s     * chamfer_deg / slices;
-        a1 = (s+1) * chamfer_deg / slices;
-        hh = bay_lug_h * ((s+1) / slices);
-        rotate([0,0, a0])
-            rotate_extrude(angle=a1-a0+0.01, $fn=20)
+    // Lead-in ramp as a single hull wedge (avoids degenerate faces)
+    hull() {
+        // leading edge (zero height slice at angle 0)
+        rotate([0,0, 0])
+            rotate_extrude(angle=0.5, $fn=20)
                 translate([bay_spigot_r, 0])
-                    square([bay_lug_depth, max(hh, 0.2)]);
+                    square([bay_lug_depth, 0.1]);
+        // trailing edge (full height at chamfer_deg)
+        rotate([0,0, chamfer_deg - 0.5])
+            rotate_extrude(angle=0.5, $fn=20)
+                translate([bay_spigot_r, 0])
+                    square([bay_lug_depth, bay_lug_h]);
     }
 }
 
