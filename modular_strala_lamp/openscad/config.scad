@@ -1,128 +1,67 @@
 // ============================================================
-// MODULAR STRÅLA LAMP — CENTRAL CONFIGURATION
+// config.scad — Modular STRALA Lamp System V2
+// All global parameters. Included by every other v2 file.
+// All dimensions in mm.
 // ============================================================
-// All dimensions in mm. Edit here; everything else updates.
 
-// --- Plug clearance (CRITICAL — do not reduce) ---
-actual_plug_width     = 41.8;
-actual_plug_height    = 41.8;
-actual_plug_diagonal  = 41.8;
-actual_plug_length    = 111.0;
-plug_passage_clearance = 3.0;
-plug_clear_passage_diameter = 60.0;
+// ---- Plug passage (NEVER reduce) ----
+final_plug_passage = 60.0;
+bore_r = final_plug_passage / 2;   // 30.0
+assert(bore_r * 2 >= 60, "Bore diameter must be >= 60mm (plug passage)");
 
-calculated_plug_passage = max(actual_plug_width, actual_plug_height, actual_plug_diagonal)
-                          + 2 * plug_passage_clearance;  // = 47.8
+// ---- FDM print parameters (Bambu P2S, 0.4mm nozzle) ----
+nozzle_d = 0.4;
+lh = 0.20;
+lw = 0.42;
+wall_min  = 1.68;   // 4 x lw
+wall_str  = 2.52;   // 6 x lw
+wall_rein = 3.36;   // 8 x lw
+clearance = 0.30;   // default (between PLA 0.25 and PETG 0.35)
+EPS = 0.01;
 
-final_plug_passage = max(calculated_plug_passage, plug_clear_passage_diameter); // = 60.0
+// ---- Bayonet geometry (mathematically defined) ----
+bay_core_wall   = 3.5;
+bay_lug_inner_r = bore_r + bay_core_wall;          // 33.5
+bay_lug_depth   = 3.5;
+bay_lug_outer_r = bay_lug_inner_r + bay_lug_depth; // 37.0
+bay_iface_wall  = 3.0;
+bay_iface_r     = bay_lug_outer_r + bay_iface_wall;// 40.0
+bay_iface_d     = bay_iface_r * 2;                 // 80.0
 
-// Assertions
-assert(final_plug_passage >= plug_clear_passage_diameter,
-       "ERROR: final_plug_passage below required minimum");
+bay_n         = 3;    // number of lugs
+bay_lug_arc   = 22;   // lug angular width (deg)
+bay_entry_arc = 30;   // entry slot width (deg) — wider than lug+tol
+bay_lock_arc  = 25;   // rotation to lock (deg)
+bay_lug_h     = 2.8;  // lug axial thickness (mm)
+bay_depth     = 5.0;  // total bayonet zone height (mm)
 
-// Derived passage aliases (all modules use these)
-bayonet_inner_diameter      = final_plug_passage;
-base_passage_diameter       = final_plug_passage;
-module_passage_diameter     = final_plug_passage;
-top_cap_passage_diameter    = final_plug_passage;
-calibration_passage_diameter = final_plug_passage;
+// ---- Snap geometry ----
+snap_ramp_deg = 4;    // degrees of ramp at end of lock groove
+snap_step     = 0.5;  // mm depth of snap well behind ramp
 
-echo("final_plug_passage =", final_plug_passage, "mm  [required >=", plug_clear_passage_diameter, "]");
+// ---- Module sizing ----
+mod_typical_d = 105;                      // typical outer diameter
+mod_narrow_d  = 88;                       // narrow accent modules min OD
+mod_min_d     = bay_iface_d + 2*wall_str; // absolute minimum OD (~85)
 
-// --- FDM print parameters (Bambu Lab P2S, 0.4mm nozzle) ---
-nozzle_diameter   = 0.4;
-layer_height      = 0.20;
-line_width        = 0.42;
+// ---- Base ----
+base_d   = 220;
+base_h   = 45;
+base_bot = 5;
 
-minimum_wall      = 1.68;   // 4 × line_width
-structural_wall   = 2.52;   // 6 × line_width
-reinforced_wall   = 3.36;   // 8 × line_width
-base_wall         = 3.36;
+// ---- STRALA fixture (measured) ----
+strala_thread_d    = 26;
+strala_shoulder_d  = 38;
+strala_ret_ring_od = 36;
+strala_cable_d     = 6;
+strala_mount_clearance = 0.6;
+strala_mount_hole_d = strala_thread_d + strala_mount_clearance;
 
-general_clearance      = 0.25;
-bayonet_radial_clearance = 0.30;
-bayonet_axial_clearance  = 0.25;
+// ---- Shade ----
+shade_h     = 200;
+shade_bot_d = 240;
+shade_top_d = 110;
+shade_wall_t= 1.6;
+shade_vent  = 15;
 
-assert(structural_wall >= minimum_wall, "ERROR: structural_wall below minimum_wall");
-
-// --- Bayonet geometry (derived from plug passage) ---
-bayonet_lug_count      = 3;
-bayonet_lock_angle     = 25;      // degrees of rotation to lock
-bayonet_working_depth  = 4.0;    // axial depth of lug pocket
-bayonet_lug_height     = 2.4;    // lug thickness (axial)
-bayonet_lug_radial_depth = 3.2;  // lug sticks this far into wall
-bayonet_core_wall      = 3.0;    // wall between bore and lug inner face
-
-// Derived radii
-bayonet_bore_radius           = final_plug_passage / 2;             // 30.0
-bayonet_core_outer_radius     = bayonet_bore_radius + bayonet_core_wall; // 33.0
-male_lug_inner_radius         = bayonet_core_outer_radius;           // 33.0
-male_lug_outer_radius         = male_lug_inner_radius + bayonet_lug_radial_depth; // 36.2
-bayonet_interface_outer_radius = male_lug_outer_radius + bayonet_core_wall; // 39.2
-bayonet_interface_outer_diameter = 2 * bayonet_interface_outer_radius;  // 78.4
-
-// Female channel (slightly larger for clearance)
-female_channel_inner_radius = male_lug_inner_radius - bayonet_radial_clearance; // 32.7
-female_channel_outer_radius = male_lug_outer_radius + bayonet_radial_clearance; // 36.5
-female_channel_height       = bayonet_lug_height + bayonet_axial_clearance;      // 2.65
-
-assert(female_channel_inner_radius <= male_lug_inner_radius - bayonet_radial_clearance + 0.001);
-assert(female_channel_outer_radius >= male_lug_outer_radius + bayonet_radial_clearance - 0.001);
-assert(female_channel_height >= bayonet_lug_height + bayonet_axial_clearance - 0.001);
-
-// --- Module geometry ---
-minimum_module_outer_diameter = bayonet_interface_outer_diameter + 2 * structural_wall;
-module_outer_diameter_typical = 105;  // main modules
-module_outer_diameter_narrow  = ceil(bayonet_interface_outer_diameter + 2 * reinforced_wall); // ~86mm
-
-// --- Lamp base ---
-base_outer_diameter   = 220;
-base_total_height     = 45;
-base_bottom_thickness = 5;
-base_outer_wall       = base_wall;
-
-// --- STRÅLA adapter — ALLE MIT REALER FASSUNG MESSEN ---
-// Montage: Fassungsgewinde geht von unten durch Halteflansch-Loch.
-//          Fassungsschulter liegt von unten gegen Flanschunterseite.
-//          Originaler STRÅLA-Schraubring sichert von oben.
-strala_socket_outer_diameter     = 30;   // MEASURE — Körper-Außendurchmesser der Fassung
-strala_socket_total_length       = 50;   // MEASURE — Gesamtlänge Fassungskörper
-strala_socket_shoulder_diameter  = 38;   // MEASURE — Schulterdurchmesser (breiter als Gewinde)
-strala_thread_outer_diameter     = 26;   // MEASURE — Außendurchmesser des Befestigungsgewindes
-strala_thread_usable_length      = 15;   // MEASURE — nutzbarer Gewindebereich
-strala_retaining_ring_outer_diameter = 36; // MEASURE — Außendurchmesser Originalschraubring
-strala_retaining_ring_inner_diameter = 27; // MEASURE — Innendurchmesser Originalschraubring
-strala_retaining_ring_height     = 5;    // MEASURE — Höhe Originalschraubring
-strala_cable_diameter            = 6;    // MEASURE — Kabeldurchmesser
-
-// Berechnetes Montageloch: Gewindedurchmesser + FDM-Spiel
-strala_mount_hole_clearance      = 0.6;  // anpassbar nach Probedruck
-strala_mount_hole_diameter       = strala_thread_outer_diameter + strala_mount_hole_clearance;
-
-echo("STRÅLA mount hole diameter:", strala_mount_hole_diameter, "mm (needs MEASURE of real socket)");
-
-// --- Lamp shades ---
-shade_height          = 200;
-shade_bottom_diameter = 250;
-shade_top_diameter    = 110;
-shade_wall            = 1.2;
-shade_rib_count       = 48;
-shade_rib_depth       = 1.5;
-shade_ventilation_gap = 15;
-shade_mount_diameter  = bayonet_interface_outer_diameter + 4;
-
-// --- Body height target ---
-lamp_body_target_height  = 600;
-lamp_body_minimum_height = 570;
-lamp_body_maximum_height = 630;
-
-// --- Render quality ---
 $fn = 64;
-
-echo("=== CONFIGURATION SUMMARY ===");
-echo("Plug passage:", final_plug_passage, "mm");
-echo("Bayonet inner:", bayonet_inner_diameter, "mm");
-echo("Bayonet interface OD:", bayonet_interface_outer_diameter, "mm");
-echo("Min module OD:", minimum_module_outer_diameter, "mm");
-echo("Typical module OD:", module_outer_diameter_typical, "mm");
-echo("Base OD:", base_outer_diameter, "mm");
