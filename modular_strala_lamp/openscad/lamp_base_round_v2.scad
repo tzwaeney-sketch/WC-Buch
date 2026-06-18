@@ -41,12 +41,13 @@ module lamp_base_round() {
                     cylinder(h=base_h, r=inner_tube_r + 1.5, $fn=96);
             }
 
-        // Cable trough: open vertical slot through the side wall,
-        // connecting outer surface to the bore region. Above the
-        // weight chamber floor so it stays a clean channel.
-        translate([0,0, base_bot + 6])
-            translate([0, -trough_w/2, 0])
-                cube([or + EPS, trough_w, base_h]);
+        // Cable exit: radial groove in the BOTTOM face only.
+        // Cable runs down through the 60mm bore and exits laterally
+        // at the base of the foot. Groove width = cable dia + 2mm
+        // clearance, depth = base_bot (5mm) — top stays closed.
+        // Lamp stands flat on the 4 rubber foot pockets.
+        translate([-EPS, -(strala_cable_d/2 + 1), -EPS])
+            cube([or + 2*EPS, strala_cable_d + 2, base_bot + EPS]);
 
         // 4 rubber foot pockets on the bottom
         for (i = [0:3])

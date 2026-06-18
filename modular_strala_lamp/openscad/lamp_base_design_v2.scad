@@ -40,10 +40,12 @@ module lamp_base_design() {
                     cylinder(h=base_h, r=inner_tube_r + 1.5, $fn=96);
             }
 
-        // Cable trough — open side slot to the bore
-        translate([0,0, base_bot + 6])
-            translate([0, -trough_w/2, 0])
-                cube([d0/2 + EPS, trough_w, base_h]);
+        // Cable exit: radial groove in the BOTTOM face only.
+        // Cable runs down through the 60mm bore and exits laterally
+        // at the base of the foot. Groove width = cable dia + 2mm
+        // clearance, depth = base_bot (5mm) — top stays closed.
+        translate([-EPS, -(strala_cable_d/2 + 1), -EPS])
+            cube([d0/2 + 2*EPS, strala_cable_d + 2, base_bot + EPS]);
 
         // foot pockets
         for (i = [0:3])
