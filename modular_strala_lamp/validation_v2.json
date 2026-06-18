@@ -1,0 +1,222 @@
+{
+  "all_pass": true,
+  "count": 12,
+  "parts": [
+    {
+      "file": "01_Fuss_Rund.stl",
+      "size_bytes": 587782,
+      "faces": 3536,
+      "bbox_mm": [
+        220.0,
+        220.0,
+        45.0
+      ],
+      "volume_mm3": 487600.9,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "02_Fuss_Design.stl",
+      "size_bytes": 764539,
+      "faces": 4560,
+      "bbox_mm": [
+        220.0,
+        220.0,
+        45.0
+      ],
+      "volume_mm3": 749333.5,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "03_Koerper_Kugel.stl",
+      "size_bytes": 773973,
+      "faces": 4276,
+      "bbox_mm": [
+        104.94,
+        104.94,
+        80.0
+      ],
+      "volume_mm3": 351962.2,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "04_Koerper_Abgeflacht.stl",
+      "size_bytes": 590020,
+      "faces": 3324,
+      "bbox_mm": [
+        104.94,
+        85.04,
+        70.0
+      ],
+      "volume_mm3": 239772.0,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "05_Koerper_Organisch.stl",
+      "size_bytes": 1634979,
+      "faces": 9180,
+      "bbox_mm": [
+        105.0,
+        105.0,
+        90.0
+      ],
+      "volume_mm3": 383749.0,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "06_Koerper_Geometrisch.stl",
+      "size_bytes": 440320,
+      "faces": 2512,
+      "bbox_mm": [
+        105.0,
+        90.93,
+        80.0
+      ],
+      "volume_mm3": 299276.9,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "07_Koerper_Schmal_Ring.stl",
+      "size_bytes": 477421,
+      "faces": 2740,
+      "bbox_mm": [
+        89.04,
+        89.04,
+        55.0
+      ],
+      "volume_mm3": 183665.8,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "08_Koerper_Schmal_Gerippt.stl",
+      "size_bytes": 635291,
+      "faces": 3700,
+      "bbox_mm": [
+        89.67,
+        89.67,
+        60.0
+      ],
+      "volume_mm3": 193798.6,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 29.99,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "09_Schirm_Klassisch.stl",
+      "size_bytes": 2056345,
+      "faces": 11200,
+      "bbox_mm": [
+        240.0,
+        240.0,
+        200.0
+      ],
+      "volume_mm3": 186646.7,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 85.88,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "10_Schirm_Gerippt.stl",
+      "size_bytes": 3032471,
+      "faces": 16512,
+      "bbox_mm": [
+        244.0,
+        244.0,
+        200.01
+      ],
+      "volume_mm3": 218063.3,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 85.8,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "11_Schirm_Organisch.stl",
+      "size_bytes": 8548153,
+      "faces": 45210,
+      "bbox_mm": [
+        241.17,
+        241.17,
+        200.0
+      ],
+      "volume_mm3": 183540.9,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 85.88,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    },
+    {
+      "file": "12_STRALA_Befestigung.stl",
+      "size_bytes": 717088,
+      "faces": 4276,
+      "bbox_mm": [
+        88.0,
+        88.0,
+        15.0
+      ],
+      "volume_mm3": 45981.0,
+      "watertight": true,
+      "components": 1,
+      "bore_min_radius_mm": 19.5,
+      "bore_passage_ok": true,
+      "bayonet_snap_present": true,
+      "fits_P2S": true,
+      "status": "PASS"
+    }
+  ]
+}
