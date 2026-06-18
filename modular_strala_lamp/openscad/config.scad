@@ -19,30 +19,25 @@ wall_rein = 3.36;   // 8 x lw
 clearance = 0.30;   // default (between PLA 0.25 and PETG 0.35)
 EPS = 0.01;
 
-// ---- Bayonet geometry (mathematically defined) ----
-bay_core_wall   = 3.5;
-bay_lug_inner_r = bore_r + bay_core_wall;          // 33.5
-bay_lug_depth   = 3.5;
-bay_lug_outer_r = bay_lug_inner_r + bay_lug_depth; // 37.0
-bay_iface_wall  = 3.0;
-bay_iface_r     = bay_lug_outer_r + bay_iface_wall;// 40.0
-bay_iface_d     = bay_iface_r * 2;                 // 80.0
-
-bay_n         = 3;    // number of lugs
-bay_lug_arc   = 22;   // lug angular width (deg)
-bay_entry_arc = 30;   // entry slot width (deg) — wider than lug+tol
-bay_lock_arc  = 25;   // rotation to lock (deg)
-bay_lug_h     = 2.8;  // lug axial thickness (mm)
-bay_depth     = 5.0;  // total bayonet zone height (mm)
-
-// ---- Snap geometry ----
-snap_ramp_deg = 4;    // degrees of ramp at end of lock groove
-snap_step     = 0.5;  // mm depth of snap well behind ramp
+// Bayonet — spigot-socket design
+bay_spigot_r  = 36.0;   // male bearing radius
+bay_lug_depth = 4.0;    // lug radial protrusion outward
+bay_lug_r     = 40.0;   // lug tip radius (bay_spigot_r + bay_lug_depth)
+bay_socket_ir = 36.35;  // female socket inner bearing radius
+bay_socket_or = 43.0;   // female socket outer radius
+bay_n         = 3;      // number of lugs
+bay_lug_arc   = 22;     // lug angular width (deg)
+bay_entry_arc = 30;     // entry slot width (deg)
+bay_lock_arc  = 25;     // rotation to lock (deg)
+bay_lug_h     = 3.0;    // lug axial height (mm)
+bay_depth     = 6.0;    // spigot/socket axial depth (mm)
+snap_step     = 0.5;    // snap well depth (mm)
+snap_ramp_deg = 4;      // snap ramp arc (deg)
 
 // ---- Module sizing ----
 mod_typical_d = 105;                      // typical outer diameter
 mod_narrow_d  = 88;                       // narrow accent modules min OD
-mod_min_d     = bay_iface_d + 2*wall_str; // absolute minimum OD (~85)
+mod_min_d     = bay_socket_or * 2 + 2*wall_str; // absolute minimum OD
 
 // ---- Base ----
 base_d   = 220;

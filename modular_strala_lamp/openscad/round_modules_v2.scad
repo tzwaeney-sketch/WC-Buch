@@ -1,13 +1,13 @@
 include <module_frame.scad>
 
 // ============================================================
-// round_modules_v2.scad — body modules 03-08
+// round_modules_v2.scad -- body modules 03-08
 // Each provides an outer decorative shell to mod_frame.
 // ============================================================
 
-_min_r = bay_iface_r + wall_str;   // 42.52
+_min_r = bay_socket_or;   // 43mm
 
-// 03 — Sphere / Kugel
+// 03 -- Sphere / Kugel
 module body_sphere(h=80, od=mod_typical_d) {
     r = od/2;
     mod_frame(h=h, outer_r=r) {
@@ -19,7 +19,7 @@ module body_sphere(h=80, od=mod_typical_d) {
     }
 }
 
-// 04 — Flattened sphere / Abgeflacht
+// 04 -- Flattened sphere / Abgeflacht
 module body_flat(h=70, od=mod_typical_d) {
     r = od/2;
     mod_frame(h=h, outer_r=r) {
@@ -31,7 +31,7 @@ module body_flat(h=70, od=mod_typical_d) {
     }
 }
 
-// 05 — Organic S-curve / Organisch
+// 05 -- Organic S-curve / Organisch
 module body_organic(h=90, od=mod_typical_d) {
     r = od/2;
     mod_frame(h=h, outer_r=r) {
@@ -47,7 +47,7 @@ module body_organic(h=90, od=mod_typical_d) {
     }
 }
 
-// 06 — Geometric faceted / Geometrisch
+// 06 -- Geometric faceted / Geometrisch
 module body_geometric(h=80, od=mod_typical_d) {
     r = od/2;
     mod_frame(h=h, outer_r=r) {
@@ -60,8 +60,8 @@ module body_geometric(h=80, od=mod_typical_d) {
     }
 }
 
-// 07 — Narrow ring accent / Schmal_Ring
-module body_narrow_ring(h=55, od=mod_narrow_d) {
+// 07 -- Narrow ring accent / Schmal_Ring
+module body_narrow_ring(h=55, od=88) {
     r = od/2;
     mod_frame(h=h, outer_r=r) {
         union() {
@@ -75,8 +75,8 @@ module body_narrow_ring(h=55, od=mod_narrow_d) {
     }
 }
 
-// 08 — Narrow ribbed / Schmal_Gerippt
-module body_narrow_ribbed(h=60, od=mod_narrow_d) {
+// 08 -- Narrow ribbed / Schmal_Gerippt
+module body_narrow_ribbed(h=60, od=88) {
     r = od/2;
     nrib = 24;
     mod_frame(h=h, outer_r=r) {
