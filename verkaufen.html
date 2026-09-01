@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Verkaufen – Foto → Kleinanzeige</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#070b14; --bg1:#0b1220;
+      --line: rgba(255,255,255,.10);
+      --text: #eef2ff;
+      --muted: rgba(238,242,255,.70);
+      --muted2: rgba(238,242,255,.52);
+      --accent: #22c55e;
+      --accent2:#38bdf8;
+      --danger:#ef4444;
+      --warn:#f59e0b;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.25);
+      --r: 26px;
+      --safeTop: env(safe-area-inset-top);
+      --safeBottom: env(safe-area-inset-bottom);
+      --max: 760px;
+    }
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 15% 0%, rgba(34,197,94,.20), transparent 56%),
+        radial-gradient(900px 520px at 85% 0%, rgba(56,189,248,.18), transparent 54%),
+        radial-gradient(1200px 650px at 50% 110%, rgba(139,92,246,.16), transparent 62%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      -webkit-tap-highlight-color: transparent;
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    button, input, textarea, select{ font:inherit; }
+
+    .wrap{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: calc(14px + var(--safeTop)) 14px calc(40px + var(--safeBottom));
+    }
+
+    .hero{
+      position:relative;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--r) + 8px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      padding: 16px;
+    }
+    .heroTop{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .logoBox{
+      width: 56px; height: 56px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: linear-gradient(135deg, rgba(34,197,94,.20), rgba(56,189,248,.12));
+      display:flex; align-items:center; justify-content:center;
+      font-size: 26px; box-shadow: var(--shadow2); flex:0 0 auto;
+    }
+    .title{ font-size: 20px; font-weight: 950; margin:0; line-height:1.1; }
+    .subtitle{ margin:4px 0 0; color: var(--muted); font-size: 13px; line-height:1.35; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 9px 12px; border-radius: 999px;
+      border:1px solid var(--line); background: rgba(0,0,0,.18);
+      color: var(--muted); font-size: 13px; user-select:none; cursor:pointer;
+    }
+
+    .steps{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+    .step{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px; border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.16);
+      color: rgba(238,242,255,.72); font-size: 13px;
+    }
+    .step.on{
+      border-color: rgba(34,197,94,.30);
+      background: linear-gradient(135deg, rgba(34,197,94,.16), rgba(56,189,248,.10));
+      color: rgba(238,242,255,.95);
+    }
+    .step .n{
+      width: 24px; height:24px; border-radius: 10px;
+      border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center; font-weight: 900; font-size: 12px;
+    }
+
+    .card{
+      margin-top: 14px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--r);
+      box-shadow: 0 16px 45px rgba(0,0,0,.30);
+      padding: 14px;
+    }
+    .cardTitle{ margin:0; font-size: 15px; font-weight: 950; }
+    .cardSub{ margin: 4px 0 10px; font-size: 12px; color: var(--muted2); line-height: 1.35; }
+
+    label{ display:block; font-size: 12px; color: var(--muted); margin: 12px 0 6px; }
+    input[type="text"], input[type="number"], textarea, select{
+      width:100%; padding: 12px 12px; border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18);
+      color: var(--text); outline:none;
+    }
+    select{ appearance:none; -webkit-appearance:none; }
+    select option{ color:#111; }
+    textarea{ min-height: 96px; resize: vertical; line-height:1.4; }
+    textarea.big{ min-height: 220px; }
+    input::placeholder, textarea::placeholder{ color: rgba(238,242,255,.38); }
+    .counter{ text-align:right; font-size:12px; color: var(--muted2); margin-top: 6px; }
+    .counter.over{ color:#fca5a5; }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
+    .two{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    @media (max-width: 480px){ .two{ grid-template-columns: 1fr; } }
+
+    .btn{
+      border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+      color: var(--text); padding: 13px 14px; border-radius: 18px; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      flex: 1 1 160px; user-select:none; box-shadow: 0 10px 25px rgba(0,0,0,.18);
+      font-weight: 700;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btnPrimary{
+      border-color: rgba(34,197,94,.30);
+      background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(56,189,248,.14));
+    }
+    .btnBig{ padding: 16px 18px; font-size: 16px; }
+    .btnGhost{ background: rgba(0,0,0,.18); }
+    .btnSmall{ flex: 0 0 auto; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight:600; }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+    .msg{
+      display:none; margin-top: 10px; padding: 10px 12px; border-radius: 16px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.03);
+      font-size: 13px; color: var(--muted); line-height: 1.4; white-space: pre-line;
+    }
+    .msg.ok{ display:block; border-color: rgba(34,197,94,.30); background: rgba(34,197,94,.10); color: #d1fae5; }
+    .msg.warn{ display:block; border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); color: #ffedd5; }
+    .msg.err{ display:block; border-color: rgba(239,68,68,.30); background: rgba(239,68,68,.10); color: #fee2e2; }
+    .msg.info{ display:block; }
+
+    /* Fotos */
+    .dropzone{
+      border:1px dashed rgba(255,255,255,.22); background: rgba(0,0,0,.14);
+      border-radius: 22px; padding: 18px; text-align:center; cursor:pointer;
+    }
+    .dropzone .big{ font-size: 40px; line-height:1; }
+    .dropzone .t{ font-weight: 800; margin-top:8px; }
+    .dropzone .h{ font-size:12px; color: var(--muted2); margin-top:4px; }
+    .thumbs{ display:grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap:10px; margin-top: 12px; }
+    .thumb{
+      position:relative; aspect-ratio: 1/1; border-radius: 16px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.2);
+    }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .thumb .x{
+      position:absolute; top:6px; right:6px; width:26px; height:26px; border-radius:99px;
+      border:1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.6); color:#fff;
+      display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px;
+    }
+    .thumb .no{
+      position:absolute; left:6px; bottom:6px; padding:2px 7px; border-radius:99px;
+      background: rgba(0,0,0,.6); font-size:11px;
+    }
+    .hiddenInput{ display:none; }
+
+    /* Loading */
+    .loading{ display:none; text-align:center; padding: 22px 10px; }
+    .loading.on{ display:block; }
+    .spinner{
+      width: 46px; height:46px; margin: 0 auto 12px; border-radius: 99px;
+      border: 4px solid rgba(255,255,255,.12); border-top-color: var(--accent);
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+    .loadText{ font-weight: 800; }
+    .loadSub{ font-size:12px; color: var(--muted2); margin-top:4px; }
+
+    /* Ergebnis */
+    .priceBox{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-top: 12px; padding: 12px 14px; border-radius: 18px;
+      border:1px solid rgba(34,197,94,.28);
+      background: linear-gradient(135deg, rgba(34,197,94,.14), rgba(56,189,248,.08));
+    }
+    .priceBig{ font-size: 28px; font-weight: 950; }
+    .priceRange{ font-size: 12px; color: var(--muted); }
+    .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    .chip{
+      padding: 6px 10px; border-radius: 999px; font-size: 12px;
+      border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); color: var(--muted);
+    }
+    .chip b{ color: var(--text); }
+    .fieldHead{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
+    .fieldHead label{ margin:0; }
+    .note{ font-size: 12px; color: var(--muted2); line-height:1.4; margin-top: 6px; }
+    ul.q{ margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); line-height:1.45; }
+    .hidden{ display:none !important; }
+
+    .howto{ font-size: 13px; color: var(--muted); line-height:1.5; }
+    .howto ol{ margin: 6px 0 0; padding-left: 20px; }
+    .howto li{ margin: 4px 0; }
+    .kbd{ font-size:12px; padding:2px 7px; border-radius:8px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.25); }
+    .toast{
+      position: fixed; left: 50%; bottom: calc(18px + var(--safeBottom)); transform: translateX(-50%) translateY(20px);
+      background: rgba(20,28,45,.96); border:1px solid rgba(255,255,255,.16); color: var(--text);
+      padding: 10px 14px; border-radius: 999px; font-size: 13px; box-shadow: var(--shadow2);
+      opacity:0; pointer-events:none; transition: all .2s ease; z-index: 50; max-width: 90vw; text-align:center;
+    }
+    .toast.on{ opacity:1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero" aria-label="Kopfbereich">
+      <div class="heroTop">
+        <div class="brand">
+          <div class="logoBox" aria-hidden="true">🏷️</div>
+          <div>
+            <h1 class="title">Foto → Kleinanzeige</h1>
+            <p class="subtitle">Foto machen, kurz prüfen, bei Kleinanzeigen einfügen. Titel, Text, Kategorie und Preis kommen automatisch.</p>
+          </div>
+        </div>
+        <a class="pill" href="index.html" title="Zurück zum Gästebuch">🚽 Gästebuch</a>
+      </div>
+      <div class="steps" aria-label="Schritte">
+        <div class="step on" id="st1"><span class="n">1</span> Foto</div>
+        <div class="step" id="st2"><span class="n">2</span> Prüfen</div>
+        <div class="step" id="st3"><span class="n">3</span> Einstellen</div>
+      </div>
+    </section>
+
+    <!-- SCHRITT 1: Fotos -->
+    <section class="card" id="cardPhotos">
+      <p class="cardTitle">1. Foto(s) vom Artikel</p>
+      <p class="cardSub">Bis zu 4 Fotos. Gut ausgeleuchtet, Artikel groß im Bild, bei Elektronik gern auch Typenschild oder Rückseite. Fotos werden vor dem Hochladen automatisch verkleinert.</p>
+
+      <div class="dropzone" id="dropzone" role="button" tabindex="0">
+        <div class="big">📸</div>
+        <div class="t">Foto aufnehmen oder auswählen</div>
+        <div class="h">Tippen zum Öffnen der Kamera / Galerie</div>
+      </div>
+      <input class="hiddenInput" id="fileCam" type="file" accept="image/*" capture="environment">
+      <input class="hiddenInput" id="fileGal" type="file" accept="image/*" multiple>
+      <div class="row">
+        <button class="btn btnSmall" id="btnCam" type="button">📷 Kamera</button>
+        <button class="btn btnSmall" id="btnGal" type="button">🖼️ Aus Galerie</button>
+        <button class="btn btnSmall btnGhost" id="btnClearPhotos" type="button">🗑️ Alle entfernen</button>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+
+      <label for="hints">Optionale Hinweise (verbessern die Preisschätzung)</label>
+      <textarea id="hints" placeholder="z.B. Neupreis 299 €, 2 Jahre alt, Rechnung vorhanden, kleiner Kratzer am Deckel, nur Abholung"></textarea>
+
+      <div class="row">
+        <button class="btn btnPrimary btnBig" id="btnAnalyze" type="button" disabled>✨ Anzeige erstellen</button>
+      </div>
+      <div class="msg" id="msgPhotos"></div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loadText" id="loadText">Foto wird analysiert…</div>
+        <div class="loadSub">Dauert meist 10–30 Sekunden.</div>
+      </div>
+    </section>
+
+    <!-- SCHRITT 2: Ergebnis prüfen -->
+    <section class="card hidden" id="cardResult">
+      <p class="cardTitle">2. Anzeige prüfen &amp; anpassen</p>
+      <p class="cardSub">Alles ist bearbeitbar. Was du hier änderst, wird beim Kopieren und Teilen übernommen.</p>
+
+      <div class="priceBox">
+        <div>
+          <div class="priceBig"><span id="priceShow">–</span> € <span id="priceTypeShow" style="font-size:14px;opacity:.8"></span></div>
+          <div class="priceRange" id="priceRange"></div>
+        </div>
+        <div class="chips" style="margin:0">
+          <span class="chip" id="chipConf"></span>
+        </div>
+      </div>
+      <div class="note" id="priceReason"></div>
+
+      <div class="chips" id="chipsMeta"></div>
+
+      <div class="fieldHead">
+        <label for="fTitle">Titel</label>
+        <button class="btn btnSmall" type="button" data-copy="fTitle">📋 Kopieren</button>
+      </div>
+      <input id="fTitle" type="text" maxlength="65">
+      <div class="counter"><span id="cntTitle">0</span>/65</div>
+
+      <div class="two">
+        <div>
+          <label for="fPrice">Preis (€)</label>
+          <input id="fPrice" type="number" inputmode="numeric" min="0" step="1">
+        </div>
+        <div>
+          <label for="fPriceType">Preisart</label>
+          <select id="fPriceType">
+            <option>VB</option>
+            <option>Festpreis</option>
+            <option>Zu verschenken</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="two">
+        <div>
+          <label for="fCondition">Zustand</label>
+          <select id="fCondition">
+            <option>Neu mit Etikett</option>
+            <option>Neu</option>
+            <option>Sehr Gut</option>
+            <option>Gut</option>
+            <option>In Ordnung</option>
+            <option>Defekt</option>
+          </select>
+        </div>
+        <div>
+          <label for="fShipping">Versand</label>
+          <select id="fShipping">
+            <option value="1">Versand möglich</option>
+            <option value="0">Nur Abholung</option>
+          </select>
+        </div>
+      </div>
+      <div class="note" id="shipNote"></div>
+
+      <div class="fieldHead">
+        <label for="fCategory">Kategorie bei Kleinanzeigen</label>
+        <button class="btn btnSmall" type="button" data-copy="fCategory">📋 Kopieren</button>
+      </div>
+      <input id="fCategory" type="text">
+
+      <div class="fieldHead">
+        <label for="fDesc">Beschreibung</label>
+        <button class="btn btnSmall" type="button" data-copy="fDesc">📋 Kopieren</button>
+      </div>
+      <textarea id="fDesc" class="big" maxlength="4000"></textarea>
+      <div class="counter"><span id="cntDesc">0</span>/4000</div>
+
+      <div id="attrsWrap">
+        <label>Erkannte Eigenschaften</label>
+        <div class="chips" id="chipsAttrs" style="margin-top:0"></div>
+      </div>
+
+      <div id="questionsWrap">
+        <label>Das solltest du noch prüfen</label>
+        <div class="note" id="sellerNotes"></div>
+        <ul class="q" id="questions"></ul>
+      </div>
+
+      <div class="row">
+        <button class="btn btnGhost" id="btnRedo" type="button">↻ Neu analysieren</button>
+        <button class="btn btnPrimary btnBig" id="btnToPublish" type="button">Weiter → Einstellen</button>
+      </div>
+    </section>
+
+    <!-- SCHRITT 3: Einstellen -->
+    <section class="card hidden" id="cardPublish">
+      <p class="cardTitle">3. Bei Kleinanzeigen einstellen</p>
+      <p class="cardSub">Kleinanzeigen hat keine offene Schnittstelle zum automatischen Einstellen. Deshalb: Text kopieren oder Fotos + Text direkt an die Kleinanzeigen-App teilen, dort einfügen und „Anzeige aufgeben“ drücken.</p>
+
+      <div class="row">
+        <button class="btn btnPrimary btnBig" id="btnShare" type="button">📤 Fotos + Text an Kleinanzeigen-App teilen</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="btnCopyAll" type="button">📋 Alles kopieren</button>
+        <a class="btn" id="btnOpenKA" href="https://www.kleinanzeigen.de/p-anzeige-aufgeben.html" target="_blank" rel="noopener">🔗 Kleinanzeigen öffnen</a>
+      </div>
+      <div class="msg" id="msgPublish"></div>
+
+      <div class="card" style="margin-top:12px; padding:12px 14px">
+        <div class="howto">
+          <b>So geht's am Handy (Android):</b>
+          <ol>
+            <li><span class="kbd">Teilen</span> antippen und die <b>Kleinanzeigen</b>-App auswählen. Die Fotos landen direkt in einer neuen Anzeige.</li>
+            <li>Titel, Beschreibung und Preis sind in der Zwischenablage. In jedes Feld <b>lange drücken → Einfügen</b>, oder die einzelnen <span class="kbd">📋 Kopieren</span>-Knöpfe oben nutzen.</li>
+            <li>Kategorie und Zustand wie oben angezeigt auswählen, dann <b>Anzeige aufgeben</b>.</li>
+          </ol>
+          <b style="display:block;margin-top:10px">iPhone:</b>
+          <ol>
+            <li><span class="kbd">Teilen</span> → Fotos in „Fotos“ sichern, oder die Fotos sind ohnehin bereits in der Galerie.</li>
+            <li>In der Kleinanzeigen-App „Anzeige aufgeben“ → Fotos auswählen, Felder einfügen, fertig.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn btnGhost" id="btnBack2" type="button">← Zurück zum Prüfen</button>
+        <button class="btn btnGhost" id="btnNew" type="button">🆕 Nächster Artikel</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_URL = "/.netlify/functions/analyze";
+    const MAX_PHOTOS = 4;
+    const MAX_SIDE = 1280;       // längste Kante nach dem Verkleinern
+    const JPEG_QUALITY = 0.82;
+    const STORAGE_KEY = "wc_verkaufen_draft_v1";
+
+    const $ = (id) => document.getElementById(id);
+    const state = { photos: [], listing: null, step: 1 };
+
+    // ---------- Helpers ----------
+    function toast(t){
+      const el = $("toast"); el.textContent = t; el.classList.add("on");
+      clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("on"), 1800);
+    }
+    function setMsg(id, type, text){
+      const el = $(id); el.className = "msg" + (type ? " " + type : ""); el.textContent = text || "";
+    }
+    function setStep(n){
+      state.step = n;
+      [1,2,3].forEach(i => $("st"+i).classList.toggle("on", i <= n));
+      $("cardPhotos").classList.toggle("hidden", n !== 1);
+      $("cardResult").classList.toggle("hidden", n !== 2);
+      $("cardPublish").classList.toggle("hidden", n !== 3);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      persist();
+    }
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch{
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        let ok = false; try{ ok = document.execCommand("copy"); }catch{}
+        ta.remove(); return ok;
+      }
+    }
+    function dataUrlToBlob(dataUrl){
+      const [head, b64] = dataUrl.split(",");
+      const mime = (head.match(/data:(.*?);/) || [])[1] || "image/jpeg";
+      const bin = atob(b64); const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return new Blob([arr], { type: mime });
+    }
+
+    // ---------- Fotos ----------
+    function loadImage(file){
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Bild konnte nicht gelesen werden (Format nicht unterstützt?).")); };
+        img.src = url;
+      });
+    }
+    async function compress(file){
+      const img = await loadImage(file);
+      let { naturalWidth: w, naturalHeight: h } = img;
+      const scale = Math.min(1, MAX_SIDE / Math.max(w, h));
+      w = Math.round(w * scale); h = Math.round(h * scale);
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      const dataUrl = c.toDataURL("image/jpeg", JPEG_QUALITY);
+      return { dataUrl, media_type: "image/jpeg", b64: dataUrl.split(",")[1] };
+    }
+    async function addFiles(files){
+      const list = Array.from(files || []).filter(f => f && ((f.type || "").startsWith("image/") || /\.(heic|heif|jpe?g|png|webp)$/i.test(f.name || "")));
+      if (!list.length) return;
+      setMsg("msgPhotos", "", "");
+      for (const f of list){
+        if (state.photos.length >= MAX_PHOTOS){ setMsg("msgPhotos", "warn", `Maximal ${MAX_PHOTOS} Fotos.`); break; }
+        try{
+          const p = await compress(f);
+          state.photos.push(p);
+        }catch(e){
+          setMsg("msgPhotos", "err", e.message || String(e));
+        }
+      }
+      renderThumbs(); persist();
+    }
+    function renderThumbs(){
+      const box = $("thumbs"); box.innerHTML = "";
+      state.photos.forEach((p, i) => {
+        const d = document.createElement("div"); d.className = "thumb";
+        d.innerHTML = `<img alt="Foto ${i+1}"><span class="no">${i+1}</span><button class="x" type="button" title="Entfernen">✕</button>`;
+        d.querySelector("img").src = p.dataUrl;
+        d.querySelector(".x").onclick = () => { state.photos.splice(i, 1); renderThumbs(); persist(); };
+        box.appendChild(d);
+      });
+      $("btnAnalyze").disabled = state.photos.length === 0;
+      $("dropzone").querySelector(".t").textContent = state.photos.length ? "Weiteres Foto hinzufügen" : "Foto aufnehmen oder auswählen";
+    }
+    $("dropzone").onclick = () => $("fileCam").click();
+    $("dropzone").onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") $("fileCam").click(); };
+    $("btnCam").onclick = () => $("fileCam").click();
+    $("btnGal").onclick = () => $("fileGal").click();
+    $("fileCam").onchange = (e) => { addFiles(e.target.files); e.target.value = ""; };
+    $("fileGal").onchange = (e) => { addFiles(e.target.files); e.target.value = ""; };
+    $("btnClearPhotos").onclick = () => { state.photos = []; renderThumbs(); persist(); };
+
+    // ---------- Analyse ----------
+    const LOAD_TEXTS = ["Foto wird analysiert…", "Artikel wird erkannt…", "Zustand wird eingeschätzt…", "Preis wird geschätzt…", "Anzeigentext wird geschrieben…"];
+    let loadTimer = null;
+    function setLoading(on){
+      $("loading").classList.toggle("on", on);
+      $("btnAnalyze").disabled = on || state.photos.length === 0;
+      clearInterval(loadTimer);
+      if (on){
+        let i = 0; $("loadText").textContent = LOAD_TEXTS[0];
+        loadTimer = setInterval(() => { i = (i + 1) % LOAD_TEXTS.length; $("loadText").textContent = LOAD_TEXTS[i]; }, 3500);
+      }
+    }
+    async function analyze(){
+      if (!state.photos.length) return;
+      setMsg("msgPhotos", "", ""); setLoading(true);
+      const ctrl = new AbortController();
+      const to = setTimeout(() => ctrl.abort(), 90_000);
+      try{
+        const r = await fetch(API_URL, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          signal: ctrl.signal,
+          body: JSON.stringify({
+            images: state.photos.map(p => ({ media_type: p.media_type, data: p.b64 })),
+            hints: $("hints").value.trim()
+          })
+        });
+        let data = null;
+        try{ data = await r.json(); }catch{}
+        if (!r.ok || !data || !data.ok){
+          const err = (data && data.error) || (r.status === 502 || r.status === 504 ? "Die Analyse hat zu lange gedauert. Bitte mit weniger/kleineren Fotos erneut versuchen." : `Fehler ${r.status}`);
+          throw new Error(err);
+        }
+        state.listing = data.listing;
+        renderListing(); persist(); setStep(2);
+      }catch(e){
+        setMsg("msgPhotos", "err", e.name === "AbortError" ? "Zeitüberschreitung. Bitte erneut versuchen." : (e.message || String(e)));
+      }finally{
+        clearTimeout(to); setLoading(false);
+      }
+    }
+    $("btnAnalyze").onclick = analyze;
+
+    // ---------- Ergebnis ----------
+    function renderListing(){
+      const L = state.listing; if (!L) return;
+      $("fTitle").value = L.title || "";
+      $("fPrice").value = L.price.suggested;
+      $("fPriceType").value = L.price.type;
+      $("fCondition").value = L.condition;
+      $("fShipping").value = L.shipping.possible ? "1" : "0";
+      $("fCategory").value = L.categoryText || [L.category, L.subcategory].filter(Boolean).join(" › ");
+      $("fDesc").value = L.description || "";
+      $("priceRange").textContent = `Realistische Spanne: ${L.price.min}–${L.price.max} €`;
+      $("priceReason").textContent = L.price.reasoning || "";
+      $("shipNote").textContent = L.shipping.note || "";
+      const conf = Math.round((L.confidence || 0) * 100);
+      $("chipConf").innerHTML = `Erkennung: <b>${conf} %</b>`;
+      const meta = [];
+      if (L.brand) meta.push(`Marke: <b>${esc(L.brand)}</b>`);
+      if (L.model) meta.push(`Modell: <b>${esc(L.model)}</b>`);
+      (L.keywords || []).slice(0, 6).forEach(k => meta.push(`#${esc(k)}`));
+      $("chipsMeta").innerHTML = meta.map(m => `<span class="chip">${m}</span>`).join("");
+      const attrs = (L.attributes || []);
+      $("attrsWrap").classList.toggle("hidden", attrs.length === 0);
+      $("chipsAttrs").innerHTML = attrs.map(a => `<span class="chip">${esc(a.name)}: <b>${esc(a.value)}</b></span>`).join("");
+      const qs = L.open_questions || [];
+      $("questionsWrap").classList.toggle("hidden", !L.seller_notes && qs.length === 0);
+      $("sellerNotes").textContent = L.seller_notes || "";
+      $("questions").innerHTML = qs.map(q => `<li>${esc(q)}</li>`).join("");
+      updateLive();
+    }
+    function esc(s){ return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+    function updateLive(){
+      const price = Number($("fPrice").value) || 0;
+      const type = $("fPriceType").value;
+      $("priceShow").textContent = type === "Zu verschenken" ? "0" : price;
+      $("priceTypeShow").textContent = type === "Festpreis" ? "Festpreis" : (type === "VB" ? "VB" : "zu verschenken");
+      $("cntTitle").textContent = $("fTitle").value.length;
+      $("cntDesc").textContent = $("fDesc").value.length;
+      $("cntTitle").parentElement.classList.toggle("over", $("fTitle").value.length > 65);
+      if (state.listing){
+        const L = state.listing;
+        L.title = $("fTitle").value; L.description = $("fDesc").value;
+        L.price.suggested = price; L.price.type = type;
+        L.condition = $("fCondition").value; L.shipping.possible = $("fShipping").value === "1";
+        L.categoryText = $("fCategory").value;
+      }
+      persist();
+    }
+    ["fTitle","fPrice","fPriceType","fCondition","fShipping","fCategory","fDesc"].forEach(id => {
+      $(id).addEventListener("input", updateLive); $(id).addEventListener("change", updateLive);
+    });
+    document.querySelectorAll("[data-copy]").forEach(b => {
+      b.onclick = async () => { const ok = await copyText($(b.dataset.copy).value); toast(ok ? "Kopiert ✓" : "Kopieren nicht möglich"); };
+    });
+    $("btnRedo").onclick = () => setStep(1);
+    $("btnToPublish").onclick = () => setStep(3);
+    $("btnBack2").onclick = () => setStep(2);
+
+    // ---------- Einstellen ----------
+    function fullText(){
+      const L = state.listing; if (!L) return "";
+      const price = L.price.type === "Zu verschenken" ? "Zu verschenken" : `${L.price.suggested} € ${L.price.type}`;
+      return [
+        L.title,
+        "",
+        L.description,
+        "",
+        `Preis: ${price}`,
+        `Zustand: ${L.condition}`,
+        `Kategorie: ${L.categoryText || ""}`,
+        L.shipping.possible ? "Versand möglich" : "Nur Abholung"
+      ].join("\n");
+    }
+    $("btnCopyAll").onclick = async () => {
+      const ok = await copyText(fullText());
+      setMsg("msgPublish", ok ? "ok" : "err", ok ? "Titel, Beschreibung, Preis und Zustand sind in der Zwischenablage. Jetzt „Kleinanzeigen öffnen“ und einfügen." : "Kopieren nicht möglich. Bitte Text manuell markieren.");
+    };
+    $("btnShare").onclick = async () => {
+      const L = state.listing; if (!L) return;
+      const files = state.photos.map((p, i) => new File([dataUrlToBlob(p.dataUrl)], `anzeige-${i+1}.jpg`, { type: "image/jpeg" }));
+      const text = fullText();
+      // Text zusätzlich in die Zwischenablage – viele Apps übernehmen beim Teilen nur die Bilder.
+      await copyText(text);
+      if (navigator.share && navigator.canShare && navigator.canShare({ files })){
+        try{
+          await navigator.share({ files, title: L.title, text });
+          setMsg("msgPublish", "ok", "Geteilt. Der Anzeigentext liegt zusätzlich in der Zwischenablage – in der Kleinanzeigen-App einfach einfügen.");
+        }catch(e){
+          if (e && e.name !== "AbortError") setMsg("msgPublish", "warn", "Teilen abgebrochen: " + (e.message || e));
+        }
+      }else{
+        setMsg("msgPublish", "warn", "Dein Browser kann keine Fotos teilen. Der Text ist kopiert – bitte „Kleinanzeigen öffnen“ und die Fotos dort aus der Galerie wählen.");
+      }
+    };
+    $("btnNew").onclick = () => {
+      state.photos = []; state.listing = null; $("hints").value = "";
+      renderThumbs(); setMsg("msgPublish", "", ""); setMsg("msgPhotos", "", "");
+      try{ localStorage.removeItem(STORAGE_KEY); }catch{}
+      setStep(1);
+    };
+
+    // ---------- Entwurf merken (App-Wechsel zu Kleinanzeigen lädt die Seite oft neu) ----------
+    function persist(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          photos: state.photos.map(p => p.dataUrl),
+          hints: $("hints").value,
+          listing: state.listing,
+          step: state.step,
+          t: Date.now()
+        }));
+      }catch{}
+    }
+    function restore(){
+      try{
+        const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (!d || Date.now() - d.t > 24 * 3600 * 1000) return;
+        state.photos = (d.photos || []).map(u => ({ dataUrl: u, media_type: "image/jpeg", b64: u.split(",")[1] }));
+        $("hints").value = d.hints || "";
+        renderThumbs();
+        if (d.listing){ state.listing = d.listing; renderListing(); setStep(d.step === 3 ? 3 : 2); }
+      }catch{}
+    }
+    $("hints").addEventListener("input", persist);
+    renderThumbs();
+    restore();
+  </script>
+</body>
+</html>

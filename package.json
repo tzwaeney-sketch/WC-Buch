@@ -1,0 +1,10 @@
+{
+  "name": "wc-buch",
+  "private": true,
+  "version": "1.0.0",
+  "description": "WC Gästebuch Familie Albrecht + Foto-zu-Kleinanzeige Assistent (Netlify)",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.123.0"
+  }
+}
