@@ -4,13 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b1220" />
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Verkaufen – Foto → Kleinanzeige</title>
+  <meta name="apple-mobile-web-app-title" content="Verkaufen">
+  <meta name="description" content="Foto machen – die App erkennt den Artikel, schreibt Titel und Beschreibung, schätzt den Preis und bereitet alles für Kleinanzeigen vor.">
+  <title>Foto → Kleinanzeige</title>
+
+  <link rel="manifest" href="/verkaufen/manifest.webmanifest">
+  <link rel="icon" href="/verkaufen/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/verkaufen/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Schrift nicht-blockierend laden: die App startet sofort, auch wenn Google Fonts langsam oder nicht erreichbar ist -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
   <style>
     :root{
@@ -43,6 +51,7 @@
         linear-gradient(180deg, var(--bg0), var(--bg1));
       -webkit-tap-highlight-color: transparent;
       overflow-x:hidden;
+      overscroll-behavior-y: none;
     }
     a{ color:inherit; text-decoration:none; }
     button, input, textarea, select{ font:inherit; }
@@ -65,12 +74,10 @@
     .heroTop{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
     .brand{ display:flex; align-items:center; gap:12px; }
     .logoBox{
-      width: 56px; height: 56px; border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.15);
-      background: linear-gradient(135deg, rgba(34,197,94,.20), rgba(56,189,248,.12));
-      display:flex; align-items:center; justify-content:center;
-      font-size: 26px; box-shadow: var(--shadow2); flex:0 0 auto;
+      width: 56px; height: 56px; border-radius: 18px; overflow:hidden;
+      border: 1px solid rgba(255,255,255,.15); box-shadow: var(--shadow2); flex:0 0 auto;
     }
+    .logoBox img{ width:100%; height:100%; display:block; }
     .title{ font-size: 20px; font-weight: 950; margin:0; line-height:1.1; }
     .subtitle{ margin:4px 0 0; color: var(--muted); font-size: 13px; line-height:1.35; }
     .pill{
@@ -79,6 +86,7 @@
       border:1px solid var(--line); background: rgba(0,0,0,.18);
       color: var(--muted); font-size: 13px; user-select:none; cursor:pointer;
     }
+    .pill.accent{ border-color: rgba(34,197,94,.35); color: var(--text); background: linear-gradient(135deg, rgba(34,197,94,.20), rgba(56,189,248,.12)); }
 
     .steps{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
     .step{
@@ -108,6 +116,7 @@
     }
     .cardTitle{ margin:0; font-size: 15px; font-weight: 950; }
     .cardSub{ margin: 4px 0 10px; font-size: 12px; color: var(--muted2); line-height: 1.35; }
+    .cardHead{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
 
     label{ display:block; font-size: 12px; color: var(--muted); margin: 12px 0 6px; }
     input[type="text"], input[type="number"], textarea, select{
@@ -142,6 +151,7 @@
     .btnBig{ padding: 16px 18px; font-size: 16px; }
     .btnGhost{ background: rgba(0,0,0,.18); }
     .btnSmall{ flex: 0 0 auto; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight:600; }
+    .btnDanger{ border-color: rgba(239,68,68,.35); color:#fecaca; }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
     .msg{
@@ -154,6 +164,16 @@
     .msg.err{ display:block; border-color: rgba(239,68,68,.30); background: rgba(239,68,68,.10); color: #fee2e2; }
     .msg.info{ display:block; }
 
+    /* Install-Banner */
+    .install{
+      display:none; margin-top: 12px; padding: 12px 14px; border-radius: 18px;
+      border:1px solid rgba(56,189,248,.30); background: rgba(56,189,248,.10);
+      font-size: 13px; line-height:1.45;
+    }
+    .install.on{ display:block; }
+    .install b{ display:block; margin-bottom: 4px; }
+    .install .row{ margin-top: 8px; }
+
     /* Fotos */
     .dropzone{
       border:1px dashed rgba(255,255,255,.22); background: rgba(0,0,0,.14);
@@ -163,6 +183,7 @@
     .dropzone .t{ font-weight: 800; margin-top:8px; }
     .dropzone .h{ font-size:12px; color: var(--muted2); margin-top:4px; }
     .thumbs{ display:grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap:10px; margin-top: 12px; }
+    .thumbs:empty{ display:none; }
     .thumb{
       position:relative; aspect-ratio: 1/1; border-radius: 16px; overflow:hidden;
       border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.2);
@@ -178,6 +199,12 @@
       background: rgba(0,0,0,.6); font-size:11px;
     }
     .hiddenInput{ display:none; }
+
+    details.settings{ margin-top: 12px; border:1px solid rgba(255,255,255,.10); border-radius: 18px; background: rgba(0,0,0,.14); padding: 0 12px; }
+    details.settings summary{ cursor:pointer; padding: 11px 0; font-size: 13px; color: var(--muted); list-style:none; }
+    details.settings summary::-webkit-details-marker{ display:none; }
+    details.settings[open] summary{ border-bottom:1px solid rgba(255,255,255,.08); }
+    details.settings .inner{ padding: 2px 0 12px; }
 
     /* Loading */
     .loading{ display:none; text-align:center; padding: 22px 10px; }
@@ -212,6 +239,23 @@
     ul.q{ margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); line-height:1.45; }
     .hidden{ display:none !important; }
 
+    /* Meine Anzeigen */
+    .list{ display:flex; flex-direction:column; gap:10px; margin-top: 10px; }
+    .item{
+      display:grid; grid-template-columns: 64px 1fr auto; gap:12px; align-items:center;
+      padding: 10px; border-radius: 18px; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.16);
+      cursor:pointer;
+    }
+    .item img{ width:64px; height:64px; object-fit:cover; border-radius: 14px; display:block; background: rgba(255,255,255,.06); }
+    .item .ph{ width:64px; height:64px; border-radius:14px; background: rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center; font-size:26px; }
+    .item .t{ font-weight: 800; font-size: 14px; line-height:1.25; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+    .item .s{ font-size: 12px; color: var(--muted2); margin-top: 3px; }
+    .itemRight{ display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+    .item .del{ border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.2); color: var(--muted); border-radius: 999px; width:32px; height:32px; cursor:pointer; font-size:14px; }
+    .badge{ font-size: 11px; padding: 4px 8px; border-radius: 999px; border:1px solid rgba(255,255,255,.12); color: var(--muted); white-space:nowrap; }
+    .badge.done{ border-color: rgba(34,197,94,.35); color:#bbf7d0; background: rgba(34,197,94,.10); }
+    .empty{ font-size: 13px; color: var(--muted2); padding: 6px 2px; }
+
     .howto{ font-size: 13px; color: var(--muted); line-height:1.5; }
     .howto ol{ margin: 6px 0 0; padding-left: 20px; }
     .howto li{ margin: 4px 0; }
@@ -223,6 +267,7 @@
       opacity:0; pointer-events:none; transition: all .2s ease; z-index: 50; max-width: 90vw; text-align:center;
     }
     .toast.on{ opacity:1; transform: translateX(-50%) translateY(0); }
+    .foot{ text-align:center; font-size: 11px; color: var(--muted2); margin-top: 18px; }
   </style>
 </head>
 <body>
@@ -231,25 +276,30 @@
     <section class="hero" aria-label="Kopfbereich">
       <div class="heroTop">
         <div class="brand">
-          <div class="logoBox" aria-hidden="true">🏷️</div>
+          <div class="logoBox"><img src="/verkaufen/icon-192.png" alt=""></div>
           <div>
             <h1 class="title">Foto → Kleinanzeige</h1>
             <p class="subtitle">Foto machen, kurz prüfen, bei Kleinanzeigen einfügen. Titel, Text, Kategorie und Preis kommen automatisch.</p>
           </div>
         </div>
-        <a class="pill" href="index.html" title="Zurück zum Gästebuch">🚽 Gästebuch</a>
+        <button class="pill accent hidden" id="btnInstall" type="button">📲 App installieren</button>
       </div>
       <div class="steps" aria-label="Schritte">
         <div class="step on" id="st1"><span class="n">1</span> Foto</div>
         <div class="step" id="st2"><span class="n">2</span> Prüfen</div>
         <div class="step" id="st3"><span class="n">3</span> Einstellen</div>
       </div>
+      <div class="install" id="installHint">
+        <b>Als App auf den Startbildschirm</b>
+        <span id="installText"></span>
+        <div class="row"><button class="btn btnSmall btnGhost" id="btnInstallLater" type="button">Später</button></div>
+      </div>
     </section>
 
     <!-- SCHRITT 1: Fotos -->
     <section class="card" id="cardPhotos">
       <p class="cardTitle">1. Foto(s) vom Artikel</p>
-      <p class="cardSub">Bis zu 4 Fotos. Gut ausgeleuchtet, Artikel groß im Bild, bei Elektronik gern auch Typenschild oder Rückseite. Fotos werden vor dem Hochladen automatisch verkleinert.</p>
+      <p class="cardSub">Bis zu 4 Fotos. Gut ausgeleuchtet, Artikel groß im Bild, bei Elektronik gern auch Typenschild oder Rückseite. Tipp: Fotos gehen auch direkt aus der Kamera-App per „Teilen“ hierher.</p>
 
       <div class="dropzone" id="dropzone" role="button" tabindex="0">
         <div class="big">📸</div>
@@ -268,6 +318,16 @@
       <label for="hints">Optionale Hinweise (verbessern die Preisschätzung)</label>
       <textarea id="hints" placeholder="z.B. Neupreis 299 €, 2 Jahre alt, Rechnung vorhanden, kleiner Kratzer am Deckel, nur Abholung"></textarea>
 
+      <details class="settings" id="settings">
+        <summary>⚙️ Einstellungen (Ort, Standardtexte)</summary>
+        <div class="inner">
+          <label for="setOrt">Ort für Abholung (kommt in jede Beschreibung)</label>
+          <input id="setOrt" type="text" placeholder="z.B. Berlin-Pankow" autocomplete="off">
+          <label for="setExtra">Zusatz für jede Anzeige (optional)</label>
+          <textarea id="setExtra" placeholder="z.B. Tierfreier Nichtraucherhaushalt. Bezahlung bar bei Abholung oder PayPal." style="min-height:70px"></textarea>
+        </div>
+      </details>
+
       <div class="row">
         <button class="btn btnPrimary btnBig" id="btnAnalyze" type="button" disabled>✨ Anzeige erstellen</button>
       </div>
@@ -278,6 +338,19 @@
         <div class="loadText" id="loadText">Foto wird analysiert…</div>
         <div class="loadSub">Dauert meist 10–30 Sekunden.</div>
       </div>
+    </section>
+
+    <!-- Meine Anzeigen -->
+    <section class="card" id="cardHistory">
+      <div class="cardHead">
+        <div>
+          <p class="cardTitle">Meine Anzeigen</p>
+          <p class="cardSub" style="margin-bottom:0">Alles, was du hier erstellt hast – bleibt auf diesem Gerät gespeichert.</p>
+        </div>
+        <span class="badge" id="histCount">0</span>
+      </div>
+      <div class="list" id="histList"></div>
+      <div class="empty" id="histEmpty">Noch keine Anzeigen. Mach ein Foto und leg los.</div>
     </section>
 
     <!-- SCHRITT 2: Ergebnis prüfen -->
@@ -375,7 +448,7 @@
     <!-- SCHRITT 3: Einstellen -->
     <section class="card hidden" id="cardPublish">
       <p class="cardTitle">3. Bei Kleinanzeigen einstellen</p>
-      <p class="cardSub">Kleinanzeigen hat keine offene Schnittstelle zum automatischen Einstellen. Deshalb: Text kopieren oder Fotos + Text direkt an die Kleinanzeigen-App teilen, dort einfügen und „Anzeige aufgeben“ drücken.</p>
+      <p class="cardSub">Kleinanzeigen hat keine offene Schnittstelle zum automatischen Einstellen. Deshalb: Fotos + Text direkt an die Kleinanzeigen-App teilen (oder kopieren), dort einfügen und „Anzeige aufgeben“ drücken.</p>
 
       <div class="row">
         <button class="btn btnPrimary btnBig" id="btnShare" type="button">📤 Fotos + Text an Kleinanzeigen-App teilen</button>
@@ -391,23 +464,27 @@
           <b>So geht's am Handy (Android):</b>
           <ol>
             <li><span class="kbd">Teilen</span> antippen und die <b>Kleinanzeigen</b>-App auswählen. Die Fotos landen direkt in einer neuen Anzeige.</li>
-            <li>Titel, Beschreibung und Preis sind in der Zwischenablage. In jedes Feld <b>lange drücken → Einfügen</b>, oder die einzelnen <span class="kbd">📋 Kopieren</span>-Knöpfe oben nutzen.</li>
-            <li>Kategorie und Zustand wie oben angezeigt auswählen, dann <b>Anzeige aufgeben</b>.</li>
+            <li>Titel, Beschreibung und Preis sind in der Zwischenablage. In jedes Feld <b>lange drücken → Einfügen</b>, oder die einzelnen <span class="kbd">📋 Kopieren</span>-Knöpfe nutzen.</li>
+            <li>Kategorie und Zustand wie angezeigt auswählen, dann <b>Anzeige aufgeben</b>.</li>
           </ol>
           <b style="display:block;margin-top:10px">iPhone:</b>
           <ol>
-            <li><span class="kbd">Teilen</span> → Fotos in „Fotos“ sichern, oder die Fotos sind ohnehin bereits in der Galerie.</li>
-            <li>In der Kleinanzeigen-App „Anzeige aufgeben“ → Fotos auswählen, Felder einfügen, fertig.</li>
+            <li>Die Fotos sind bereits in deiner Galerie. In der Kleinanzeigen-App „Anzeige aufgeben“ → Fotos auswählen.</li>
+            <li>Felder mit den <span class="kbd">📋 Kopieren</span>-Knöpfen einzeln füllen, fertig.</li>
           </ol>
         </div>
       </div>
 
+      <div class="row">
+        <button class="btn btnPrimary" id="btnMarkDone" type="button">✅ Als eingestellt markieren</button>
+      </div>
       <div class="row">
         <button class="btn btnGhost" id="btnBack2" type="button">← Zurück zum Prüfen</button>
         <button class="btn btnGhost" id="btnNew" type="button">🆕 Nächster Artikel</button>
       </div>
     </section>
 
+    <div class="foot">Foto → Kleinanzeige · läuft komplett auf deinem Handy, Fotos werden nur zur Analyse übertragen.</div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -417,10 +494,14 @@
     const MAX_PHOTOS = 4;
     const MAX_SIDE = 1280;       // längste Kante nach dem Verkleinern
     const JPEG_QUALITY = 0.82;
-    const STORAGE_KEY = "wc_verkaufen_draft_v1";
+    const DRAFT_KEY = "verkaufen_draft_v2";
+    const SETTINGS_KEY = "verkaufen_settings_v1";
+    const INSTALL_DISMISS_KEY = "verkaufen_install_dismissed";
+    const INTAKE_CACHE = "verkaufen-shared-intake";
 
     const $ = (id) => document.getElementById(id);
-    const state = { photos: [], listing: null, step: 1 };
+    const state = { photos: [], listing: null, step: 1, currentId: null, createdAt: null, status: "entwurf" };
+    let deferredInstall = null;
 
     // ---------- Helpers ----------
     function toast(t){
@@ -430,20 +511,20 @@
     function setMsg(id, type, text){
       const el = $(id); el.className = "msg" + (type ? " " + type : ""); el.textContent = text || "";
     }
+    function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
     function setStep(n){
       state.step = n;
       [1,2,3].forEach(i => $("st"+i).classList.toggle("on", i <= n));
       $("cardPhotos").classList.toggle("hidden", n !== 1);
+      $("cardHistory").classList.toggle("hidden", n !== 1);
       $("cardResult").classList.toggle("hidden", n !== 2);
       $("cardPublish").classList.toggle("hidden", n !== 3);
       window.scrollTo({ top: 0, behavior: "smooth" });
-      persist();
+      persistDraft();
     }
     async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch{
+      try{ await navigator.clipboard.writeText(text); return true; }
+      catch{
         const ta = document.createElement("textarea");
         ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
         document.body.appendChild(ta); ta.select();
@@ -457,6 +538,77 @@
       const bin = atob(b64); const arr = new Uint8Array(bin.length);
       for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
       return new Blob([arr], { type: mime });
+    }
+    const fmtDate = (t) => new Date(t).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "2-digit" });
+
+    // ---------- IndexedDB: Meine Anzeigen ----------
+    const DB_NAME = "verkaufen", DB_STORE = "listings";
+    function idb(){
+      return new Promise((res, rej) => {
+        const r = indexedDB.open(DB_NAME, 1);
+        r.onupgradeneeded = () => r.result.createObjectStore(DB_STORE, { keyPath: "id" });
+        r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+      });
+    }
+    async function dbTx(mode, fn){
+      const db = await idb();
+      return new Promise((res, rej) => {
+        const t = db.transaction(DB_STORE, mode); const st = t.objectStore(DB_STORE);
+        const req = fn(st); let out;
+        if (req) req.onsuccess = () => { out = req.result; };
+        t.oncomplete = () => { db.close(); res(out); }; t.onerror = () => { db.close(); rej(t.error); };
+      });
+    }
+    const dbPut = (e) => dbTx("readwrite", (s) => s.put(e));
+    const dbGet = (id) => dbTx("readonly", (s) => s.get(id));
+    const dbAll = () => dbTx("readonly", (s) => s.getAll());
+    const dbDel = (id) => dbTx("readwrite", (s) => s.delete(id));
+
+    let saveTimer = null;
+    function saveEntrySoon(){ clearTimeout(saveTimer); saveTimer = setTimeout(saveEntry, 400); }
+    async function saveEntry(){
+      if (!state.listing || !state.currentId) return;
+      try{
+        await dbPut({
+          id: state.currentId, createdAt: state.createdAt || Date.now(), updatedAt: Date.now(),
+          status: state.status, listing: state.listing, hints: $("hints").value,
+          photos: state.photos.map(p => p.dataUrl)
+        });
+        renderHistory();
+      }catch(e){ console.warn("Speichern fehlgeschlagen", e); }
+    }
+    async function renderHistory(){
+      let all = [];
+      try{ all = await dbAll(); }catch{}
+      all.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+      $("histCount").textContent = all.length;
+      $("histEmpty").classList.toggle("hidden", all.length > 0);
+      const box = $("histList"); box.innerHTML = "";
+      all.forEach(e => {
+        const L = e.listing || {};
+        const price = L.price ? (L.price.type === "Zu verschenken" ? "Zu verschenken" : `${L.price.suggested} € ${L.price.type}`) : "";
+        const d = document.createElement("div"); d.className = "item";
+        d.innerHTML = `${e.photos && e.photos[0] ? `<img alt="">` : `<div class="ph">🏷️</div>`}
+          <div><div class="t">${esc(L.title || "Ohne Titel")}</div><div class="s">${esc(price)} · ${fmtDate(e.updatedAt || e.createdAt)}</div></div>
+          <div class="itemRight"><span class="badge ${e.status === "eingestellt" ? "done" : ""}">${e.status === "eingestellt" ? "✓ Eingestellt" : "Entwurf"}</span><button class="del" type="button" title="Löschen">🗑</button></div>`;
+        const img = d.querySelector("img"); if (img) img.src = e.photos[0];
+        d.onclick = () => openEntry(e.id);
+        d.querySelector(".del").onclick = async (ev) => {
+          ev.stopPropagation();
+          if (!confirm(`„${L.title || "Ohne Titel"}“ löschen?`)) return;
+          await dbDel(e.id);
+          if (state.currentId === e.id){ state.currentId = null; state.listing = null; persistDraft(); }
+          renderHistory(); toast("Gelöscht");
+        };
+        box.appendChild(d);
+      });
+    }
+    async function openEntry(id){
+      const e = await dbGet(id); if (!e) return;
+      state.currentId = e.id; state.createdAt = e.createdAt; state.status = e.status || "entwurf";
+      state.photos = (e.photos || []).map(u => ({ dataUrl: u, media_type: "image/jpeg", b64: u.split(",")[1] }));
+      state.listing = e.listing; $("hints").value = e.hints || "";
+      renderThumbs(); renderListing(); setMsg("msgPublish", "", ""); setStep(2);
     }
 
     // ---------- Fotos ----------
@@ -485,14 +637,10 @@
       setMsg("msgPhotos", "", "");
       for (const f of list){
         if (state.photos.length >= MAX_PHOTOS){ setMsg("msgPhotos", "warn", `Maximal ${MAX_PHOTOS} Fotos.`); break; }
-        try{
-          const p = await compress(f);
-          state.photos.push(p);
-        }catch(e){
-          setMsg("msgPhotos", "err", e.message || String(e));
-        }
+        try{ state.photos.push(await compress(f)); }
+        catch(e){ setMsg("msgPhotos", "err", e.message || String(e)); }
       }
-      renderThumbs(); persist();
+      renderThumbs(); persistDraft(); if (state.listing) saveEntrySoon();
     }
     function renderThumbs(){
       const box = $("thumbs"); box.innerHTML = "";
@@ -500,7 +648,7 @@
         const d = document.createElement("div"); d.className = "thumb";
         d.innerHTML = `<img alt="Foto ${i+1}"><span class="no">${i+1}</span><button class="x" type="button" title="Entfernen">✕</button>`;
         d.querySelector("img").src = p.dataUrl;
-        d.querySelector(".x").onclick = () => { state.photos.splice(i, 1); renderThumbs(); persist(); };
+        d.querySelector(".x").onclick = () => { state.photos.splice(i, 1); renderThumbs(); persistDraft(); };
         box.appendChild(d);
       });
       $("btnAnalyze").disabled = state.photos.length === 0;
@@ -512,7 +660,52 @@
     $("btnGal").onclick = () => $("fileGal").click();
     $("fileCam").onchange = (e) => { addFiles(e.target.files); e.target.value = ""; };
     $("fileGal").onchange = (e) => { addFiles(e.target.files); e.target.value = ""; };
-    $("btnClearPhotos").onclick = () => { state.photos = []; renderThumbs(); persist(); };
+    $("btnClearPhotos").onclick = () => { state.photos = []; renderThumbs(); persistDraft(); };
+
+    // Geteilte Fotos (Web Share Target) aus dem Cache holen, den der Service Worker befüllt hat
+    async function importSharedPhotos(){
+      if (!("caches" in window)) return;
+      try{
+        const cache = await caches.open(INTAKE_CACHE);
+        const keys = await cache.keys();
+        const files = [];
+        let sharedText = "";
+        for (const k of keys){
+          const res = await cache.match(k);
+          if (k.url.endsWith("/_shared/text")){ sharedText = await res.text(); continue; }
+          const blob = await res.blob();
+          const name = decodeURIComponent(res.headers.get("x-name") || "foto.jpg");
+          files.push(new File([blob], name, { type: blob.type || "image/jpeg" }));
+        }
+        await Promise.all(keys.map(k => cache.delete(k)));
+        if (files.length){
+          startNew(false);
+          await addFiles(files);
+          if (sharedText && !$("hints").value) $("hints").value = sharedText.slice(0, 500);
+          toast(`${files.length} Foto${files.length > 1 ? "s" : ""} übernommen`);
+        }
+      }catch(e){ console.warn("Share-Import fehlgeschlagen", e); }
+    }
+
+    // ---------- Einstellungen ----------
+    function loadSettings(){
+      try{
+        const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+        $("setOrt").value = s.ort || ""; $("setExtra").value = s.extra || "";
+      }catch{}
+    }
+    function saveSettings(){
+      try{ localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ort: $("setOrt").value.trim(), extra: $("setExtra").value.trim() })); }catch{}
+    }
+    $("setOrt").addEventListener("input", saveSettings);
+    $("setExtra").addEventListener("input", saveSettings);
+    function combinedHints(){
+      const parts = [];
+      const h = $("hints").value.trim(); if (h) parts.push(h);
+      const ort = $("setOrt").value.trim(); if (ort) parts.push(`Abholort: ${ort} (bitte in der Beschreibung als Abholort nennen).`);
+      const extra = $("setExtra").value.trim(); if (extra) parts.push(`Folgenden Text am Ende der Beschreibung ergänzen: "${extra}"`);
+      return parts.join("\n");
+    }
 
     // ---------- Analyse ----------
     const LOAD_TEXTS = ["Foto wird analysiert…", "Artikel wird erkannt…", "Zustand wird eingeschätzt…", "Preis wird geschätzt…", "Anzeigentext wird geschrieben…"];
@@ -528,6 +721,7 @@
     }
     async function analyze(){
       if (!state.photos.length) return;
+      if (navigator.onLine === false){ setMsg("msgPhotos", "warn", "Du bist offline. Die Analyse braucht eine Internetverbindung."); return; }
       setMsg("msgPhotos", "", ""); setLoading(true);
       const ctrl = new AbortController();
       const to = setTimeout(() => ctrl.abort(), 90_000);
@@ -538,7 +732,7 @@
           signal: ctrl.signal,
           body: JSON.stringify({
             images: state.photos.map(p => ({ media_type: p.media_type, data: p.b64 })),
-            hints: $("hints").value.trim()
+            hints: combinedHints()
           })
         });
         let data = null;
@@ -548,7 +742,8 @@
           throw new Error(err);
         }
         state.listing = data.listing;
-        renderListing(); persist(); setStep(2);
+        if (!state.currentId){ state.currentId = `a${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`; state.createdAt = Date.now(); state.status = "entwurf"; }
+        renderListing(); await saveEntry(); setStep(2);
       }catch(e){
         setMsg("msgPhotos", "err", e.name === "AbortError" ? "Zeitüberschreitung. Bitte erneut versuchen." : (e.message || String(e)));
       }finally{
@@ -584,10 +779,10 @@
       $("questionsWrap").classList.toggle("hidden", !L.seller_notes && qs.length === 0);
       $("sellerNotes").textContent = L.seller_notes || "";
       $("questions").innerHTML = qs.map(q => `<li>${esc(q)}</li>`).join("");
-      updateLive();
+      $("btnMarkDone").textContent = state.status === "eingestellt" ? "✓ Eingestellt (zurücksetzen)" : "✅ Als eingestellt markieren";
+      updateLive(false);
     }
-    function esc(s){ return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
-    function updateLive(){
+    function updateLive(save = true){
       const price = Number($("fPrice").value) || 0;
       const type = $("fPriceType").value;
       $("priceShow").textContent = type === "Zu verschenken" ? "0" : price;
@@ -602,10 +797,10 @@
         L.condition = $("fCondition").value; L.shipping.possible = $("fShipping").value === "1";
         L.categoryText = $("fCategory").value;
       }
-      persist();
+      if (save) saveEntrySoon();
     }
     ["fTitle","fPrice","fPriceType","fCondition","fShipping","fCategory","fDesc"].forEach(id => {
-      $(id).addEventListener("input", updateLive); $(id).addEventListener("change", updateLive);
+      $(id).addEventListener("input", () => updateLive()); $(id).addEventListener("change", () => updateLive());
     });
     document.querySelectorAll("[data-copy]").forEach(b => {
       b.onclick = async () => { const ok = await copyText($(b.dataset.copy).value); toast(ok ? "Kopiert ✓" : "Kopieren nicht möglich"); };
@@ -619,13 +814,8 @@
       const L = state.listing; if (!L) return "";
       const price = L.price.type === "Zu verschenken" ? "Zu verschenken" : `${L.price.suggested} € ${L.price.type}`;
       return [
-        L.title,
-        "",
-        L.description,
-        "",
-        `Preis: ${price}`,
-        `Zustand: ${L.condition}`,
-        `Kategorie: ${L.categoryText || ""}`,
+        L.title, "", L.description, "",
+        `Preis: ${price}`, `Zustand: ${L.condition}`, `Kategorie: ${L.categoryText || ""}`,
         L.shipping.possible ? "Versand möglich" : "Nur Abholung"
       ].join("\n");
     }
@@ -637,8 +827,7 @@
       const L = state.listing; if (!L) return;
       const files = state.photos.map((p, i) => new File([dataUrlToBlob(p.dataUrl)], `anzeige-${i+1}.jpg`, { type: "image/jpeg" }));
       const text = fullText();
-      // Text zusätzlich in die Zwischenablage – viele Apps übernehmen beim Teilen nur die Bilder.
-      await copyText(text);
+      await copyText(text); // viele Apps übernehmen beim Teilen nur die Bilder
       if (navigator.share && navigator.canShare && navigator.canShare({ files })){
         try{
           await navigator.share({ files, title: L.title, text });
@@ -650,38 +839,92 @@
         setMsg("msgPublish", "warn", "Dein Browser kann keine Fotos teilen. Der Text ist kopiert – bitte „Kleinanzeigen öffnen“ und die Fotos dort aus der Galerie wählen.");
       }
     };
-    $("btnNew").onclick = () => {
-      state.photos = []; state.listing = null; $("hints").value = "";
-      renderThumbs(); setMsg("msgPublish", "", ""); setMsg("msgPhotos", "", "");
-      try{ localStorage.removeItem(STORAGE_KEY); }catch{}
-      setStep(1);
+    $("btnMarkDone").onclick = async () => {
+      state.status = state.status === "eingestellt" ? "entwurf" : "eingestellt";
+      $("btnMarkDone").textContent = state.status === "eingestellt" ? "✓ Eingestellt (zurücksetzen)" : "✅ Als eingestellt markieren";
+      await saveEntry(); toast(state.status === "eingestellt" ? "Als eingestellt markiert" : "Wieder als Entwurf markiert");
     };
+    function startNew(goStep1 = true){
+      state.photos = []; state.listing = null; state.currentId = null; state.createdAt = null; state.status = "entwurf";
+      $("hints").value = "";
+      renderThumbs(); setMsg("msgPublish", "", ""); setMsg("msgPhotos", "", "");
+      if (goStep1) setStep(1); else persistDraft();
+    }
+    $("btnNew").onclick = () => startNew(true);
 
     // ---------- Entwurf merken (App-Wechsel zu Kleinanzeigen lädt die Seite oft neu) ----------
-    function persist(){
+    function persistDraft(){
       try{
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-          photos: state.photos.map(p => p.dataUrl),
-          hints: $("hints").value,
-          listing: state.listing,
-          step: state.step,
-          t: Date.now()
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({
+          photos: state.listing ? [] : state.photos.map(p => p.dataUrl), // mit Anzeige liegen die Fotos in der Datenbank
+          hints: $("hints").value, currentId: state.currentId, step: state.step, t: Date.now()
         }));
       }catch{}
     }
-    function restore(){
+    async function restoreDraft(){
       try{
-        const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-        if (!d || Date.now() - d.t > 24 * 3600 * 1000) return;
+        const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+        if (!d || Date.now() - d.t > 3 * 24 * 3600 * 1000) return;
+        if (d.currentId){
+          const e = await dbGet(d.currentId);
+          if (e){ await openEntry(e.id); if (d.step === 3) setStep(3); return; }
+        }
         state.photos = (d.photos || []).map(u => ({ dataUrl: u, media_type: "image/jpeg", b64: u.split(",")[1] }));
         $("hints").value = d.hints || "";
         renderThumbs();
-        if (d.listing){ state.listing = d.listing; renderListing(); setStep(d.step === 3 ? 3 : 2); }
       }catch{}
     }
-    $("hints").addEventListener("input", persist);
-    renderThumbs();
-    restore();
+    $("hints").addEventListener("input", () => { persistDraft(); if (state.listing) saveEntrySoon(); });
+
+    // ---------- Installation ----------
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    function showInstallHint(){
+      if (isStandalone) return;
+      let dismissed = false; try{ dismissed = localStorage.getItem(INSTALL_DISMISS_KEY) === "1"; }catch{}
+      if (dismissed) return;
+      if (isIOS){
+        $("installText").textContent = "In Safari unten auf „Teilen“ tippen, dann „Zum Home-Bildschirm“. Danach startet die App wie eine normale App.";
+        $("installHint").classList.add("on");
+      }
+    }
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault(); deferredInstall = e;
+      $("btnInstall").classList.remove("hidden");
+      let dismissed = false; try{ dismissed = localStorage.getItem(INSTALL_DISMISS_KEY) === "1"; }catch{}
+      if (!dismissed && !isStandalone){
+        $("installText").textContent = "Tippe auf „App installieren“. Dann hat die App ein eigenes Icon, startet ohne Browserleiste und taucht im Teilen-Menü deiner Kamera auf.";
+        $("installHint").classList.add("on");
+      }
+    });
+    $("btnInstall").onclick = async () => {
+      if (!deferredInstall) return;
+      deferredInstall.prompt();
+      const { outcome } = await deferredInstall.userChoice;
+      if (outcome === "accepted"){ $("btnInstall").classList.add("hidden"); $("installHint").classList.remove("on"); toast("App installiert ✓"); }
+      deferredInstall = null;
+    };
+    $("btnInstallLater").onclick = () => { try{ localStorage.setItem(INSTALL_DISMISS_KEY, "1"); }catch{} $("installHint").classList.remove("on"); };
+    window.addEventListener("appinstalled", () => { $("btnInstall").classList.add("hidden"); $("installHint").classList.remove("on"); });
+
+    if ("serviceWorker" in navigator){
+      window.addEventListener("load", () => navigator.serviceWorker.register("/verkaufen/sw.js", { scope: "/verkaufen/" }).catch(() => {}));
+    }
+
+    // ---------- Start ----------
+    (async () => {
+      loadSettings();
+      renderThumbs();
+      const url = new URL(location.href);
+      const shared = url.searchParams.get("shared") === "1";
+      const fresh = url.searchParams.get("new") === "1";
+      if (url.search){ history.replaceState(null, "", location.pathname); }
+      if (fresh){ startNew(true); }
+      else if (!shared){ await restoreDraft(); }
+      await renderHistory();
+      if (shared){ await importSharedPhotos(); }
+      showInstallHint();
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+{
+  "name": "Foto → Kleinanzeige",
+  "short_name": "Verkaufen",
+  "id": "/verkaufen/",
+  "start_url": "/verkaufen/?source=pwa",
+  "scope": "/verkaufen/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "lang": "de",
+  "description": "Foto machen – die App erkennt den Artikel, schreibt Titel und Beschreibung, schätzt den Preis und bereitet alles für Kleinanzeigen vor.",
+  "categories": ["shopping", "productivity", "utilities"],
+  "icons": [
+    { "src": "/verkaufen/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/verkaufen/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/verkaufen/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "share_target": {
+    "action": "/verkaufen/share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "files": [{ "name": "photos", "accept": ["image/*"] }]
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Neue Anzeige",
+      "short_name": "Neu",
+      "url": "/verkaufen/?new=1",
+      "icons": [{ "src": "/verkaufen/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

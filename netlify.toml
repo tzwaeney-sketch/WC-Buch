@@ -4,3 +4,22 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Alte Adresse der Verkaufs-Seite weiterleiten
+[[redirects]]
+  from = "/verkaufen.html"
+  to = "/verkaufen/"
+  status = 301
+
+# Service Worker und Manifest immer frisch ausliefern
+[[headers]]
+  for = "/verkaufen/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/verkaufen/"
+
+[[headers]]
+  for = "/verkaufen/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "no-cache"
