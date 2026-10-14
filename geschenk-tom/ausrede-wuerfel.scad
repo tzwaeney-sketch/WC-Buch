@@ -26,8 +26,11 @@ module label(l) {
 // Ausrichtung je Fläche: Text liegt auf der Fläche, von außen lesbar
 rots = [[0,0,0],[180,0,0],[90,0,0],[90,0,180],[90,0,90],[90,0,-90]];
 
-difference() {
-  minkowski() { cube(size - 2*r, center = true); sphere(r, $fn = 32); }
-  for (k = [0:5])
-    rotate(rots[k]) translate([0, 0, size/2 - depth]) label(faces[k]);
-}
+// part = "body" (Würfel mit Gravur) | "text" (Einlage für 2. Farbe/AMS) | "all"
+part = "all";
+
+module rohling() { minkowski() { cube(size - 2*r, center = true); sphere(r, $fn = 32); } }
+module texte() { for (k = [0:5]) rotate(rots[k]) translate([0, 0, size/2 - depth]) label(faces[k]); }
+
+if (part == "body" || part == "all") difference() { rohling(); texte(); }
+if (part == "text" || part == "all") color("black") intersection() { rohling(); texte(); }
