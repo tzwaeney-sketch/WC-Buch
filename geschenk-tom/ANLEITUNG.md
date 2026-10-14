@@ -12,13 +12,15 @@ Ein 45-mm-Würfel für alle Lebenslagen im Büro. Tom wird gefragt, ob er was er
 | 6 | HAPPY BDAY TOM! (der Joker) |
 
 Dateien:
+- **`ausrede-wuerfel-2farbig.3mf` – alles in einer Datei (Körper + Schrift als Teile) → einfach öffnen**
 - `wuerfel-koerper.stl` – Würfel mit 1 mm tiefer Gravur (alleine = einfarbige Version)
 - `wuerfel-text.stl` – Schrift-Einlage, füllt die Gravur exakt (2. Farbe)
 - `ausrede-wuerfel.scad` – Quelle; Texte/Größe änderbar (`part = "body"` / `"text"`)
 
 ## 🎨 Zweifarbig mit AMS (Bambu Studio)
-1. **Beide** STLs gleichzeitig importieren (`wuerfel-koerper.stl` + `wuerfel-text.stl`).
-2. Frage „Als ein Objekt mit mehreren Teilen laden?" → **Ja**. Die Teile liegen dann automatisch passgenau ineinander.
+1. `ausrede-wuerfel-2farbig.3mf` öffnen – Körper und Text sind schon ein Objekt mit zwei Teilen.
+   (Alternativ beide STLs zusammen importieren und „als ein Objekt mit mehreren Teilen laden?" mit **Ja** beantworten.)
+2. Falls Bambu Studio fragt, ob es eine Datei eines anderen Slicers ist: nur Geometrie laden ist okay.
 3. In der Objektliste: Körper → Filament 1 (z. B. **Gelb/Orange**), Text → Filament 2 (**Schwarz**).
 4. Würfel nicht drehen/neu ausrichten – liegt bereits richtig („BIN IM MEETING" oben).
 5. Einstellungen zum Sparen von Zeit und Abfall:
